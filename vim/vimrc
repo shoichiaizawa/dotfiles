@@ -1,0 +1,1446 @@
+" File:  ~/.vimrc@ -> ~/Dropbox/code/dotfiles/vim/vimrc
+" Author: name <username@example.com>
+" Source: github-url
+"
+" This is my .vimrc file, a shameless ripoff of countless Vim settings
+" discovered out there on teh interweb.
+"
+" Preamble: About this .vimrc file -------------------------------------- {{{1
+"
+" Since I am still new to Vim, my vimrc settings are far from complete.
+" From time to time, I work on the enhancement of my vimrc settings
+" using other people's configuration files collected via GitHub and
+" other online resources (many thanks to those pioneers).
+"
+" TODO: Modularise this single .vimrc file into separate files
+"
+"       Currently my Vim settings are entirely configured within this single
+"       vimrc file.
+"       My aim is to modularise the vimrc settings into separate files sorted
+"       by its functionalities and store them in vim directory,
+"       i.e. organise the settings in this file into separate setting files;
+"       for instance:
+"
+"         - base.vim
+"         - functions.vim
+"         - mappings.vim
+"         - plugins.vim
+"         - etc
+"
+" }}}1
+" Preamble: Vundle settings {{{1
+
+set nocompatible            " be iMproved, required
+filetype off                " required
+" Set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'  " Let Vundle manage itself, required
+
+Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline'  " Requires powerline/fonts
+Plugin 'vim-airline/vim-airline-themes' " Requires vim-airline/vim-airline
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
+Plugin 'luochen1990/rainbow'
+Plugin 'majutsushi/tagbar'
+Plugin 'mattn/emmet-vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'reedes/vim-pencil'
+Plugin 'ryanoasis/vim-devicons'   " FIXME: Not working with CtrlP
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+
+" TODO: Not installed but want to try one day (or I am curious what it is):
+"Plugin 'honza/vim-snippets'
+"Plugin 'jiangmiao/auto-pairs'  Alternative: 'Raimondi/delimitMate'
+"Plugin 'junegunn/vim-easy-align'  TODO: I have tabular but how about this?
+"Plugin 'kchmck/vim-coffee-script'
+"Plugin 'klen/python-mode'
+"Plugin 'moll/vim-node'
+"Plugin 'othree/html5.vim'
+"Plugin 'othree/html5-syntax.vim'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
+"Plugin 'tpope/vim-commentary'  TODO: I use NERDCommenter but how about this?
+"Plugin 'tpope/vim-eunuch'  " Unix commands in Vim
+"Plugin 'tpope/vim-git'     " Support plugin for fugitive
+"Plugin 'Valloric/YouCompleteMe'
+
+" TODO: Not only Solarized but hopefully I want to rotate colour schemes:
+"Plugin 'chriskempson/base16-vim'
+"Plugin 'sjl/badwolf'
+"Plugin 'tomasr/molokai'
+
+" Previously installed but deleted:
+"Plugin 'bling/vim-airline'               " Requires powerline/fonts
+"Plugin 'kien/ctrlp.vim'                  " Deprecated, use ctrlpvim/ctrlp.vim
+"Plugin 'Lokaltog/vim-powerline'          " Airline replaced this
+"Plugin 'ryanoasis/vim-webdevicons'
+"Plugin 'severin-lemaignan/vim-minimap'   " Not complete yet and unusable
+call vundle#end()           " required, all of your Plugins must be added
+" before the following line
+
+filetype plugin indent on   " required
+"           │     │    └───── Enable file type detection
+"           │     └────────── Enable loading of indent file
+"           └──────────────── Enable loading of plugin files
+
+" Quick help notes for Vundle {{{2
+"
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" https://github.com/gmarik/Vundle.vim
+" https://github.com/gmarik/Vundle.vim/wiki
+"
+" }}}2
+" TODO: I don't understand what the following lines are doing: {{{2
+"
+"       I believe they suddenly appeared around the time installing Vundle;
+"       to be investigated later.
+"
+"       Update (2016-10-03):
+"       See http://stackoverflow.com/questions/9850360/what-is-netrwhist
+"
+" let g:netrw_dirhistmax  =10
+" let g:netrw_dirhist_cnt =8
+" let g:netrw_dirhist_1='/Users/Shoichi'
+" let g:netrw_dirhist_2='/Users/Shoichi/.git'
+" let g:netrw_dirhist_3='/Users/Shoichi/.vim'
+" let g:netrw_dirhist_4='/Users/Shoichi/.vim/bundle/Vundle.vim'
+" let g:netrw_dirhist_5='/Users/Shoichi/.vim'
+" let g:netrw_dirhist_6='/Users/Shoichi/.config'
+" let g:netrw_dirhist_7='/Users/Shoichi/.dropbox'
+" let g:netrw_dirhist_8='/Users/Shoichi/Dropbox/SHO/Backup/dotfiles/vim/.vim'
+
+" }}}2
+
+" }}}1 End of Vundle settings; put your non-Plugin stuff after this line
+
+" My unique .vimrc settings --------------------------------------------------
+"
+" My settings are added on top of an example vimrc file created by
+" Bram Moolenaar.
+"
+" TODO: Understand and merge Bram's example Vim configurations
+"
+"       Understand what Bram does in the example fire and merge any of his
+"       example settings into my settings.
+"
+" General Settings: {{{1
+
+" TODO: Organise the settings by behaviour
+
+let mapleader = ","         "       Use ',' for the mapleader (default '\')
+let maplocalleader = "\\"   "       Use '\' for the mappings local to buffer
+set t_Co=256                " Tell the term has 256 colors set background=dark
+set background=dark
+colorscheme solarized
+" syntax enable               "      TODO: Use syntax highlighting
+syntax on                   "       TODO: Use syntax highlighting
+
+set encoding=utf-8          "enc:   Set the character encoding used inside Vim
+set fileencoding=utf-8      "fenc:  Set the character encoding for the file of
+                            "       this buffer
+set termencoding=utf-8      "tenc:  Encoding used for the terminal
+
+set spell                   "       Enable spell checking by default
+set spelllang=en            "spl:   Set spell check language (default "en")
+" Toggle spell checking with ',s' (default off)
+map <silent> <Leader>s :set spell!<CR>
+" set complete+=kspell
+
+" set timeout                 "to:    Time out on :mappings and key codes
+"                             "       (default on)
+" set timeoutlen=1000         "tm:    The time in milliseconds to wait
+"                             "       (default 1000)
+set notimeout
+set ttimeout
+set ttimeoutlen=10          "ttm:   The time for key code delay (default -1)
+
+set mouse=a                 "       Enable mouse scrolling
+set mousehide               "mh:    Hide mouse cursor when typing (default on)
+set clipboard=unnamed       "       Allow copy text to clipboard with * register
+set clipboard+=unnamedplus  "TODO   Allow copy text to clipboard with + register
+" set shellslash              "ssl    TODO something to do with Windows OS
+set ttyfast                 "tf:    Faster terminal connection
+set hidden                  "hid:   Hide buffers when not displayed instead of
+                            "       being closed
+set history=10000           "hi:    Keep 10000 lines of command line history
+set autoread                "ar:    When a file has been detected to have been
+                            "       changed outside of Vim and it has not been
+                            "       changed inside of Vim, automatically read it
+                            "       again
+set confirm                 "conf:  Using a dialogue, ask the user whether
+                            "       to confirm the command,
+                            "       such as :q, :qa and :w
+set shortmess=atI           "shm:   Shorten command-line text and other info tokens
+
+"------
+" Tabs
+"------
+
+set tabstop=2               "ts:    Size of a hard tabstop
+set softtabstop=2           "sts:   Size of a soft tabstop
+set shiftwidth=2            "sw:    Size of spaces to use for each step of
+                            "       (auto)indent
+set smarttab                "sta:   Uses shiftwidth instead of tabstop at
+                            "       start of line
+set expandtab               "et:    Always uses spaces instead of tab characters
+
+set autoindent              "ai:    Always set autoindenting on
+set smartindent             "si:    Smart indent
+set shiftround              "sr:    Use multiple of shiftwidth when indenting
+                            "       with '<' and '>'
+
+"set cindent                 "cin:   cindent
+"set cinoptions=             "cino:  TODO:
+"set cinwords=               "cinw:  TODO:
+"set noautoindent            "noai:  No autoindent
+"set nosmartindent           "nosi:  No smartindent
+"set nocindent               "nocin: No cindent
+
+"---------
+" Folding
+"---------
+
+set foldenable              "fen:   When off, all folds are open (default on)
+set foldcolumn=1            "fdc:   Show indicator whether folds are open or closed
+"set foldlevel=99            "fdl:   Open all folds at Vim start up
+set foldmethod=marker       "fdm:   Folding lines according to markers
+"set foldmethod=indent       "fdm:   Folding lines according to indents
+
+set title                   "       Show the filename in the window title bar
+set number                  "nu:    Enables line numbers
+"set relativenumber          "rnu    Enables relative line numbers
+map <Leader>rn :set relativenumber!<CR>
+
+set ruler                   "ru:    Show the cursor position all the time
+set cursorline              "cul:   Highlight current line
+" set cursorcolumn            "cuc:   Highlight the screen column of the cursor
+highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
+" highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
+highlight Visual cterm=NONE ctermfg=254 ctermbg=125
+" highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
+
+" FIXME: Work on colour glitches when splitting
+" TODO:  Work in GUI settings
+augroup SorarizedColorAu
+  autocmd!
+
+  autocmd WinLeave,InsertEnter * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=NONE
+  " autocmd WinLeave,InsertEnter * highlight CursorLine gui=NONE guifg=NONE guibg=#005f87
+
+  autocmd WinLeave,InsertEnter * highlight CursorColumn cterm=NONE ctermfg=NONE ctermbg=NONE
+  " autocmd WinLeave,InsertEnter * highlight CursorColumn gui=NONE guifg=NONE guibg=#005f87
+
+  " autocmd WinLeave,InsertEnter * highlight CursorLineNr cterm=bold ctermfg=254 ctermbg=136
+  " autocmd WinLeave,InsertEnter * highlight CursorLineNr gui=bold guifg= guibg=
+
+  autocmd WinEnter,InsertLeave * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=0
+  " autocmd WinEnter,InsertLeave * highlight CursorLine gui=NONE guifg=NONE guibg=#303030
+
+  autocmd WinEnter,InsertLeave * highlight CursorColumn cterm=NONE ctermfg=NONE ctermbg=0
+  " autocmd WinEnter,InsertLeave * highlight CursorColumn gui=NONE guifg=NONE guibg=#303030
+
+  autocmd WinEnter,InsertLeave * highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
+  " autocmd WinEnter,InsertLeave * highlight CursorLineNr guifg= guifg=
+augroup END
+
+" " Cursorline
+" " Only show cursorline in the current window and in normal mode.
+" augroup cline
+"   autocmd!
+"   autocmd WinLeave,InsertEnter * set nocursorline
+"   autocmd WinEnter,InsertLeave * set cursorline
+" augroup END
+
+set scrolloff=999           "so:    Cursor line will always be in the middle of
+                            "       the window (thus zz redraw is meaningless)
+"set scrolloff=3             "so:    Keep 3 lines away from margins when scrolling
+"set sidescrolloff=7         "siso:  TODO: Describe what this does
+"set sidescroll=1            "ss:    TODO: Describe what this does
+
+set laststatus=2            "ls:    Display the status line
+set cmdheight=2             "ch:    Set the command window height to 2 lines
+set showcmd                 "sc:    Show (partial) command in the last line of
+                            "       the screen
+set showmode                "smd:   Show the current mode
+                            "       (vim-airline does the job now)
+set showtabline=2           "stal:  Show tabline
+                            "       0:never 1:if more than 2 tabs 2:always
+
+set modeline                "ml:    Enable the modeline to allow specific vim
+                            "       variable settings to a file.
+set modelines=5             "mls:   First and last 5 lines for variable settings
+
+set helpheight=999          "hh:    Maximise the height of the help window
+                            "       when launched
+set visualbell              "vb:    Use visual bell instead of beeping
+                            "       when doing something wrong
+set t_vb=                   "       Disable error flash and beep
+                            "       when visualbell is set
+" set errorbells              "eb   Ring the bell for error messages
+set showmatch               "sm:    Show matching brackets [{()}]
+set matchtime=2             "mat:   How many tenths of a seconds to blink
+                            "       when matching brackets
+
+"--------
+" Search
+"--------
+
+set hlsearch                "hls:   Switch on highlighting the last used
+                            "       search pattern
+set incsearch               "is:    Do incremental searching
+set ignorecase              "ic:    Set search to be case insensitive...
+set smartcase               "scs    ...unless you typed uppercase letters
+                            "       in your query
+set wrapscan                "ws:    Searches wrap around the end of the file
+set gdefault                "gd:    Apply substitutions globally by default
+                            "       (add 'g' for old behaviour)
+
+set wildmenu                "wmnu:  Show the possible matches
+                            "       just above the command line
+highlight WildMenu cterm=bold ctermfg=254 ctermbg=125
+highlight WildMenu gui=NONE guifg=NONE guibg=NONE
+set wildmode=list:longest,full "wim:  Make cmdline tab completion similar to bash
+
+set wildignore&             "wig:   Stuff to ignore when tab-completing
+set wig=.git,.hg,.svn       "       Version control
+set wig+=*.jpg,*.jpeg,*.bmp "       Binary images
+set wig+=*.gif,*.png        "       Binary images
+set wig+=*.o,*.obj,*.exe    "       Compiled object files
+set wig+=*.dll,*.manifest   "       Compiled object files
+set wig+=*.so,*.out,*.class "       Compiled object files
+set wig+=*.aux,*.out,*.toc  "       LaTeX intermediate files
+set wig+=*.DS_Store         "       OS X stuff
+set wig+=*~,*.bak           "       Backup files
+set wig+=*.sw?              "       Vim swap files
+set wig+=*.spl              "       Compiled spelling word lists
+set wig+=*.pyc              "       Python byte code
+set wig+=*.luac             "       Lua byte code
+
+set wrap                    "       Wrap lines (default on); use nowrap to turn off
+nnoremap <silent> <Leader>W :set wrap!<CR>
+command! -nargs=* Wrap set wrap linebreak nolist
+set linebreak               "lbr:   Vim will wrap long lines at a character
+                            "       in 'breakat' rather than at the last character
+                            "       that fits on the screen
+set showbreak=↪             "sbr:   ↪ indicates linebreaks
+" set textwidth=80            "tw:    Maximum width of text that is being inserted
+                            "       (default 0)
+set colorcolumn=81          "cc:    A ruler to indicate line breaks at 80
+" set colorcolumn=+1          "cc:    A ruler to indicate line breaks (textwidth+1)
+" let &colorcolumn=join(range(81,999),",")
+" highlight OverLength cterm=NONE ctermfg=red ctermbg=NONE
+" highlight OverLength cterm=NONE ctermbg=red ctermfg=white
+" highlight OverLength gui=NONE guifg=NONE guibg=#592929
+" match OverLength /\%81v.\+/
+
+set lazyredraw              "lz:    Do not redraw while executing macros
+let &keywordprg=':help'     "       Quick help; press 'K' to look up
+                            "       the keyword under the cursor
+
+" set list                    "       Show invisible characters with the following
+                            "       char list
+set listchars=tab:▸\ ,trail:⋅,nbsp:⋅,eol:¬,extends:❯,precedes:❮ " trail:⌴ eol:↲
+nmap <silent> <Leader>i :set list!<CR>| " Toggle [i]nvisible characters (default off)
+
+set nostartofline           "nosol: Stop certain movements from always going to
+                            "       the first character of a line
+
+set backspace=2             "bs:    Allow backspacing over everything
+                            "       in insert mode;
+                            "       equiv to :set backspace=indent,eol,start
+set whichwrap=b,s,h,l,<,>,~,[,] "ww:  Allow specified keys that move the cursor
+                            "       left/right to move to the previous/next line
+                            "       when the cursor is on the first/last character
+                            "       in the line.
+
+set nrformats=alpha,hex     "nf:    Increase or decrease items (default octal,hex)
+
+set pastetoggle=<F2>        "pt:    TODO: Comment what this does
+set virtualedit=block       "ve:    Allow block selections to operate across lines
+                            "       regardless of the underlying text
+set virtualedit& virtualedit+=block
+
+set splitbelow              "sb:    Split a window below the current one
+set splitright              "spr:   Split a window right of the current one
+
+" }}}1
+" General Settings: Backups {{{1
+
+set backup                        " Enable backups
+set noswapfile                    " TODO: Learn brief history of swap
+
+set undofile
+set undoreload=10000
+
+set backupdir=~/.vim/tmp/backup// " Backups
+set directory=~/.vim/tmp/swap//   " Swap files
+set undodir=~/.vim/tmp/undo//     " Undo files
+
+" Make those folders automatically if they don't already exist
+if !isdirectory(expand(&backupdir))
+  call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+  call mkdir(expand(&directory), "p")
+endif
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+
+" }}}1
+
+" Autocmd: Files (Unsorted) {{{1
+
+autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
+
+" }}}1
+" Autocmd: Markdown {{{1
+
+augroup ft_markdown
+  autocmd!
+
+  autocmd BufWinEnter,BufRead,BufNewFile *.md setlocal filetype=markdown
+  " TODO: autocmd BufWinEnter,BufRead,BufNewFile *.md setlocal tabstop=4 softtabstop=4
+  " nnoremap <LocalLeader>1 yypVr=:redraw<CR>
+  " nnoremap <LocalLeader>2 yypVr-:redraw<CR>
+  " nnoremap <LocalLeader>3 I### <Esc>
+  " nnoremap <LocalLeader>4 I#### <Esc>
+  " nnoremap <LocalLeader>5 I##### <Esc>
+  " nnoremap <LocalLeader>6 I###### <Esc>
+augroup END
+
+" }}}1
+" Autocmd: Python {{{1
+
+augroup ft_python
+  autocmd!
+
+  autocmd BufWinEnter,BufRead,BufNewFile *.py
+  \ nnoremap <Leader>cz I#<Space><Esc>yypVr-:redraw<CR>2xI#<Space><Esc>yykP2j
+  autocmd BufWinEnter,BufRead,BufNewFile *.py setlocal textwidth=79
+  autocmd BufWinEnter,BufRead,BufNewFile *.py setlocal colorcolumn=80
+  autocmd BufWinEnter,BufRead,BufNewFile *.py let NERDSpaceDelims=0
+augroup END
+
+" }}}1
+" Autocmd: Vim {{{1
+
+augroup ft_vim
+  autocmd!
+
+  autocmd FileType vim
+  \ nnoremap <Leader>cz I"<Space><Esc>yypVr-:redraw<CR>2xI"<Space><Esc>yykP2j
+  autocmd FileType vim setlocal foldmethod=marker
+  autocmd FileType vim setlocal colorcolumn=79
+  autocmd FileType gitcommit setlocal colorcolumn=73
+  autocmd FileType help setlocal textwidth=78
+  autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+augroup END
+
+" }}}1
+" Autocmd: Line Return {{{1
+"
+" Make sure Vim returns to the same line when you reopen a file.
+"
+" Credits: Many thanks to the following Vim pioneers:
+"     - Bram Moolenaar, who shares this in his example .vimrc file;
+"     - Amit, who inspires Steve Losh; and
+"     - Steve Losh for his great zvzz notion.
+"
+augroup line_return
+  autocmd!
+  autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+  \     execute 'normal! g`"zvzz' |
+  \ endif
+augroup END
+
+" NOTES: About the trailing "zvzz" comes after g`"
+"
+" zvzz, which appears after g`", consists of zv and zz, where:
+"
+"   - zv: View cursor line
+"           Open just enough folds to make the line in which
+"           the cursor is located not folded.
+"
+"   - zz: Redraw, line [count] at center of window in the same column
+"         (also see "z." for difference)
+
+" }}}1
+
+" Plugin Settings: Solarized Dark Theme {{{1
+
+" TODO: Enhance the settings
+
+" let g:solarized_termcolors=256
+" let g:solarized_termcolors=16
+
+let g:solarized_termtrans=1
+"let g:solarized_degrade=1
+
+let g:solarized_bold=1
+let g:solarized_underline=1
+let g:solarized_italic=1
+
+let g:solarized_contrast='normal'   " Stay normal recommended [normal, high, low]
+let g:solarized_visibility='normal' " listchars visibility [normal, high, low]
+let g:solarized_hitrail=0
+
+" }}}1
+" Plugin Settings: NERD Commenter {{{1
+
+" TODO: Enhance the settings
+
+let NERDSpaceDelims=1
+let NERDCompactSexyComs=1
+
+nmap <Leader>ca <Plug>NERDCommenterAppend
+nmap <Leader>cA <Plug>NERDCommenterAltDelims
+
+" }}}1
+" Plugin Settings: Syntastic {{{1
+
+" -------
+" General
+" -------
+
+" TODO: Enhance the settings
+
+" Syntastic recommended settings for new users
+" See https://github.com/scrooloose/syntastic#settings
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+" let g:syntastic_enable_balloons = 1
+" let g:syntastic_enable_highlighting = 1
+
+" ---------
+" HTML Tidy
+" ---------
+
+let g:syntastic_html_tidy_exec = '/usr/local/bin/tidy'
+
+" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute ", "trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+
+" See more checker options at:
+" https://github.com/scrooloose/syntastic/wiki/HTML:---tidy
+
+" ----------
+" JavaScript
+" ----------
+
+" let g:syntastic_javascript_checker = ['']  " TODO: Choose one
+
+" ------
+" Python
+" ------
+
+let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_checker_args='--ignore=foo,bar'
+" TODO: See available options at:
+" http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+
+" --------------------
+" Mappings (Syntastic)
+" --------------------
+
+nnoremap <Leader>C :SyntasticCheck<CR>
+
+" }}}1
+" Plugin Settings: Airline {{{1
+
+" TODO: Enhance the settings
+
+"set guifont=Liberation\ Mono\ for\ Powerline\ 10
+
+let g:airline_theme="solarized"
+" let g:airline_theme=""
+
+let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#branch#enabled = 1               " default 1
+let g:airline#extensions#syntastic#enabled = 1            " default 1
+
+"-----------------
+" airline-tabline
+"-----------------
+
+let g:airline#extensions#tabline#enabled = 1  " Enable enhanced tabline, default 0
+let g:airline#extensions#tabline#buffer_nr_show = 0       " default 0
+let g:airline#extensions#tabline#buffer_nr_format = '%s ' " default '%s '
+let g:airline#extensions#tabline#tab_nr_type = 0 " # of splits (default 0)
+" let g:airline#extensions#tabline#fnamecollapse = 0      " default 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline#extensions#tabline#show_close_button = 0    " default 1
+let g:airline#extensions#tabline#close_symbol = 'X'       " default X
+
+" configure separators for the tabline only.
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#right_sep = ''
+" let g:airline#extensions#tabline#right_alt_sep = ''
+
+"-----------------------
+" airline-customization
+"-----------------------
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+"  unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+function! RefreshUI()
+  if exists(':AirlineRefresh')
+    AirlineRefresh
+  else
+    redraw!
+    redrawstatus!
+  endif
+endfunction
+
+" }}}1
+" Plugin Settings: NerdTree {{{1
+
+" TODO: Enhance the settings
+
+augroup ps_nerdtree
+  autocmd!
+  autocmd FileType nerdtree setlocal nolist
+  autocmd FileType nerdtree nnoremap <buffer> H :vertical resize -10<CR>
+  autocmd FileType nerdtree nnoremap <buffer> L :vertical resize +10<CR>
+augroup END
+
+let NERDTreeIgnore = ['\~$', '.*\.pyc$', '.DS_Store']  " TODO: Add more items
+
+let NERDTreeHighlightCursorline = 1       " options: 0 or 1 (default 1)
+let g:NERDTreeWinSize=20        " options: [integer value] (default 31)
+let g:NERDTreeWinPos = "left"   " options: [left, right] (default left)
+let g:NERDTreeShowHidden = 1    " Show hidden files by default;
+                                " press "I" to toggle (default 0)
+let g:NERDTreeShowBookmarks = 1 " Show the bookmarks table by default (default 0)
+let g:NERDTreeMinimalUI = 1     " Disables the 'Bookmarks' label 'Press ? for help' (default 0)
+let g:NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2       " options: 0, 1 or 2 (default 0)
+
+map <Leader>nn :NERDTreeToggle<CR>|     " Toggle NERDTree
+map <Leader>nb :NERDTreeFromBookmark|   " TODO: What is this?
+map <Leader>nf :NERDTreeFind<CR>|       " Find the current file in the tree
+
+" }}}1
+" Plugin Settings: Emmet {{{1
+
+" TODO: Enhance the settings
+
+let g:user_emmet_leader_key='<C-E>'
+
+" }}}1
+" Plugin Settings: EasyMotion {{{1
+
+" TODO: Enhance the settings
+
+highlight link EasyMotionTarget IncSearch
+highlight link EasyMotionShade  Comment
+
+let g:EasyMotion_do_mapping = 0 "Disable default mappings
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_keys = ';HKLYUIOPNM,QWERTASDGZXCVBJF'
+
+nmap m <Plug>(easymotion-s2)
+xmap m <Plug>(easymotion-s2)
+omap m <Plug>(easymotion-s2)
+
+" }}}1
+" Plugin Settings: vim-devicons {{{1
+
+" TODO: Enhance the settings
+" FIXME: Fix devicons are not shown when using CtrlP
+
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+autocmd VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
+autocmd VimEnter * call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
+
+" }}}1
+" Plugin Settings: Rainbow Parentheses Improved {{{1
+
+" Default color settings for terminal:
+" \ 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+
+nmap <Leader>R :RainbowToggle<CR>
+let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+\ 'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\ 'ctermfgs': ['darkblue', 'darkgreen', 'brown', 'red', 'magenta'],
+\ 'operators': '_,_',
+\ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\ 'separately': {
+\   '*': {},
+\   'tex': {
+\     'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\   },
+\   'lisp': {
+\     'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\   },
+\   'vim': {
+\     'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+\   },
+\   'html': {
+\     'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+\   },
+\   'css': 0,
+\ }
+\}
+
+" }}}1
+" Plugin Settings: Vim Markdown {{{1
+
+" Type 'gx' to open an URL under the cursor; this is a standard Vim command
+" <Plug>Markdown_OpenUrlUnderCursor
+
+autocmd FileType markdown setlocal foldmethod=manual
+
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_math=1
+let g:vim_markdown_frontmatter=1
+
+" }}}1
+" Plugin Settings: Vim Git Gutter {{{1
+
+" let g:gitgutter_map_keys = 0  " To disable the default mappings
+
+nmap [h <Plug>GitGutterPrevHunk|            " default [c
+nmap ]h <Plug>GitGutterNextHunk|            " default ]c
+
+" nmap <Leader>hs <Plug>GitGutterStageHunk|   " default map
+" nmap <Leader>hr <Plug>GitGutterRevertHunk|  " default map
+" nmap <Leader>hp <Plug>GitGutterPreviewHunk| " default map
+
+" let g:gitgutter_max_signs = 500             " default value
+
+" let g:gitgutter_realtime = 0  " to stop vim-gitgutter running in realtime
+" let g:gitgutter_eager = 0     " to stop vim-gitgutter running eagerly
+
+" }}}1
+" Plugin Settings: Vim Fugitive {{{1
+
+if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+  nnoremap <silent> <leader>gs :Gstatus<CR>
+  nnoremap <silent> <leader>ga :Git add %<CR>
+  nnoremap <silent> <leader>gd :Gdiff<CR>
+  nnoremap <silent> <leader>gc :Gcommit<CR>
+  nnoremap <silent> <leader>gb :Gblame<CR>
+  nnoremap <silent> <leader>gl :Glog<CR>
+  nnoremap <silent> <leader>gp :Git push<CR>
+  nnoremap <silent> <leader>gr :Gread<CR>
+  nnoremap <silent> <leader>gw :Gwrite<CR>
+  nnoremap <silent> <leader>ge :Gedit<CR>
+  " Mnemonic _i_nteractive
+  nnoremap <silent> <leader>gi :Git add -p %<CR>
+  " nnoremap <silent> <leader>gg :SignifyToggle<CR>
+endif
+
+" }}}1
+" Plugin Settings: Tagbar {{{1
+
+" TODO: Enhance the setting
+
+let g:tagbar_autoclose = 1    " If 1, close Tagbar once open (default 0)
+let g:tagbar_autofocus = 1    " If 1, move to Tagbar window when open (default 0)
+let g:tagbar_autopreview = 1  " If 1, automatically show tags along the cursor (default 0)
+let g:tagbar_compact = 1      " If 1, compact mode without short help (default 0)
+" let g:tagbar_foldlevel = 2  " Initial foldlevel for folds (default 99)
+
+let g:tagbar_sort = 0         " If 1 is set, sorted alphabetically;
+                              " if 0, sorted in order appeared in the file (default 1)
+
+" let g:tagbar_vertical = 30
+" let g:tagbar_previewwin_pos = "aboveleft"
+
+let g:tagbar_width = 30       " Width for Tagbar window in characters (default 40)
+
+" let g:tagbar_iconchars = ['▶', '▼']  " (default on Linux and Mac OS X)
+let g:tagbar_iconchars = ['▸', '▾']
+
+" TODO: Find out a mapping key works best for me
+nmap <Leader>tt :TagbarToggle<CR>
+
+" TODO: Support for additional filetypes
+"
+"       Some filetypes are not supported in the beginning and seem to require
+"       extra configurations; see the Wiki page for details:
+"       https://github.com/majutsushi/tagbar/wiki
+
+" }}}1
+" Plugin Settings: Goyo.vim {{{1
+"
+" FIXME: Fix any settings not restored upon leaving Goyo (if any)
+" TODO:  Find a way to come back to the original location when leaving Goyo
+"        by :q (:Goyo! works okay but not for :q)
+"
+function! s:goyo_enter()
+  " silent !tmux set status off
+  set nocursorline
+  set noshowmode
+  set noshowcmd
+  set scrolloff=5
+  " GitGutterEnable
+  " Limelight
+endfunction
+
+function! s:goyo_leave()
+  " silent !tmux set status on
+  set cursorline
+  set showmode
+  set showcmd
+  set scrolloff=999
+  highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
+  " highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
+  highlight Visual cterm=NONE ctermfg=254 ctermbg=125
+  " highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
+  highlight WildMenu cterm=bold ctermfg=254 ctermbg=125
+  " highlight WildMenu gui=NONE guifg=NONE guibg=NONE
+  " Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+nnoremap <silent> <Leader>gy :Goyo<CR>
+
+" NOTES: See below for some examples of customisation:
+" https://github.com/junegunn/goyo.vim/wiki/Customization
+
+" }}}1
+" Plugin Settings: Limelight.vim {{{1
+
+" TODO: Work on settings
+"
+"       See https://github.com/junegunn/limelight.vim
+
+" " Color name (:help cterm-colors) or ANSI code
+" let g:limelight_conceal_ctermfg = 'gray'
+" let g:limelight_conceal_ctermfg = 240
+
+" " Color name (:help gui-colors) or RGB color
+" let g:limelight_conceal_guifg = 'DarkGray'
+" let g:limelight_conceal_guifg = '#777777'
+
+" " Default: 0.5
+" let g:limelight_default_coefficient = 0.7
+
+" " Number of preceding/following paragraphs to include (default: 0)
+" let g:limelight_paragraph_span = 1
+
+" " Beginning/end of paragraph
+" "   When there's no empty line between the paragraphs
+" "   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" " Highlighting priority (default: 10)
+" "   Set it to -1 not to overrule hlsearch
+" let g:limelight_priority = -1
+
+" }}}1
+
+" Mappings: Arrow keys deactivation, and map something useful instead {{{1
+"
+" Credits:
+"   - mmozuras (Mindaugas Mozūras)
+"   - tpope (Tim Pope)
+"
+" NOTES: See details for mmozuras's blog:
+" http://codingfearlessly.com/2012/08/21/vim-putting-arrows-to-use/
+
+" Map up/down arrow keys to move the current line up/down in Normal mode;
+" this requires "tpope/vim-unimpaired" plugin
+nmap <Up> [e
+nmap <Down> ]e
+" Map up/down arrow keys to  in Normal mode
+" nnoremap <silent> <Up> :m .-2<CR>==
+" nnoremap <silent> <Down> :m .+1<CR>==
+"
+" Map up/down arrow keys to move the selected line(s) up/down in Visual mode;
+" this requires "tpope/vim-unimpaired" plugin
+vmap <Up> [egv
+vmap <Down> ]egv
+" Map up/down arrow keys to move the selected line(s) in Visual mode;
+" vnoremap <silent> <Up> :m '<-2<CR>gv=gv
+" vnoremap <silent> <Down> :m '>+1<CR>gv=gv
+
+" Map left/right arrow keys to indent in Normal mode, instead of setting <Nop>
+nmap <Left> <<
+nmap <Right> >>
+
+" Map left/right arrow keys to indent in Visual mode, instead of setting <Nop>
+vmap <Left> <gv
+vmap <Right> >gv
+
+" }}}1
+" Mappings: Markdown Headings {{{1
+
+" TODO: Enhance the settings; move this to FileType section
+
+nnoremap <Leader>1 yypVr=:redraw<CR>
+nnoremap <Leader>2 yypVr-:redraw<CR>
+nnoremap <Leader>3 I### <Esc>
+nnoremap <Leader>4 I#### <Esc>
+nnoremap <Leader>5 I##### <Esc>
+nnoremap <Leader>6 I###### <Esc>
+
+" }}}1
+" Mappings: Markdown to HTML {{{1
+
+" Credits: JeffreyWay (Jeffrey Way)
+"
+" See http://code.tutsplus.com/tutorials/vim-essential-plugin-markdown-to-html--net-19383
+"
+nmap <Leader>md :%!/usr/local/Cellar/markdown/1.0.1/bin/markdown --html4tag
+vmap <Leader>md :%!/usr/local/Cellar/markdown/1.0.1/bin/markdown --html4tag
+
+" }}}1
+" Mappings: Miscellaneous {{{1
+
+" Source $MYVIMRC reloads the saved $MYVIMRC
+nmap <silent> <Leader>S :source $MYVIMRC<CR>:call RefreshUI()<CR>
+
+nmap <silent> <Leader>ev :tabedit $MYVIMRC<CR>|      " Open $MYVIMRC for editing
+nmap <silent> <Leader>eb :tabedit ~/.bashrc<CR>|     " Open .bashrc for editing
+nmap <silent> <Leader>eg :tabedit ~/.gitconfig<CR>|  " Open .gitconfig for editing
+" nnoremap <Leader>et :tabnew ~/dotfiles/tmux.conf<CR>
+" nnoremap <Leader>ez :tabnew ~/dotfiles/zshrc<CR>
+" nnoremap <Leader>em :tabnew ~/dotfiles/mutt/muttrc<CR>
+
+map <silent> <Leader>p :!open -a "Marked" %<CR><CR>
+map <silent> <Leader>mo :!open -a "Markoff" %<CR><CR>
+
+" }}}1
+" Mappings: Regular char enhancement {{{1
+
+" Up and Down are more logical with g..
+nnoremap <silent> k gk|                 " Go up [count] screen line(s)
+nnoremap <silent> j gj|                 " Go down [count] screen line(s)
+nnoremap <silent> gk k|                 " Go up [count] actual line(s)
+nnoremap <silent> gj j|                 " Go down [count] actual line(s)
+inoremap <silent> <Up> <Esc>gka|        " Go up [count] screen line(s)
+inoremap <silent> <Down> <Esc>gja|      " Go down [count] screen line(s)
+
+noremap ; :|     " Semi-colon is now colon; hence, no futher typing mistakes
+
+" Better mappings for going to the first/last characters of the screen line
+noremap 0 g^|    " Go to the first non-blank character of the screen line
+noremap ^ g0|    " Go to the first character of the screen line
+noremap $ g_|    " Go to the last non-blank character of the screen line
+noremap _ g$|    " Go to the last character of the screen line
+
+" Disable the normal register; hence, no yank occurs
+nnoremap x "_x|  " X deletes char(s) forwards using black hole register "_
+nnoremap X "_X|  " X deletes char(s) backwards using black hole register "_
+
+" Create Blank Newlines and stay in Normal mode
+nnoremap <silent> zj o<Esc>
+nnoremap <silent> zk O<Esc>
+
+" TODO: Taken from Bram's example vimrc; what is Ex mode exactly?
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" TODO: Taken from Bran's example vimrc; I don't understand its behaviour
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Map Y to act like D and C, i.e. to yank until EOL, otherwise same as yy
+map Y y$
+
+" gi already moves to "last place you exited insert mode", so we'll map gI to
+" something similar: move to last change; same as: nnoremap gI `.
+nnoremap gI '.
+
+" Indent line(s) in Visual Mode becomes easier with the trailing 'gv' command
+vnoremap < <gv
+vnoremap > >gv
+
+" Select (charwise) the contents of the current line, excluding indentation.
+" Great for pasting Python lines into REPLs.
+nnoremap vv ^vg_
+
+" Select entire buffer
+nnoremap va ggVG
+
+" }}}1
+" Mappings: Search mappings {{{1
+
+" These will make it so that going to the next one in a search will center
+" on the line it's found in.
+map N Nzzzv
+map n nzzzv
+
+" Same when jumping around
+map g; g;zz
+map g, g,zz
+map <C-O> <C-O>zz
+
+" }}}1
+" Mappings: Smart brackets/quotation marks {{{1
+
+" TODO: Use a plugin if anything better than doing these
+
+" When typing a set of brackets or quotation marks, the cursor is going inside them
+inoremap '' ''<Left>
+inoremap "" ""<Left>
+" inoremap `` ``<Left>
+inoremap () ()<Left>
+inoremap <> <><Left>
+inoremap {} {}<Left>
+inoremap [] []<Left>
+
+" }}}1
+" Mappings: Smart escape keys {{{1
+
+" Escape from Insert mode to Normal mode
+inoremap jk <Esc><Esc>
+inoremap kj <Esc><Esc>
+
+" }}}1
+" Mappings: Smart line movement {{{1
+
+" Normal mode (See Arrow keys deactivation mappings above)
+" nnoremap <silent> <Up> :m .-2<CR>==
+" nnoremap <silent> <Down> :m .+1<CR>==
+
+" Insert mode
+inoremap <C-J> <Esc>:m .+1<CR>==gi
+inoremap <C-K> <Esc>:m .-2<CR>==gi
+
+" Visual mode
+vnoremap <C-K> :m '<-2<CR>gv=gv
+vnoremap <C-J> :m '>+1<CR>gv=gv
+" vnoremap <silent> <Up> :m '<-2<CR>gv=gv
+" vnoremap <silent> <Down> :m '>+1<CR>gv=gv
+
+" NOTES: Hints to improve these mappings can be found in the links below:
+" http://stackoverflow.com/questions/741814/move-entire-line-up-and-down-in-vim
+" http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
+" http://vim.wikia.com/wiki/Swapping_characters,_words_and_lines
+" http://codingfearlessly.com/2012/08/21/vim-putting-arrows-to-use/
+
+" }}}1
+" Mappings: Smart window manipulation {{{1
+
+" Easy window navigation
+nnoremap <C-H> <C-W>h
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <Leader><Tab> <C-W>w|    " Move to the next window
+
+nnoremap <Leader>v <C-W>v<C-W>l|  " Open a [v]ertical split, switch to it (,v)
+nnoremap <Leader>h <C-W>s<C-W>j|  " Open a [h]orizontal split, switch to it (,h)
+                                  " This requires <CR> as Fugitive has mappings
+                                  " prepending ",h" FIXME Try something else
+
+" FIXME: Settings are poor in this resize section
+
+nnoremap <Tab><CR> :resize +10<CR>|   " Resize with window size +10
+nnoremap <S-Tab><CR> :resize -10<CR>| " Resize with window size -10
+nnoremap <Tab>v<CR> :vertical :resize +10<CR>|   " Resize with window size +10
+nnoremap <S-Tab>v<CR> :vertical :resize -10<CR>| " Resize with window size -10
+
+nnoremap <buffer> H :vertical resize -10<CR>
+nnoremap <buffer> L :vertical resize +10<CR>
+
+nnoremap <Tab>= <C-W>=|   " Make all windows (almost) equally high and wide
+nnoremap <Tab>o <C-W>o|   " Close all other windows except the current one
+
+" }}}1
+" Mappings: Smart statement separators {{{1
+
+" Quickly set comma or semicolon at the end of the string
+inoremap ,, <End>,
+inoremap ;; <End>;
+autocmd FileType python inoremap :: <End>:
+
+" }}}1
+" Mappings: Smart tab manipulation {{{1
+
+" TODO: Work on settings
+
+nnoremap <silent> <C-Right> :tabnext<CR>|     " Next Tab
+nnoremap <silent> <C-Left> :tabprevious<CR>|  " Previous Tab
+nnoremap <silent> <C-T> :tabnew<CR>|          " New Tab
+
+nnoremap <Tab>k :bnext<CR>|                   " bn: Go to the next buffer
+nnoremap <Tab>j :bprevious<CR>|               " bp: Go to the previous buffer
+
+" map <Leader>tn :tabnew<CR>
+" map <Leader>to :tabonly<CR>
+" map <Leader>tc :tabclose<CR>
+" map <Leader>tm :tabmove
+" map <Leader>t<Leader> :tabnext<CR>
+
+" }}}1
+" Mappings: Toggle foldings {{{1
+
+nnoremap <Space> za|    " Space key to toggle a specified fold
+nnoremap za zA|         " Swap za for zA; za to toggle folding recursively
+nnoremap zA za|         " Swap zA for za; zA to toggle specified folding
+nnoremap zr zR|         " Swap zr with zR; zr to open all folds
+nnoremap zR zr|         " Swap zR with zr; zR to reduce folding by one level
+nnoremap zm zM|         " Swap zm with zM; zm to close all folds
+nnoremap zM zm|         " Swap zM with zm; zM to fold by one level
+
+" }}}1
+" Mappings: Unhighlighting {{{1
+
+nnoremap <silent> <Leader><Space> :nohlsearch<CR>
+
+" nohls: Make <C-l> clear the highlight as well as redraw.
+" nnoremap <C-L> :nohlsearch<CR><C-L>
+" inoremap <C-L> <C-O>:nohlsearch<CR>
+
+" }}}1
+" Mappings: TODO: Not working (To be sorted) {{{1
+
+" To save, ctrl-s. Somehow not working..
+"nmap <C-S> :w<CR>
+"imap <C-S> <Esc>:w<CR>a
+
+" I don't know what this is doing -> to be sorted later
+"vmap <C-Right> xpgvlolo
+"vmap <C-left> xhPgvhoho
+"vnoremap <Left> h
+"vnoremap <Right> l
+"vnoremap <Up> k
+"vnoremap <Down> j
+
+" }}}1
+" NOTES: Explanation on how to achieve inline commenting when mapping keys:
+" http://stackoverflow.com/a/24717020/1334728
+"
+" Functions: Incr() - Incrementing selected numbers using V-BLOCK {{{1
+"
+" Credits: Vim Tips Wiki Wikia members
+"
+" NOTES: See http://vim.wikia.com/wiki/Making_a_list_of_numbers
+"
+function! Incr()
+  let a = line('.') - line("'<")
+  let c = virtcol("'<")
+  if a > 0
+    execute 'normal! '.c.'|'.a."\<C-a>"
+  endif
+  normal `<
+endfunction
+vnoremap <C-a> :call Incr()<CR>
+
+" }}}1
+" Functions: CohamaSmoothScroll() - Smooth scrolling {{{1
+
+" This allows scrolling with ctrl-d/u/f/b smoothly rather than scrolling
+" instantaneously; hence, scrolling direction is now visible to eyes.
+"
+" Credits: cohama: https://github.com/cohama/.vim/blob/master/.vimrc#L1061
+"
+let s:scroll_time_ms = 100
+let s:scroll_precision = 8
+function! CohamaSmoothScroll(dir, windiv, factor)
+  let cl = &cursorline
+  let cc = &cursorcolumn
+  set nocursorline nocursorcolumn
+  let height = winheight(0) / a:windiv
+  let n = height / s:scroll_precision
+  if n <= 0
+  let n = 1
+  endif
+  let wait_per_one_move_ms = s:scroll_time_ms / s:scroll_precision * a:factor
+  let i = 0
+  let scroll_command = a:dir == "down" ?
+    \ "normal! " . n . "\<C-E>" . n ."j" :
+    \ "normal! " . n . "\<C-Y>" . n ."k"
+  while i < s:scroll_precision
+  let i = i + 1
+  execute scroll_command
+  execute "sleep " . wait_per_one_move_ms . "m"
+  redraw
+  endwhile
+  let &cursorline = cl
+  let &cursorcolumn = cc
+endfunction
+
+nnoremap <silent> <C-D> :call CohamaSmoothScroll("down", 2, 1)<CR>
+nnoremap <silent> <C-U> :call CohamaSmoothScroll("up", 2, 1)<CR>
+nnoremap <silent> <C-F> :call CohamaSmoothScroll("down", 1, 2)<CR>
+nnoremap <silent> <C-B> :call CohamaSmoothScroll("up", 1, 2)<CR>
+
+" }}}1
+" Functions: Preserve() - Strip trailing whitespace {{{1
+"
+" Preserve: A Vim function that keeps your state
+"
+" This function is based upon the function below introduced at Vimcasts.org.
+" The function can be reused for any actions requiring state preservation
+" for last search and cursor position.
+"
+" Credits:
+"   - nelstrom (Drew Neil)
+"   - jpalardy (Jonathan Palardy)
+"
+" NOTES: See details in the link below:
+" http://vimcasts.org/episodes/tidying-whitespace/
+" https://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
+"
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+nmap <silent> <Leader>w :call Preserve("%s/\\s\\+$//e")<CR>
+
+" TODO: Assign convenient mappings
+" nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+" nmap _= :call Preserve("normal gg=G")<CR>
+" nmap _- :call Preserve("g/^$/d")<CR>
+
+" Tidying whitespace -- Vimcasts.org: {{{2
+
+" See details at http://vimcasts.org/episodes/tidying-whitespace/
+
+" function! <SID>StripTrailingWhitespaces()
+"     " Preparation: save last search, and cursor position.
+"     let _s=@/
+"     let l = line(".")
+"     let c = col(".")
+"     " Do the business:
+"     %s/\s\+$//e
+"     " Clean up: restore previous search history, and cursor position
+"     let @/=_s
+"     call cursor(l, c)
+" endfunction
+"
+" nnoremap <silent> <F5> :call <SID>StripTrailingWhitespaces()<CR>
+" autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
+
+" }}}2
+
+" }}}1
+" End of my unique .vimrc settings -------------------------------------------
+
+" TODO: Merge the following Bram's example vimrc settings into my settings
+" An example .vimrc settings created by Bram Moolenaar {{{1
+"
+"     Because I am new to Vim, to begin with working on my vimrc settings,
+"     I adapted these settings below from an example .vimrc file created
+"     by Bram Moolenaar; I am planning to integrate his settings into
+"     my own settings section above later.
+"
+"     Once I fully understand what his example settings do, I will delete
+"     the lines below.
+"
+" ----------------------------------------------------------------------------
+"
+" NOTES: Bram's example vimrc locations
+"
+" The section below is an example vimrc file created by Bram Moolenaar.
+"
+" If you are using the OS X and installed Vim via Homebrew, Bram's example
+" vimrc file is located locally at:
+"   /usr/local/Cellar/vim/7.4.xxxx/share/vim/vim74/vimrc_example.vim
+"
+" if not, the Vim shipped with the OS X is located locally at:
+"   /usr/share/vim/vim73/vimrc_example.vim
+"
+" The latest version of Bram's example vimrc can be found on GitHub:
+"   https://github.com/vim/vim/blob/master/runtime/vimrc_example.vim
+"
+" ----------------------------------------------------------------------------
+" An example for a vimrc file.
+"
+" Maintainer: Bram Moolenaar <Bram@vim.org>
+" Last change:  2015 Mar 24
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"       for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"     for OpenVMS:  sys$login:.vimrc
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+" set nocompatible
+
+" allow backspacing over everything in insert mode
+" set backspace=indent,eol,start
+
+" if has("vms")
+"   set nobackup    " do not keep a backup file, use versions instead
+" else
+"   set backup    " keep a backup file (restore to previous version)
+"   set undofile    " keep an undo file (undo changes after closing)
+" endif
+" set history=50    " keep 50 lines of command line history
+" set ruler   " show the cursor position all the time
+" set showcmd   " display incomplete commands
+" set incsearch   " do incremental searching
+
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
+
+" Don't use Ex mode, use Q for formatting
+" map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+" inoremap <C-U> <C-G>u<C-U>
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+" if has('mouse')
+"   set mouse=a
+" endif
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+" if &t_Co > 2 || has("gui_running")
+"   syntax on
+"   set hlsearch
+" endif
+
+" Only do this part when compiled with support for autocommands.
+" if has("autocmd")
+
+"   " Enable file type detection.
+"   " Use the default filetype settings, so that mail gets 'tw' set to 72,
+"   " 'cindent' is on in C files, etc.
+"   " Also load indent files, to automatically do language-dependent indenting.
+"   filetype plugin indent on
+
+"   " Put these in an autocmd group, so that we can delete them easily.
+"   augroup vimrcEx
+"   au!
+
+"   " For all text files set 'textwidth' to 78 characters.
+"   autocmd FileType text setlocal textwidth=78
+
+"   " When editing a file, always jump to the last known cursor position.
+"   " Don't do it when the position is invalid or when inside an event handler
+"   " (happens when dropping a file on gvim).
+"   autocmd BufReadPost *
+"     \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+"     \   exe "normal! g`\"" |
+"     \ endif
+
+"   augroup END
+
+" else
+
+"   set autoindent    " always set autoindenting on
+
+" endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+endif
+
+if has('langmap') && exists('+langnoremap')
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping.  If unset (default), this may break plugins (but it's backward
+  " compatible).
+  set langnoremap
+endif
+
+" }}}1 End of an example .vimrc file

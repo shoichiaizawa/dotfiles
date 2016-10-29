@@ -1,0 +1,77 @@
+# file: ~/.octaverc@ -> ~/Dropbox/code/dotfiles/octaverc
+
+setenv ("GNUTERM", "X11");
+
+
+# Use white bold '>> ' for the Octave terminal profile instead of 'octave:N>'
+PS1 ("\\[\\033[01;37m\\]\>> \\[\\033[0m\\]");
+# PS1('>> ');
+# PS1 ("\\[\\033[01;31m\\]\\s:\\#> \\[\\033[0m\\]");
+
+# Use yellow hold '->' for multi-line input
+PS2 ("\\[\\033[01;33m\\]\-> \\[\\033[0m\\]");
+
+
+################################################################################
+# Below are some tweaks for the Octave configuration file, `~/.octaverc`
+# See the full explanation at:
+# http://wiki.octave.org/Tips_and_tricks
+################################################################################
+
+# # Change default figure size
+# set (0, 'DefaultFigurePosition', [1 get(0, "screensize")(4:-1:3) get(0, "DefaultFigurePosition")(4)]);
+
+
+# Change default axes font name
+# set (0, "DefaultAxesFontName", "Arial");
+
+
+# Change default axes font size
+set(0, 'DefaultAxesFontSize', 14);
+
+
+# Shorten help message
+suppress_verbose_help_message(1);
+
+
+# Alias to help: `man` is now `help`
+function man (name)
+   help (char (name))
+endfunction
+
+
+# # Default image size to take the right half of the monitor
+# set (0,
+#   "DefaultFigurePosition",
+#     [get(0, "screensize")(3)/2    1 ...
+#      get(0, "screensize")(3)/2    get(0, "screensize")(4)]
+# );
+
+
+# TODO: Not working
+# # Reload octave.rc after clear
+# function clear (varargin)
+#   args = sprintf (', "%s"', varargin{:});
+#   evalin ("caller", ['builtin ("clear"' args ')']);
+#   source ("~/.octaverc");
+# endfunction
+
+
+# TODO: Not working
+# # Reload octave.rc after clear but keep packages loaded
+# function clear (varargin)
+#   args = sprintf (', "%s"', varargin{:});
+#   evalin ("caller", ['builtin ("clear"' args ')']);
+#   pkglist = pkg ("list");
+#   loadedpkg = cell (0);
+#   for ii = 1:numel (pkglist)
+#     if (pkglist{ii}.loaded)
+#       loadedpkg{end+1} = pkglist{ii}.name;
+#     endif
+#   endfor
+#   source ("~/.octaverc");
+#   if (numel (loadedpkg) != 0)
+#     pkg ("load", loadedpkg{:});
+#   endif
+# endfunction
+

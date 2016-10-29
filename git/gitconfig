@@ -1,0 +1,244 @@
+# File: ~/.gitconfig@ -> ~/Dropbox/code/dotfiles/git/gitconfig
+# Author: name <username@example.com>
+# Source: github-url
+
+[user]
+	name     = Shoichi Aizawa
+	email    = shoichiaizawa@gmail.com
+	username = shoichiaizawa
+[github]
+	user     = shoichiaizawa
+[core]
+	excludesfile = /Users/sho/.gitignore_global
+	editor       = vim
+	; editor       = vim -wl1  ; suggested -wl1 options, which did not work
+	pager        = less -FRXK  ; --quit-if-one-screen, --RAW-CONTROL-CHARS, --no-init, --quit-on-intr
+[difftool "sourcetree"]
+	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[merge]
+	conflictstyle = diff3
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "media"]
+	required = true
+	clean    = git media clean %f
+	smudge   = git media smudge %f
+[filter "hawser"]
+	clean    = git hawser clean %f
+	smudge   = git hawser smudge %f
+	required = true
+[push]
+	default = simple
+[color]
+	branch      = auto
+	diff        = auto
+	grep        = auto
+	interactive = auto
+	status      = auto
+	ui          = auto
+[alias]
+	git  = !git
+	init = init -g  ; `alias git=hub` in your profile
+	this = !git init && git add . && git commit -m \"Initial commit\"
+
+	# See alternative solution 'karan/joe', 'simonwhitaker/gibo'
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+
+	# Adopted from @mathiasbynens
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
+
+	# Adopted from @tpope
+	# List the commits for this week in reverse order
+	; summary = log --abbrev-commit --pretty=oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
+	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
+
+	# ---
+	# add
+	# ---
+
+	aa     = add --all
+	addall = add --all
+
+	# ------
+	# branch
+	# ------
+
+	branch   = branch --verbose
+	br       = branch --verbose
+	branches = branch --all --verbose
+
+	# Adopted from @mathiasbynens
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+	# ----------------
+	# browse (git=hub)
+	# ----------------
+
+	b               = browse
+	repo            = browse
+	gh              = browse
+	gh-branches     = browse -- branches
+	gh-commits      = browse -- commits
+	gh-contributors = browse -- contributors
+	gh-graphs       = browse -- graphs
+	gh-issues       = browse -- issues
+	gh-network      = browse -- network
+	gh-pulls        = browse -- pulls
+	gh-stargazers   = browse -- stargazers
+	gh-tree         = browse -- tree
+	gh-wiki         = browse -- wiki
+
+	# --------
+	# checkout
+	# --------
+
+	co = checkout
+	cb = checkout -b
+
+	# -----------
+	# cherry-pick
+	# -----------
+
+	cp = cherry-pick
+
+	# ------
+	# commit
+	# ------
+
+	commit = commit --verbose
+	ci     = commit --verbose
+	cm     = commit -m
+	cam    = commit -am
+	amend  = commit --verbose --amend
+	ammend = commit --verbose --amend
+
+	# Adopted from @mathiasbynens
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+	# ------
+	# config
+	# ------
+
+	cf-ls    = config --global --list
+	cfl-ls   = config --local  --list
+	conf-ls  = config --global --list
+	confl-ls = config --local  --list
+	cf-e     = config --global --edit
+	cfl-e    = config --local  --edit
+	conf-e   = config --global --edit
+	confl-e  = config --local  --edit
+	ed       = config --global --edit
+	edl      = config --local	--edit
+	edit     = config --global --edit
+	editl    = config --local --edit
+	econf    = config --global --edit
+	econfl   = config --local --edit
+
+	# ----
+	# diff
+	# ----
+
+	# Adapted from @mathiasbynens
+	# Show the diff between the latest commit and the current state
+	d  = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+	df     = diff
+	ds     = diff --staged
+	dfs    = diff --staged
+	diffs  = diff --staged
+	dc     = diff --color-words
+	dfc    = diff --color-words
+	diffc  = diff --color-words
+	dsc    = diff --staged --color-words
+	dfsc   = diff --staged --color-words
+	diffsc = diff --staged --color-words
+
+	### status ###
+	st     = status
+	stat   = status
+	statsu = status
+	s      = status --short --branch
+	ss     = status --short --branch
+	stv    = status -v
+	stvv   = status -vv
+	si     = status --ignored
+
+	# ------
+	# remote
+	# ------
+
+	remotes = remote --verbose
+
+	# ---
+	# log
+	# ---
+
+	log5   = log -5
+	log10  = log -10
+	lg     = log
+	lg5    = log -5
+	lg10   = log -10
+	ls     = log
+	ls5    = log -5
+	ls10   = log -10
+	l      = log --graph --decorate --oneline --abbrev-commit --all
+	l5     = log --graph --decorate --oneline --abbrev-commit --all -5
+	l10    = log --graph --decorate --oneline --abbrev-commit --all -10
+	ll     = log --graph --decorate --oneline --abbrev-commit --all
+	ll5    = log --graph --decorate --oneline --abbrev-commit --all -5
+	ll10   = log --graph --decorate --oneline --abbrev-commit --all -10
+	logg   = log --graph --decorate --oneline --abbrev-commit --all
+	logg5  = log --graph --decorate --oneline --abbrev-commit --all -5
+	logg10 = log --graph --decorate --oneline --abbrev-commit --all -10
+
+	# ---
+	# tag
+	# ---
+
+	; TODO:
+
+	tags = tag -l
+
+	# -----
+	# reset
+	# -----
+
+	unstage = reset HEAD
+	uns     = reset HEAD
+
+	# -----
+	# merge
+	# -----
+
+	# TODO: Adapted from @mathiasbynens; find out how to use this
+	# Merge GitHub pull request on top of the `master` branch
+	mpr = "!f() { \
+		if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
+			git fetch origin refs/pull/$1/head:pr/$1 && \
+			git rebase master pr/$1 && \
+			git checkout master && \
+			git merge pr/$1 && \
+			git branch -D pr/$1 && \
+			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
+		fi \
+	}; f"
+
+[filter "lfs"]
+	clean    = git-lfs clean %f
+	smudge   = git-lfs smudge %f
+	required = true
+[pager]
+	log  = diff-highlight | less -FRXK
+	show = diff-highlight | less -FRXK
+	diff = diff-highlight | less -FRXK
+[diff]
+	compactionHeuristic = true
+[interactive]
+	diffFilter = diff-highlight

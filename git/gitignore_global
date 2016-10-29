@@ -1,0 +1,22 @@
+# File: ~/.gitignore_global@ -> ~/Dropbox/code/dotfiles/git/gitignore_global
+
+# Vim generated files #
+#######################
+*~
+*.bak
+*.sw?
+
+# OS generated files #
+######################
+.DS_Store
+.Spotlight-V100
+.Trashes
+.netrwhist
+
+# Jekyll generated files #
+##########################
+.jekyll-metadata
+
+# Python generated files #
+##########################
+*.pyc

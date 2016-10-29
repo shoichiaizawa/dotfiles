@@ -1,0 +1,27 @@
+#proxy localhost:9050
+#proxy-type socks5
+#use-proxy yes
+
+browser open
+
+#always-display-description true
+
+download-retries 2
+history-limit 0
+auto-reload yes
+reload-time 60
+reload-only-visible-feeds no
+show-read-feeds no
+show-read-articles no
+reload-threads 5
+confirm-exit yes
+#articlelist-format "%T | %t"
+#articlelist-format "%4i %f %D %6L %?T?;%-17T; ?%t" -- default values
+articlelist-format "%D %6L %10a %?T?; %-17T; ?%t"
+
+# color formatting
+color listnormal color146 black protect dim
+color listfocus color255 blue protect
+color listnormal_unread color255 black protect dim
+color listfocus_unread color255 blue protect
+color info white blue protect

@@ -1,0 +1,55 @@
+"*":
+  "activate-power-mode":
+    autoToggle: false
+    comboMode:
+      enabled: false
+    particles: {}
+    screenShake: {}
+  core:
+    disabledPackages: [
+      "markdown-format"
+    ]
+    packagesWithKeymapsDisabled: []
+    telemetryConsent: "limited"
+    themes: [
+      "atom-dark-ui"
+      "atom-dark-syntax"
+    ]
+  editor:
+    fontSize: 12
+    invisibles: {}
+    showIndentGuide: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+  "exception-reporting":
+    userId: "5f1fd872-de33-9d23-b5da-da0fbe791e6c"
+  "file-icons": {}
+  "markdown-writer": {}
+  metrics:
+    userId: "1fb1a4b11cc74709a8f29f6ea5dd2b441a8e95cb"
+  minimap:
+    autoToggle: false
+    plugins:
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+  "one-dark-ui": {}
+  "tree-view": {}
+  "vim-mode":
+    useSmartcaseForSearch: true
+  "vim-surround":
+    pairs: [
+      "()"
+      "{}"
+      "[]"
+      "\"\""
+      "''"
+      "``"
+      "{%%}"
+      "<%%>"
+    ]
+  welcome:
+    showOnStartup: false

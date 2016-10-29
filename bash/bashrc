@@ -1,0 +1,963 @@
+# File: ~/.bashrc@ -> ~/Dropbox/code/dotfiles/bash/bashrc
+# Author: name <username@example.com>
+# Source: github-url
+
+# TODO: Organise the bashrc settings for code visibility.
+#
+#       It is just so cluttering at the moment. Modularise this file into
+#       multiple separate files if necessary;
+#       for instance:
+#
+#         - aliases
+#         - bash_prompt
+#         - path
+#         - functions
+#         - etc
+
+# Show uptime of the Mac
+#echo -n "Uptime: "; uptime
+#echo ""
+
+export MYNAME='Shoichi Aizawa'
+export LESS='-iMR'
+export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+
+################################################################################
+# PATH Setting                                                                 #
+################################################################################
+
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+export PATH=$PATH:~/.composer/vendor/bin
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+
+################################################################################
+# History Settings                                                             #
+################################################################################
+
+# Append history to `~/.bash_history` when you exit a shell
+shopt -s histappend
+export HISTSIZE=32768              # Save 32³ items in history (default 500)
+export HISTFILESIZE=1000000
+export HISTTIMEFORMAT='%F %T -- '  # yyyy-mm-dd HH:MM:SS -- command
+export HISTCONTROL=ignoreboth      # ignoredups:ignorespace
+export HISTIGNORE='history:h:pwd:pdw:exit:eixt:quit:df:du:du1:ls:l1:l:la:la1:l1a:lal:lla:l.:l.l:ll.:ll:lll:ls -la:'
+#export HISTTIMEFORMAT='%b %d %I:%M %p '     # using strftime format
+
+################################################################################
+# Command Prompt Configuration                                                 #
+################################################################################
+
+# TODO: See what other people do for their command prompt configuration: dotfiles-mathiasbynens/, dotfiles-questbeat/, dotfiles-tpope/, dotfiles-yonchu/ etc
+
+# TODO: Not working...
+# Load the shell dotfiles:
+for file in ~/.bash/{bash_prompt}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
+source ~/.bash/bash_prompt  # temp one-liner to source the prompt file as script above is not working.
+
+#export PS1='\u\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
+# Command Prompt Configuration Help {{{1
+#
+# | Code       | Command Prompt Output                              |
+# |------------|----------------------------------------------------|
+# | \u         | username                                           |
+# | \s         | current shell                                      |
+# | \w         | current working directory                          |
+# | \W         | basename of current working directory              |
+# | \d         | date in "weekday month date" format ("Mon Jan 16") |
+# | \D(format) | date in strfime format ("%Y-%m-%d")                |
+# | \A         | time in 24-hour HH:MM format                       |
+# | \t         | time in 24-hour HH:MM:SS format                    |
+# | \@         | time in 12-hour HH:MM am/pm format                 |
+# | \T         | time in 12-hour HH:MM:SS format                    |
+# | \H         | hostname                                           |
+# | \h         | hostname up to first "."                           |
+# | \!         | history number if this command                     |
+# | \$         | when UID is 0 (root), a "#", otherwise a "$"       |
+# | \\         | a literal backslash                                |
+#
+# }}}1
+
+################################################################################
+# Grep                                                                         #
+################################################################################
+
+# GREP_COLOR Codes Help {{{1
+#
+# ANSI escape code:
+#
+# | SGR parameters      | Text colour | Background |
+# |---------------------|-------------|------------|
+# | 0 reset all         | 30 black    | 40 black   |
+# | 1 bright            | 31 red      | 41 red     |
+# | 2 dim               | 32 green    | 42 green   |
+# | 3 italic            | 33 yellow   | 43 yellow  |
+# | 4 underline: single | 34 blue     | 44 blue    |
+# | 5 blink: slow       | 35 magenta  | 45 magenta |
+# | 6 blink: fast       | 36 cyan     | 46 cyan    |
+# | 7 reverse           | 37 white    | 47 white   |
+# | 8 hidden            |     ---     |     ---    |
+# | many more up to 107 |     ---     |     ---    |
+#
+# Separate with ";"
+#
+# Many of SGR parameters are not widely supported.
+# See Wikipedia and elsewhere for details:
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+#
+# }}}1
+
+export GREP_OPTIONS='--color=auto'  # Specify options grep should use by default
+export GREP_COLOR='1;38;5;0;48;5;136'
+
+################################################################################
+# Terminal Color Formatting                                                    #
+################################################################################
+
+# TODO: Work on better colour formatting than the current settings
+#GIT_PS1_SHOWDIRTYSTATE=true
+export CLICOLOR=1
+export LS_OPTIONS='--color=auto'
+               #1122334455667788990011 -- column numbers for attributes
+export LSCOLORS=GxFxCxDxBxegedabagaced
+# export LSCOLORS=GxBxHxDxFxhxhxhxhxexex   # previous color formatting
+
+# Color Formatting Help {{{1
+#
+# The color designators are as follows:         The order of the attributes are as follows:
+# a black                                       1. directory
+# b red                                         2. symbolic link
+# c green                                       3. socket
+# d brown                                       4. pipe
+# e blue                                        5. executable
+# f magenta                                     6. block special
+# g cyan                                        7. character special
+# h light grey                                  8. executable with setuid bit set
+# A bold black, usually shows up as dark grey   9. executable with setgid bit set
+# B bold red                                    10. directory writable to others, with sticky bit
+# C bold green                                  11. directory writable to others, without sticky bit
+# D bold brown, usually shows up as yellow
+# E bold blue
+# F bold magenta
+# G bold cyan
+# H bold light grey; looks like bright white
+# x default foreground or background
+#
+# }}}1
+
+################################################################################
+# Completions                                                                  #
+################################################################################
+
+# ---------------
+# Bash completion
+# ---------------
+#
+# Add tab completion for many Bash commands
+if which brew &> /dev/null && [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
+  source $(brew --prefix)/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+  source /etc/bash_completion
+fi
+
+# --------------
+# wting/autojump
+# --------------
+#
+# Add the path for wting/autojump to Bash
+# [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# ------
+# rupa/z
+# ------
+#
+# Add the path for rupa/z
+[[ -s $(brew --prefix)/etc/profile.d/z.sh ]] && . $(brew --prefix)/etc/profile.d/z.sh
+
+# -----------------------------
+# Git completion with `g` alias
+# -----------------------------
+#
+# Enable tab completion for `g` by marking it as an alias for `git`
+# https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L35
+if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+  complete -o default -o nospace -F _git g;
+fi;
+
+# --------------------------------------
+# brew cask completion with `cask` alias
+# --------------------------------------
+#
+# Enable tab completion for `cask` by marking it as an alias for `brew cask`
+# Inspired by the above script by mathiasbynens :D
+#
+# Dependency:
+#   - `brew tap caskroom/cask`
+#   - `brew tap homebrew/completions`
+#   - `brew install brew-cask-completion`
+#
+# See the following GitHub repository for details:
+# https://github.com/xyb/homebrew-cask-completion
+if type _brew_cask &> /dev/null && [ -f /usr/local/etc/bash_completion.d/brew-cask ]; then
+  complete -o default -o nospace -F _brew_cask cask
+fi
+
+# --------------------------------------------
+# vagrant completion with `homestead` function
+# --------------------------------------------
+#
+# Enable tab completion for `homestead` by marking it as a function for `( cd
+# ~/Homestead && vagrant $* )`; see the function right below
+#
+# Dependency:
+#   - vagrant
+#   - `brew tap homebrew/completions/`
+#   - `brew install vagrant-completion`
+#
+# See the following GitHub repository for details:
+# https://github.com/mitchellh/vagrant/blob/master/contrib/bash/completion.sh
+if type _vagrant &> /dev/null && [ -f /usr/local/etc/bash_completion.d/vagrant ]; then
+  complete -o default -o nospace -F _vagrant homestead
+fi
+
+# Accessing Homestead Globally
+# See: https://laravel.com/docs/master/homestead#accessing-homestead-globally
+#
+# This function will allow you to run any Vagrant command from anywhere on your
+# system and will automatically point that command to your Homestead
+# installation
+function homestead() {
+  ( cd ~/Homestead && vagrant $* )
+}
+
+# --------------------------------------
+# killall tab completion for common apps
+# --------------------------------------
+#
+# Add `killall` tab completion for common apps
+# https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L47
+complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter ScriptMonitor NotificationCenter" killall;
+
+# ------------------------------------------------------------------
+# Completion for Composer -- PHP package manager
+# TODO: Alternative option: homebrew/completions/composer-completion
+# ------------------------------------------------------------------
+# [Requirements]
+# Composer: `tap homebrew/php && brew install composer`
+# ------------------------------------------------------------------
+#
+# https://github.com/stecman/composer-bash-completion-plugin
+# https://github.com/stecman/symfony-console-completion
+#
+# Modified version of what `composer _completion -g -p composer` generates
+# Composer will only load plugins when a valid composer.json is in its working
+# directory, so for this hack to work, we are always running the completion
+# command in ~/.composer
+function _composercomplete {
+  export COMP_LINE COMP_POINT COMP_WORDBREAKS;
+  local -x COMPOSER_CWD=`pwd`
+  local RESULT STATUS
+
+  # Honour the COMPOSER_HOME variable if set
+  local composer_dir=$COMPOSER_HOME
+  if [ -z "$composer_dir" ]; then
+    composer_dir=$HOME/.composer
+  fi
+
+  RESULT=`cd $composer_dir && composer depends _completion`;
+  STATUS=$?;
+
+  if [ $STATUS -ne 0 ]; then
+    echo $RESULT;
+    return $?;
+  fi;
+
+  local cur;
+  _get_comp_words_by_ref -n : cur;
+
+  COMPREPLY=(`compgen -W "$RESULT" -- $cur`);
+
+  __ltrim_colon_completions "$cur";
+};
+
+complete -F _composercomplete composer;
+
+################################################################################
+# Python                                                                       #
+################################################################################
+
+# -----------------------------
+# Python Interpreter completion
+# -----------------------------
+#
+# Enable tab completion for the Python Interactive Interpreter:
+# http://askubuntu.com/questions/25605/how-can-i-get-tab-completion-in-the-interactive-python-interpreter
+# https://nicolas.perriault.net/code/2010/python-tab-completion/
+# file: ~/.pythonrc.py@ -> ~/Dropbox/Development/dotfiles/pythonrc.py
+export PYTHONSTARTUP=$HOME/.pythonrc.py
+
+################################################################################
+# Java                                                                         #
+################################################################################
+
+# ----
+# Java
+# ----
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.x.0_xx` # Choose your Java version
+
+# -------
+# Android
+# -------
+
+export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
+# export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
+
+export ANDROID_HOME=/usr/local/opt/android-sdk  # Homebrew version
+# export ANDROID_HOME=~/Library/Android/sdk/      # Android Studio default
+
+################################################################################
+# Alias Settings                                                               #
+################################################################################
+
+# Enable simple aliases to be sudo'ed. ("sudone"?)
+# http://www.gnu.org/software/bash/manual/bashref.html#Aliases says: "If the
+# last character of the alias value is a space or tab character, then the next
+# command word following the alias is also checked for alias expansion."
+# Related answers from Stack Exchange:
+# http://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
+alias sudo='sudo '
+
+set -o noclobber          # Prevent unintentional overwriting
+# set -o vi                 # Set Vi Mode in Bash
+shopt -s nocaseglob       # Case-insensitive globbing (used in pathname expansion)
+shopt -s cdspell          # Autocorrect minor typos in path names when using `cd`
+shopt -s dirspell
+shopt -s no_empty_cmd_completion
+shopt -s autocd
+shopt -s cdable_vars
+
+# ------
+# SAFETY
+# ------
+
+alias rm='rm -iv'         # interactive, verbose
+alias mv='mv -iv'         # interactive, verbose
+alias cp='cp -iv'         # interactive, verbose
+alias ln='ln -iv'         # interactive, verbose
+
+# -----------------------------------------------------------------
+# ls aliases
+# -----------------------------------------------------------------
+# Notes for ls option flags:
+#
+# -a: Show dotfiles
+# -l: List in long format
+# -r: Reverse the order of the sorts:
+# -t: Sort by time modified
+# -h: Show file size in human-readable format
+# -F: Show a symbol after each pathname
+# i.e. directory/, executable*, symlink@, socket=, whiteout%, FIFO|
+# -----------------------------------------------------------------
+
+# Detect which `ls` flavour is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+  colorflag='--color'
+else # OS X `ls`
+  colorflag='-G'
+fi
+
+alias ls='ls -hF ${colorflag}'          # Default human-readable & symbol after pathname
+alias l1='ls -1'                        # List all files per line
+alias l='ls -l'                         # List all files in long format
+alias la='ls -a'                        # List all files, including dotfiles
+alias la1='ls -a1'                      # List all files per line, including dotfiles
+alias l1a=la1                           # List all files per line, including dotfiles
+alias lal='ls -al'                      # List all files in long format, including dotfiles
+alias lla=lal
+alias l.='ls -d .*'                     # List all dotfiles
+alias l.l='ls -ld .*'                   # List all dotfiles in long format
+alias ll.=l.l
+#alias lsd
+alias ll='ls -alrthFG'                  # List all files in detail
+alias lll=ll
+
+# -----------------------------------
+# tree (requires `brew install tree`)
+# -----------------------------------
+
+alias tree='tree -CF'
+alias tree1='tree -L 1'
+alias tree2='tree -L 2'
+alias tree3='tree -L 3'
+alias treea='tree -a'
+alias treea1='tree -a -L 1'
+alias treea2='tree -a -L 2'
+alias treea3='tree -a -L 3'
+alias tree.=treea
+alias tree.1=treea1
+alias tree.2=treea2
+alias tree.3=treea3
+alias trls='tree -CF | less -R'  # -C outputs colour, -R makes less understand color
+
+# ---------
+# df and du
+# ---------
+
+alias df='df -H'                        # Human-readable using base 10
+alias du='du -ch'                       # Human-readable including grand total
+alias du1='du -d 1'                     # Human-readable, grand total, min-level
+
+# ----
+# less
+# ----
+
+alias lessn='less -N'                   # lessn:    Show the linenumber
+alias m='less'                          # m:        Show less output
+alias mn='less -N'                      # mn:       Show the position & linenumbers
+
+# --
+# cd
+# --
+
+alias cd..='cd ../'                     # Go back 1 directory level
+alias c..='cd ..'                       # Go back 1 directory level
+alias ..='cd ../'                       # Go back 1 directory level
+alias ...='cd ../../'                   # Go back 2 directory levels
+alias ....='cd ../../../'               # Go back 3 directory levels
+alias .....='cd ../../../../'           # Go back 4 directory levels
+alias ......='cd ../../../../../'       # Go back 5 directory levels
+alias .......='cd ../../../../../../'   # Go back 6 directory levels
+alias .3='cd ../../../'                 # Go back 3 directory levels
+alias .4='cd ../../../../'              # Go back 4 directory levels
+alias .5='cd ../../../../../'           # Go back 5 directory levels
+alias .6='cd ../../../../../../'        # Go back 6 directory levels
+
+#alias -- /='cd /'                       # TODO: Invalid expression
+alias abs='cd /'                        # abs:    Go to root of disk
+alias root='cd /'                       # root:   Go to root of disk
+
+alias ~='cd ~'                          # ~:      Go Home
+#alias home='cd ~'                       # home:   Go Home
+
+alias -- -='cd -'                       # -:      Go back to the previous cd
+alias cd-='cd -'                        # cd-:    Go back to the previous cd
+alias bk='cd -'                         # bk:     Go back to the previous cd
+alias undo='cd -'                       # undo:   Go back to the previous cd
+
+alias dt='cd ~/Desktop/'                # dt:     Go to Desktop
+alias dc='cd ~/Documents/'              # dc:     Go to Documents
+alias dl='cd ~/Downloads/'              # dl:     Go to Downloads
+alias dr='cd ~/Dropbox/'                # dr:     Go to Dropbox
+
+alias blogging='cd ~/Dropbox/code/github/sho-repos/shoichiaizawa.github.io'
+alias code='cd ~/Dropbox/code'
+alias sandbox='cd ~/Dropbox/code/examples-code/sandbox' # sandbox: Go to sandbox
+alias drafts='cd ~/Dropbox/code/examples-code/sandbox/drafts'
+
+# -----
+# mkdir
+# -----
+
+alias mkdir='mkdir -p'                  # Enable to create intermediate directories
+alias md='mkdir -p'                     # md:     Make a directory
+mcd () { mkdir -p "$1" && cd "$1"; }    # mcd:    Makes new Dir and jumps inside
+
+# -------------
+# Time and Date
+# -------------
+
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%Y-%m-%d"'
+alias week='date +%V'
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# ------------------
+# pbcopy and pbpaste
+# ------------------
+
+alias pbc=pbcopy
+alias pbp=pbpaste
+alias pbsort='pbpaste | sort | pbcopy' # Sort the items in the clipboard and copy them in the clipboard back
+alias pbs=pbsort
+
+# -------
+# history
+# -------
+
+alias h='history'
+alias histg='history | grep'
+
+# ----
+# grep
+# ----
+
+alias igrep='grep -i'             # igrep:  case-insensitive grep
+# Colored grep:
+# http://www.jefftk.com/p/colored-grep
+alias grey-grep="GREP_COLOR='1;30' grep --color=always"
+alias red-grep="GREP_COLOR='1;31' grep --color=always"
+alias green-grep="GREP_COLOR='1;32' grep --color=always"
+alias yellow-grep="GREP_COLOR='1;33' grep --color=always"
+alias blue-grep="GREP_COLOR='1;34' grep --color=always"
+alias magenta-grep="GREP_COLOR='1;35' grep --color=always"
+alias cyan-grep="GREP_COLOR='1;36' grep --color=always"
+alias white-grep="GREP_COLOR='1;37' grep --color=always"
+
+# ----------
+# ssh-keygen
+# ----------
+
+alias ssh-rsa3072='ssh-keygen -t rsa -b 3072 -C'
+alias ssh-rsa4096='ssh-keygen -t rsa -b 4096 -C'
+alias ssh-check-key='ssh-keygen -l -f' #Show fingerprint of specified public key file
+alias ssh-change-pass='ssh-keygen -p -f' # Change the passphrase of a private key
+
+# ------------------------
+# Edit configuration files
+# ------------------------
+
+alias ebashrc='vim ~/.bashrc'     # Edit .bashrc from anywhere
+alias evimrc='vim ~/.vimrc'       # Edit .vimrc from anywhere
+alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
+alias egitconf='vim ~/.gitconfig'  # Edit .gitconfig from anywhere
+alias egitig='vim ~/.gitignore_global' # Edit .gitignore_global from anywhere
+
+# --------------
+# mute and unmute
+# --------------
+
+alias mute="osascript -e 'set volume output muted true'"
+alias unmute="osascript -e 'set volume output muted false'"
+
+# -------
+# Editors
+# -------
+
+alias vi=vim
+alias edit=vim
+alias e=vim
+alias emacs='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs -nw'
+# alias subl="open -a 'Sublime Text'"
+
+# ----
+# OS X
+# ----
+
+alias purge='sudo purge'
+alias f='open -a Finder ./'       # Open the current working directory in Finder
+
+# Function: cdf -- cd to the path of the front Finder window
+# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
+
+cdf() {
+  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+  if [ "$target" != "" ]; then
+    cd "$target"; pwd
+  else
+    echo 'No Finder window found' >&2
+  fi
+}
+
+# trash:  Moves a file to the MacOS trash
+trash () { command mv "$@" ~/.Trash ; }
+
+# ql:    Opens any file in MacOS Quick Look Preview
+ql () { qlmanage -p "$*" >& /dev/null; }
+
+# ----------------
+# Typo corrections
+# ----------------
+
+alias ehco=echo                   # ehco is now echo
+alias eixt=exit                   # eixt is now exit
+alias oepn=open                   # oepn is now open
+alias pdw=pwd                     # pdw is now pwd
+alias quit=exit                   # quit is now exit
+
+# ----------
+# Networking
+# ----------
+
+alias myip='curl ip.appspot.com'                    # myip:         Public facing IP Address
+alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
+alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
+alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
+
+# Function: ii - display useful host related informaton
+
+ii() {
+  echo -e "\nYou are logged on ${RED}$HOST"
+  echo -e "\nAdditionnal information:$NC " ; uname -a
+  echo -e "\n${RED}Users logged on:$NC " ; w -h
+  echo -e "\n${RED}Current date :$NC " ; date
+  echo -e "\n${RED}Machine stats :$NC " ; uptime
+  echo -e "\n${RED}Current network location :$NC " ; scselect
+  echo -e "\n${RED}Public facing IP Address :$NC " ; myip
+  #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
+  echo
+}
+
+# -------------------------------------------------------------------
+# showHidden:   Show hidden files in Finder
+# hideHidden:   Hide hidden files in Finder
+# -------------------------------------------------------------------
+
+alias showHidden='defaults write com.apple.finder AppleShowAllFiles -bool TRUE && killall Finder'
+alias hideHidden='defaults write com.apple.finder AppleShowAllFiles -bool FALSE && killall Finder'
+
+# -------------------------------------------------------------------
+# menubarHide:   Hide Menubar (OS X 10.11.x+)
+# menubarShow:   Show Menubar (OS X 10.11.x+)
+# -------------------------------------------------------------------
+
+alias menubarHide='defaults write NSGlobalDomain _HIHideMenuBar -bool true && killall Finder'
+alias menubarShow='defaults write NSGlobalDomain _HIHideMenuBar -bool false && killall Finder'
+
+# ----------------------------------------------------
+# Hide/show all desktop icons (useful when presenting)
+# ----------------------------------------------------
+
+alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
+alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
+
+# ------------------------------------------------
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+# ------------------------------------------------
+
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# --------------------------------------------------------------------
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+# --------------------------------------------------------------------
+
+alias empty-trash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# --------------------------
+# Homebrew and Homebrew Cask
+# --------------------------
+
+alias brew="env PATH=${PATH/\/Users\/${HOME}\/\.pyenv\/shims:/} brew"
+alias cask='brew cask'
+alias cask-path="cd '$(brew --repository)/Library/Taps/caskroom/homebrew-cask/Casks'"
+caskup() {
+  # rm -rf "$(brew --cache)"
+  brew update
+  brew cask uninstall --force "$@"
+  brew cask install "$@"
+}
+
+# ------------
+# To be sorted
+# ------------
+
+alias cl='clear'                        # c:      Clear terminal display
+alias which='type --all'                 # which:  Find executables
+alias path='echo -e ${PATH//:/\\n}'     # path:   Echo all executable Paths
+#alias path='echo $PATH | tr -s ":" "\n"' # path: Same as above
+
+alias g='git'
+alias git=hub
+
+# This creates a backup file for Atom packages installed by the user
+# To install, run: `apm install --packages-file packages.list`
+# NOTE: For an alternative method, use `atom star|stars|starred`
+alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 >| ~/.atom/packages.list"
+
+alias speedtest='speedtest-cli'
+
+alias reload='exec $SHELL -l'     # Invoke the default shell ($SHELL) as a login shell
+
+alias rm~='rm *~'
+alias rm.~='rm .*~'
+
+alias diff='colordiff'            # Requires `brew install colordiff`
+
+# Disable Spotlight
+alias spotoff="sudo mdutil -a -i off"
+# Enable Spotlight
+alias spoton="sudo mdutil -a -i on"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map='xargs -n1'
+
+alias npm-pkg-versions='npm list -g --depth=0'
+alias composer-pkg-versions='composer global show --installed'  # short for -i
+alias pip-all-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
+alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
+alias meteor-upgrade='curl https://install.meteor.com/ | sh'
+
+# How to deploy a static website to Heroku:
+# https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489
+# TODO: Add conditionals for composer.json and index.php if necessary
+heroku-static-test() {
+  touch composer.json index.php
+  echo '{}' >| composer.json
+  echo '<?php include_once("home.html"); ?>' >| index.php
+  if [ -f index.html ]; then
+    mv index.html home.html
+  else
+    touch home.html
+  fi
+}
+
+# file: /usr/libexec/java_home@ -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home
+# Running the `java_home` results in printing out the current Java JDK version
+alias java-versions='/usr/libexec/java_home -V'
+
+alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
+
+# Function: toggleiTerm -- Toggle iTerm Dock icon {{{1
+
+# https://gist.github.com/CrazyApi/5377685
+# Add this to your terminal profile
+
+function toggleiTerm() {
+  pb='/usr/libexec/PlistBuddy'
+  iTerm='/Applications/iTerm.app/Contents/Info.plist'
+  echo "Do you wish to hide iTerm in Dock?"
+  select ync in "Hide" "Show" "Cancel"; do
+    case $ync in
+      'Hide' )
+        $pb -c "Add :LSUIElement bool true" $iTerm
+        echo "relaunch iTerm to take effectives"
+        break
+        ;;
+      'Show' )
+        $pb -c "Delete :LSUIElement" $iTerm
+        echo "run killall 'iTerm' to exit, and then relaunch it"
+        break
+        ;;
+      'Cancel' )
+        break
+        ;;
+    esac
+  done
+}
+
+# }}}1
+# Function: man -- Coloured man {{{1
+#
+# http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
+#
+# ANSI escape code:
+#
+# | SGR parameters      | Text colour | Background |
+# |---------------------|-------------|------------|
+# | 0 reset all         | 30 black    | 40 black   |
+# | 1 bright            | 31 red      | 41 red     |
+# | 2 dim               | 32 green    | 42 green   |
+# | 3 italic            | 33 yellow   | 43 yellow  |
+# | 4 underline: single | 34 blue     | 44 blue    |
+# | 5 blink: slow       | 35 magenta  | 45 magenta |
+# | 6 blink: fast       | 36 cyan     | 46 cyan    |
+# | 7 reverse           | 37 white    | 47 white   |
+# | 8 hidden            |     ---     |     ---    |
+# | many more up to 107 |     ---     |     ---    |
+#
+# Separate with ";"
+#
+# Many of SGR (Select Graphic Rendition) parameters are not widely supported.
+# See Wikipedia and elsewhere for details:
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+
+#man() {
+  #env \
+  #LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+  #LESS_TERMCAP_md=$(printf "\e[1;31m") \
+  #LESS_TERMCAP_me=$(printf "\e[0m") \
+  #LESS_TERMCAP_se=$(printf "\e[0m") \
+  #LESS_TERMCAP_so=$(printf "\e[1;43;30m") \
+  #LESS_TERMCAP_ue=$(printf "\e[0m") \
+  #LESS_TERMCAP_us=$(printf "\e[1;32m") \
+  #man "$@"
+#}
+
+man() {
+  env \
+  LESS_TERMCAP_mb=$(printf "\e[1;38;5;166m") \
+  LESS_TERMCAP_md=$(printf "\e[1;38;5;166m") \
+  LESS_TERMCAP_me=$(printf "\e[0m") \
+  LESS_TERMCAP_se=$(printf "\e[0m") \
+  LESS_TERMCAP_so=$(printf "\e[1;38;5;0;48;5;136m") \
+  LESS_TERMCAP_ue=$(printf "\e[0m") \
+  LESS_TERMCAP_us=$(printf "\e[1;38;5;64m") \
+  man "$@"
+}
+
+# }}}1
+# Function: github-create -- Create a repository from local {{{1
+
+# TODO: Note fully figured out how to use this
+
+github-create() {
+  repo_name=$1
+
+  dir_name=`basename $(pwd)`
+
+  if [ "$repo_name" = "" ]; then
+    echo "Repo name (hit enter to use '$dir_name')?"
+    read repo_name
+  fi
+
+  if [ "$repo_name" = "" ]; then
+    repo_name=$dir_name
+  fi
+
+  username=`git config github.user`
+  if [ "$username" = "" ]; then
+    echo "Could not find username, run 'git config --global github.user <username>'"
+    invalid_credentials=1
+  fi
+
+  token=`git config github.token`
+  if [ "$token" = "" ]; then
+    echo "Could not find token, run 'git config --global github.token <token>'"
+    invalid_credentials=1
+  fi
+
+  if [ "$invalid_credentials" == "1" ]; then
+    return 1
+  fi
+
+  echo -n "Creating Github repository '$repo_name' ..."
+  curl -u "$username:$token" https://api.github.com/user/repos -d '{"name":"'$repo_name'"}' > /dev/null 2>&1
+  echo " done."
+
+  echo -n "Pushing local code to remote ..."
+  git remote add origin git@github.com:$username/$repo_name.git > /dev/null 2>&1
+  git push -u origin master > /dev/null 2>&1
+  echo " done."
+}
+
+# }}}1
+
+################################################################################
+# rbenv                                                                        #
+################################################################################
+
+if which rbenv > /dev/null; then
+  eval "$(rbenv init -)";
+fi
+# eval "$(rbenv init -)"
+
+################################################################################
+# nvm                                                                          #
+################################################################################
+
+# NOTE:
+# Install nvm manually;
+# see details at https://github.com/creationix/nvm#manual-install
+
+# Automatically source nvm upon login
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Activate `bash_completion`
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+# An alias for manual upgrade
+alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
+
+# NOTES: Source nvm for Homebrew version (not officially supported)
+# export NVM_DIR=~/.nvm
+# source $(brew --prefix nvm)/nvm.sh
+
+################################################################################
+# pyenv & pyenv-virtualenv                                                     #
+################################################################################
+
+if which pyenv > /dev/null; then
+  eval "$(pyenv init -)";
+  eval "$(pyenv virtualenv-init -)";
+fi
+
+################################################################################
+# Alfred                                                                       #
+################################################################################
+
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
+
+################################################################################
+# thefuck
+################################################################################
+
+if which thefuck > /dev/null; then
+  eval "$(thefuck --alias)";
+fi
+
+###-begin-npm-completion-###
+#
+# npm command completion script
+#
+# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
+# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
+#
+
+if type complete &>/dev/null; then
+  _npm_completion () {
+    local words cword
+    if type _get_comp_words_by_ref &>/dev/null; then
+      _get_comp_words_by_ref -n = -n @ -w words -i cword
+    else
+      cword="$COMP_CWORD"
+      words=("${COMP_WORDS[@]}")
+    fi
+
+    local si="$IFS"
+    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
+                           COMP_LINE="$COMP_LINE" \
+                           COMP_POINT="$COMP_POINT" \
+                           npm completion -- "${words[@]}" \
+                           2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  complete -o default -F _npm_completion npm
+elif type compdef &>/dev/null; then
+  _npm_completion() {
+    local si=$IFS
+    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
+                 COMP_LINE=$BUFFER \
+                 COMP_POINT=0 \
+                 npm completion -- "${words[@]}" \
+                 2>/dev/null)
+    IFS=$si
+  }
+  compdef _npm_completion npm
+elif type compctl &>/dev/null; then
+  _npm_completion () {
+    local cword line point words si
+    read -Ac words
+    read -cn cword
+    let cword-=1
+    read -l line
+    read -ln point
+    si="$IFS"
+    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+                       COMP_LINE="$line" \
+                       COMP_POINT="$point" \
+                       npm completion -- "${words[@]}" \
+                       2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  compctl -K _npm_completion npm
+fi
+###-end-npm-completion-###

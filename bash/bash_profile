@@ -1,0 +1,21 @@
+# File: ~/.bash_profile@ -> ~/Dropbox/code/dotfiles/bash/bash_profile
+
+# This only runs on user login
+echo ""
+echo -n "Welcome to Unix on macOS, "; whoami
+echo ""
+echo -n "Today is "; date "+%Y-%m-%d %H:%M:%S %z"
+echo ""
+cal
+
+# This loads in the configuration in .bashrc
+# Put all configuration there!
+if [ -f ~/.bashrc ]; then
+  source ~/.bashrc
+fi
+
+if [ -f ~/.bash/welcome.sh ]; then
+  sh ~/.bash/welcome.sh
+fi
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
