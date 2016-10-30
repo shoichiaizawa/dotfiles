@@ -49,6 +49,7 @@ Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
 Plugin 'luochen1990/rainbow'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/emmet-vim'
+Plugin 'othree/html5.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'reedes/vim-pencil'
 Plugin 'ryanoasis/vim-devicons'   " FIXME: Not working with CtrlP
@@ -69,7 +70,6 @@ Plugin 'tpope/vim-unimpaired'
 "Plugin 'kchmck/vim-coffee-script'
 "Plugin 'klen/python-mode'
 "Plugin 'moll/vim-node'
-"Plugin 'othree/html5.vim'
 "Plugin 'othree/html5-syntax.vim'
 "Plugin 'pangloss/vim-javascript'
 "Plugin 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
