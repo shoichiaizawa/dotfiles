@@ -5,10 +5,13 @@
       enabled: false
     particles: {}
     screenShake: {}
+  "atom-beautify":
+    general: {}
+  "atom-html-preview":
+    triggerOnSave: true
+  "atom-pair": {}
+  "color-picker": {}
   core:
-    disabledPackages: [
-      "markdown-format"
-    ]
     packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
     themes: [
@@ -21,6 +24,8 @@
     showIndentGuide: true
     softWrap: true
     softWrapAtPreferredLineLength: true
+  emmet: {}
+  "ex-mode": {}
   "exception-reporting":
     userId: "5f1fd872-de33-9d23-b5da-da0fbe791e6c"
   "file-icons": {}
@@ -37,6 +42,8 @@
       "highlight-selected": true
       "highlight-selectedDecorationsZIndex": 0
   "one-dark-ui": {}
+  script: {}
+  "todo-show": {}
   "tree-view": {}
   "vim-mode":
     useSmartcaseForSearch: true
