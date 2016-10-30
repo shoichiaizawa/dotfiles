@@ -17,6 +17,8 @@ minimap-find-and-replace
 minimap-git-diff
 minimap-highlight-selected
 pigments
+script
+todo-show
 vim-mode
 vim-surround
 
