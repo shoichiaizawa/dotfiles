@@ -39,6 +39,7 @@ Plugin 'gmarik/Vundle.vim'  " Let Vundle manage itself, required
 
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ap/vim-css-color'
 Plugin 'vim-airline/vim-airline'  " Requires powerline/fonts
 Plugin 'vim-airline/vim-airline-themes' " Requires vim-airline/vim-airline
 Plugin 'ctrlpvim/ctrlp.vim'
