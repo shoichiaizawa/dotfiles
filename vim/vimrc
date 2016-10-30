@@ -419,7 +419,7 @@ augroup ft_markdown
   autocmd!
 
   autocmd BufWinEnter,BufRead,BufNewFile *.md setlocal filetype=markdown
-  " TODO: autocmd BufWinEnter,BufRead,BufNewFile *.md setlocal tabstop=4 softtabstop=4
+  autocmd FileType markdown setlocal tabstop=4 shiftwidth=4 softtabstop=4
   " nnoremap <LocalLeader>1 yypVr=:redraw<CR>
   " nnoremap <LocalLeader>2 yypVr-:redraw<CR>
   " nnoremap <LocalLeader>3 I### <Esc>
