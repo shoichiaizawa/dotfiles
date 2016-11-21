@@ -4,35 +4,63 @@
     comboMode:
       enabled: false
     particles: {}
+    playAudio: {}
     screenShake: {}
   "atom-beautify":
-    general: {}
+    general:
+      _analyticsUserId: "88f1fbfd-145d-434f-b89f-a2b284139c21"
+    html:
+      indent_size: 2
+      wrap_attributes_indent_size: 2
   "atom-html-preview":
     triggerOnSave: true
+  "atom-material-ui":
+    colors:
+      genAccent: true
+      paintCursor: true
+    fonts: {}
+    tabs:
+      compactTabs: true
+      tintedTabBar: true
+    treeView:
+      compactList: true
+    ui:
+      panelContrast: true
+      panelShadows: true
   "atom-pair": {}
   "color-picker": {}
   core:
+    disabledPackages: [
+      "vim-mode"
+      "vim-surround"
+      "vim-mode-plus-ex-mode"
+      "welcome"
+    ]
     packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
     themes: [
-      "atom-dark-ui"
-      "atom-dark-syntax"
+      "atom-material-ui"
+      "atom-material-syntax"
     ]
   editor:
-    fontSize: 12
     invisibles: {}
     showIndentGuide: true
     softWrap: true
     softWrapAtPreferredLineLength: true
   emmet: {}
-  "ex-mode": {}
+  "ex-mode":
+    splitbelow: true
+    splitright: true
   "exception-reporting":
     userId: "5f1fd872-de33-9d23-b5da-da0fbe791e6c"
   "file-icons": {}
+  jumpy:
+    fontSize: 1
   "markdown-writer": {}
   metrics:
     userId: "1fb1a4b11cc74709a8f29f6ea5dd2b441a8e95cb"
   minimap:
+    absoluteMode: true
     autoToggle: false
     plugins:
       "find-and-replace": true
@@ -41,12 +69,31 @@
       "git-diffDecorationsZIndex": 0
       "highlight-selected": true
       "highlight-selectedDecorationsZIndex": 0
+      pigments: true
+      pigmentsDecorationsZIndex: 0
+    scrollAnimation: true
   "one-dark-ui": {}
+  "regex-railroad-diagram": {}
   script: {}
   "todo-show": {}
   "tree-view": {}
   "vim-mode":
     useSmartcaseForSearch: true
+    wrapLeftRightMotion: true
+  "vim-mode-plus":
+    clearHighlightSearchOnResetNormalMode: true
+    clearMultipleCursorsOnEscapeInsertMode: true
+    highlightSearch: true
+    ignoreCaseForSearch: true
+    ignoreCaseForSearchCurrentWord: true
+    incrementalSearch: true
+    smoothScrollOnFullScrollMotion: true
+    smoothScrollOnHalfScrollMotion: true
+    statusBarModeStringStyle: "long"
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true
+    useSmartcaseForSearchCurrentWord: true
+    wrapLeftRightMotion: true
   "vim-surround":
     pairs: [
       "()"

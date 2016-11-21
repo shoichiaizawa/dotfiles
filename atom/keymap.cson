@@ -24,16 +24,23 @@
 # If you are unfamiliar with CSON, you can read more about it here:
 # https://github.com/bevry/cson#what-is-cson
 
-# Keymaps for atom/vim-mode ####################################################
-#
-"atom-text-editor.vim-mode.normal-mode":
+# Keymaps for t9md/atom-vim-mode-plus ##########################################
+"atom-text-editor.vim-mode-plus.normal-mode":
 
-  ### Core ###
+  ### t9md/atom-vim-mode-plus ###
 
-  # `x` can now be used as if setting was done with black hole register
-  # see https://github.com/atom/vim-mode/issues/583#issuecomment-241950843
-  # xxx: achieve real black hole register, i.e. make `x` usable too
-  'x': 'core:delete'
+  'Y': 'vim-mode-plus:yank-to-last-character-of-line'
+
+  ### t9md/atom-vim-mode-plus-ex-mode ###
+
+  # ':': 'vim-mode-plus-ex-mode:open'
+  # '!': 'vim-mode-plus-ex-mode:toggle-setting'
+
+  ### t9md/open-this ###
+
+  'g f':      'open-this:here'
+  'ctrl-w f': 'open-this:split-down'
+  'ctrl-w F': 'open-this:split-right'
 
   ### Markdown Writer (Normal mode) ###
 
@@ -41,16 +48,21 @@
   "g k": "markdown-writer:jump-to-reference-definition"
   "[ h": "markdown-writer:jump-to-previous-heading"
   "] h": "markdown-writer:jump-to-next-heading"
+  ", 1":  "markdown-writer:toggle-h1"
+  ", 2":  "markdown-writer:toggle-h2"
+  ", 3":  "markdown-writer:toggle-h3"
+  ", 4":  "markdown-writer:toggle-h4"
+  ", 5":  "markdown-writer:toggle-h5"
   ", o": "markdown-writer:toggle-ol"
   ", u": "markdown-writer:toggle-ul"
   ", t": "markdown-writer:toggle-task"
   ", T": "markdown-writer:toggle-taskdone"
 
-"atom-text-editor.vim-mode.insert-mode":
+"atom-text-editor.vim-mode-plus.insert-mode":
 
   ### Init Script ###
 
-  # See https://github.com/atom/vim-mode/issues/334#issuecomment-85603175
+  # See: https://github.com/atom/vim-mode/issues/334#issuecomment-85603175
   # XXX: Improve for very rare edge cases, i.e. typing words such as "Dijkstra"
   # need to be written `j k` first and deleted the whitespace inbetween
   'k': 'exit-insert-mode-if-preceded-by-j'
@@ -60,7 +72,7 @@
   "| i": "markdown-writer:insert-table"
   "| |": "markdown-writer:jump-to-next-table-cell"
 
-"atom-text-editor.vim-mode.visual-mode":
+"atom-text-editor.vim-mode-plus.visual-mode":
 
   ### Markdown Writer (Visual mode) ###
 
@@ -68,7 +80,27 @@
   "8": "markdown-writer:toggle-bold-text"
   "`": "markdown-writer:toggle-code-text"
 
-######################## End of atom/vim-mode keymaping ########################
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+
+  ### Core ###
+
+  # `x` and `X` can now be used as if setting was done with black hole register
+  # See: https://github.com/atom/vim-mode/issues/583#issuecomment-241950843
+  'x': 'core:delete'
+  'X': 'core:delete'
+
+  ### t9md/atom-vim-mode-plus ###
+
+  'k': 'vim-mode-plus:move-up-screen'
+  'j': 'vim-mode-plus:move-down-screen'
+  'g k': 'vim-mode-plus:move-up'
+  'g j': 'vim-mode-plus:move-down'
+
+  ### lloeki/ex-mode ###
+
+  ':': 'ex-mode:open'
+
+###################### End of t9md/vim-mode-plus keymaping #####################
 
 # Default Keymaps for Markdown Writer ##########################################
 # https://atom.io/packages/markdown-writer
@@ -98,3 +130,13 @@
   "cmd-j cmd-t": "markdown-writer:jump-to-next-table-cell"
 
 ####################### End of Markdown Writer keymaping #######################
+
+# Tree-view navigation
+# -------------------------
+'.tree-view':
+  '-': 'choose-pane:start'
+  # 'm m': 'choose-pane:focus-last-focused'
+  'g g': 'core:move-to-top'
+  'shift-g': 'core:move-to-bottom'
+  'ctrl-h': 'focus-pane-or-panel:focus-on-left'
+  'ctrl-l': 'focus-pane-or-panel:focus-on-right'

@@ -30,4 +30,4 @@ atom.commands.add 'atom-text-editor', 'exit-insert-mode-if-preceded-by-j': (e) -
     e.abortKeyBinding()
   else
     editor.backspace()
-    atom.commands.dispatch(e.currentTarget, 'vim-mode:activate-normal-mode')
+    atom.commands.dispatch(e.currentTarget, 'vim-mode-plus:activate-normal-mode')

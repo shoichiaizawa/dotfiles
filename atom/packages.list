@@ -1,6 +1,10 @@
 activate-power-mode
+ask-stack
 atom-beautify
 atom-html-preview
+atom-material-syntax
+atom-material-syntax-dark
+atom-material-ui
 atom-pair
 autocomplete-paths
 color-picker
@@ -8,6 +12,7 @@ emmet
 ex-mode
 file-icons
 highlight-selected
+jumpy
 markdown-format
 markdown-helpers
 markdown-scroll-sync
@@ -16,10 +21,15 @@ minimap
 minimap-find-and-replace
 minimap-git-diff
 minimap-highlight-selected
+minimap-pigments
+open-this
 pigments
+regex-railroad-diagram
 script
 todo-show
 vim-mode
+vim-mode-plus
+vim-mode-plus-ex-mode
 vim-surround
 
 
