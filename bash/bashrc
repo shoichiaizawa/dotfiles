@@ -725,6 +725,32 @@ alias java-versions='/usr/libexec/java_home -V'
 
 alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
 
+# Function: cask-update -- Update outdated Homebrew Cask formula {{{1
+# Dependencies:
+# - caskroom/homebrew-cask
+# - vitorgalvao/tiny-scripts
+#
+# See details:
+# https://github.com/caskroom/homebrew-cask/blob/master/CONTRIBUTING.md#updating-a-cask
+#
+# TODO: review bash function, i.e. I am not confident about the if statement bit
+#
+function cask-update() {
+  if which brew > /dev/null && which cask-repair > /dev/null; then
+    echo "Enter the name of an outdated cask: "
+    read outdated_cask
+    echo "Enter your GitHub username: "
+    read github_user
+    echo "------------------------------"
+    echo "Outdated cask: $outdated_cask"
+    echo "GitHub username: $github_user"
+    cd "$(brew --repository)/Library/Taps/caskroom/homebrew-cask/Casks"
+    cask-repair --pull origin --push $github_user $outdated_cask
+    cd $OLDPWD
+  fi
+}
+
+# }}}1
 # Function: toggleiTerm -- Toggle iTerm Dock icon {{{1
 
 # https://gist.github.com/CrazyApi/5377685
