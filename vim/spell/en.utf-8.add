@@ -47,6 +47,7 @@ BFGS
 Bigtable
 Bitbucket
 BitKeeper
+Bitnami
 blog
 blogging
 blogs
@@ -207,6 +208,7 @@ hyperlink
 Hypertable
 IDE
 IDEs
+IIS
 imagemagick
 img
 Imgur
@@ -225,6 +227,7 @@ iPad
 iPhone
 iPhoto
 iPod
+IPv6
 ish
 iso
 iTerm
@@ -261,6 +264,7 @@ lynda
 MacBook
 macOS
 macvim
+MAMP
 mapleader
 master
 mathiasbynens
@@ -535,6 +539,7 @@ VoiceOver
 Vundle
 vundle
 W3C
+WampServer
 wc
 WebKit
 WebPlatform
@@ -555,6 +560,7 @@ workflow
 wrapscan
 www
 X11
+XAMPP
 xargs
 xkcd
 xls
