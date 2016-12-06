@@ -1015,9 +1015,11 @@ noremap ^ g0|    " Go to the first character of the screen line
 noremap $ g_|    " Go to the last non-blank character of the screen line
 noremap _ g$|    " Go to the last character of the screen line
 
-" Disable the normal register; hence, no yank occurs
-nnoremap x "_x|  " X deletes char(s) forwards using black hole register "_
+" Disable the normal register; hence, p and P no longer yank the deleted text
+nnoremap x "_x|  " x deletes char(s) forwards using black hole register "_
 nnoremap X "_X|  " X deletes char(s) backwards using black hole register "_
+vnoremap x "_x|  " x deletes char(s) in Visual mode using black hole register "_
+vnoremap X "_X|  " X deletes char(s) in Visual mode using black hole register "_
 
 " Create Blank Newlines and stay in Normal mode
 nnoremap <silent> zj o<Esc>
