@@ -916,6 +916,7 @@ alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git descri
 ################################################################################
 
 if which pyenv > /dev/null; then
+  export PYTHON_CONFIGURE_OPTS="--enable-framework"
   eval "$(pyenv init -)";
   eval "$(pyenv virtualenv-init -)";
 fi
