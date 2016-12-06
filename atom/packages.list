@@ -1,6 +1,10 @@
+Sublime-Style-Column-Selection
 activate-power-mode
+aligner
+aligner-php
 ask-stack
 atom-beautify
+atom-bootstrap3
 atom-html-preview
 atom-material-syntax
 atom-material-syntax-dark
@@ -8,6 +12,7 @@ atom-material-ui
 atom-pair
 autocomplete-paths
 color-picker
+cursor-history
 emmet
 ex-mode
 file-icons
@@ -26,10 +31,9 @@ open-this
 pigments
 regex-railroad-diagram
 script
+set-syntax
 todo-show
-vim-mode
 vim-mode-plus
 vim-mode-plus-ex-mode
-vim-surround
 
 
