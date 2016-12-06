@@ -24,12 +24,47 @@
 # If you are unfamiliar with CSON, you can read more about it here:
 # https://github.com/bevry/cson#what-is-cson
 
+'atom-workspace:not([mini])':
+
+  ### t9md/atom-cursor-history ###
+
+  'ctrl-i': 'cursor-history:next'
+  'ctrl-o': 'cursor-history:prev'
+  'ctrl-cmd-i': 'cursor-history:next-within-editor'
+  'ctrl-cmd-o': 'cursor-history:prev-within-editor'
+
+'atom-text-editor[mini]':
+
+  'ctrl-u': 'editor:delete-to-beginning-of-line'
+  'ctrl-w': 'editor:delete-to-beginning-of-word'
+
 # Keymaps for t9md/atom-vim-mode-plus ##########################################
+
 "atom-text-editor.vim-mode-plus.normal-mode":
+
+  ', i': 'window:toggle-invisibles'
+  ', S': 'window:reload'
+  ', e i': 'application:open-your-init-script'
+  ', e c': 'application:open-your-config'
+  ', e k': 'application:open-your-keymap'
+  ', e s': 'application:open-your-stylesheet'
+  ', e n': 'application:open-your-snippets'
 
   ### t9md/atom-vim-mode-plus ###
 
   'Y': 'vim-mode-plus:yank-to-last-character-of-line'
+  'space': 'vim-mode-plus:toggle-fold'
+
+  # surround: ys
+  # -------------------------
+  'S': 'vim-mode-plus:surround-smart-word'
+  # 's': 'vim-mode-plus:surround'
+  'd s': 'vim-mode-plus:delete-surround-any-pair'
+  'c s': 'vim-mode-plus:change-surround-any-pair'
+  # 'c s': 'vim-mode-plus:change-surround'
+  'y s w': 'vim-mode-plus:surround-word'
+  'y s i w': 'vim-mode-plus:surround-word'
+  'm s': 'vim-mode-plus:map-surround'
 
   ### t9md/atom-vim-mode-plus-ex-mode ###
 
@@ -48,11 +83,11 @@
   "g k": "markdown-writer:jump-to-reference-definition"
   "[ h": "markdown-writer:jump-to-previous-heading"
   "] h": "markdown-writer:jump-to-next-heading"
-  ", 1":  "markdown-writer:toggle-h1"
-  ", 2":  "markdown-writer:toggle-h2"
-  ", 3":  "markdown-writer:toggle-h3"
-  ", 4":  "markdown-writer:toggle-h4"
-  ", 5":  "markdown-writer:toggle-h5"
+  ", 1": "markdown-writer:toggle-h1"
+  ", 2": "markdown-writer:toggle-h2"
+  ", 3": "markdown-writer:toggle-h3"
+  ", 4": "markdown-writer:toggle-h4"
+  ", 5": "markdown-writer:toggle-h5"
   ", o": "markdown-writer:toggle-ol"
   ", u": "markdown-writer:toggle-ul"
   ", t": "markdown-writer:toggle-task"
@@ -74,11 +109,18 @@
 
 "atom-text-editor.vim-mode-plus.visual-mode":
 
+  'S': 'vim-mode-plus:surround'
+
   ### Markdown Writer (Visual mode) ###
 
   "_": "markdown-writer:toggle-italic-text"
   "8": "markdown-writer:toggle-bold-text"
   "`": "markdown-writer:toggle-code-text"
+
+'atom-text-editor.vim-mode-plus.insert-mode, atom-text-editor.vim-mode-plus.visual-mode':
+
+  'ctrl-k': 'editor:move-line-up'
+  'ctrl-j': 'editor:move-line-down'
 
 'atom-text-editor.vim-mode-plus:not(.insert-mode)':
 
@@ -89,16 +131,22 @@
   'x': 'core:delete'
   'X': 'core:delete'
 
+  ### t9md/open-this ###
+  
+  ', space': 'vim-mode-plus:clear-persistent-selection'
+
+  ### lloeki/ex-mode ###
+
+  ':': 'ex-mode:open'
+
+'atom-text-editor.vim-mode-plus:not(.insert-mode):not(.linewise):not(.blockwise)':
+
   ### t9md/atom-vim-mode-plus ###
 
   'k': 'vim-mode-plus:move-up-screen'
   'j': 'vim-mode-plus:move-down-screen'
   'g k': 'vim-mode-plus:move-up'
   'g j': 'vim-mode-plus:move-down'
-
-  ### lloeki/ex-mode ###
-
-  ':': 'ex-mode:open'
 
 ###################### End of t9md/vim-mode-plus keymaping #####################
 
@@ -131,12 +179,15 @@
 
 ####################### End of Markdown Writer keymaping #######################
 
+'.preview-pane result-view list-tree':
+
+  'k': 'core:move-up'
+  'j': 'core:move-down'
+  'g g': 'core:move-to-top'
+  'G': 'core:move-to-bottom'
+
 # Tree-view navigation
 # -------------------------
 '.tree-view':
-  '-': 'choose-pane:start'
-  # 'm m': 'choose-pane:focus-last-focused'
   'g g': 'core:move-to-top'
   'shift-g': 'core:move-to-bottom'
-  'ctrl-h': 'focus-pane-or-panel:focus-on-left'
-  'ctrl-l': 'focus-pane-or-panel:focus-on-right'
