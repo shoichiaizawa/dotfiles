@@ -219,6 +219,7 @@ incsearch
 init
 inline
 instagram
+IntelliJ
 interweb
 interwebs
 io
@@ -233,11 +234,15 @@ iso
 iTerm
 iTerm2
 iTunes
+J2SE
 java
+JavaBeans
 javascript
+JDBC
 JDK
 jdk
 jekyll
+JIT
 JLL
 jpeg
 jpg
@@ -245,6 +250,7 @@ jQuery
 js
 JSON
 json
+JSP
 jsx
 Keychain
 keychain
@@ -422,6 +428,7 @@ screenshot
 scrolloff
 sdk
 sed
+servlets
 SGR
 SHA
 shiftwidth
@@ -539,6 +546,7 @@ VoiceOver
 Vundle
 vundle
 W3C
+WAMP
 WampServer
 wc
 WebKit
@@ -570,4 +578,5 @@ yaml
 yml
 YouCompleteMe
 youtube
+Zend
 zsh
