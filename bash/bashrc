@@ -295,9 +295,9 @@ complete -F _composercomplete composer;
 # -----------------------------
 #
 # Enable tab completion for the Python Interactive Interpreter:
-# http://askubuntu.com/questions/25605/how-can-i-get-tab-completion-in-the-interactive-python-interpreter
+# https://stackoverflow.com/questions/246725/how-do-i-add-tab-completion-to-the-python-shell
 # https://nicolas.perriault.net/code/2010/python-tab-completion/
-# file: ~/.pythonrc.py@ -> ~/Dropbox/Development/dotfiles/pythonrc.py
+# File: ~/.pythonrc.py@ -> ~/Dropbox/code/dotfiles/pythonrc.py
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 ################################################################################
