@@ -6,6 +6,9 @@
     particles: {}
     playAudio: {}
     screenShake: {}
+  aligner:
+    alignComments: true
+  "aligner-php": {}
   "atom-beautify":
     general:
       _analyticsUserId: "88f1fbfd-145d-434f-b89f-a2b284139c21"
@@ -35,6 +38,7 @@
       "vim-surround"
       "vim-mode-plus-ex-mode"
       "welcome"
+      "markdown-format"
     ]
     packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
@@ -42,8 +46,11 @@
       "atom-material-ui"
       "atom-material-syntax"
     ]
+  "cursor-history":
+    flashOnLand: true
   editor:
     invisibles: {}
+    scrollPastEnd: true
     showIndentGuide: true
     softWrap: true
     softWrapAtPreferredLineLength: true
@@ -56,6 +63,9 @@
   "file-icons": {}
   jumpy:
     fontSize: 1
+  "markdown-preview":
+    liveUpdate: false
+    useGitHubStyle: true
   "markdown-writer": {}
   metrics:
     userId: "1fb1a4b11cc74709a8f29f6ea5dd2b441a8e95cb"
@@ -73,10 +83,14 @@
       pigmentsDecorationsZIndex: 0
     scrollAnimation: true
   "one-dark-ui": {}
+  pigments:
+    markerType: "native-dot"
   "regex-railroad-diagram": {}
   script: {}
   "todo-show": {}
-  "tree-view": {}
+  "tree-view":
+    alwaysOpenExisting: true
+    hideVcsIgnoredFiles: true
   "vim-mode":
     useSmartcaseForSearch: true
     wrapLeftRightMotion: true
@@ -87,6 +101,8 @@
     ignoreCaseForSearch: true
     ignoreCaseForSearchCurrentWord: true
     incrementalSearch: true
+    showHoverOnOperate: true
+    showHoverSearchCounter: true
     smoothScrollOnFullScrollMotion: true
     smoothScrollOnHalfScrollMotion: true
     statusBarModeStringStyle: "long"
