@@ -42,6 +42,8 @@
 
 "atom-text-editor.vim-mode-plus.normal-mode":
 
+  'v a': 'core:select-all'
+
   ', i': 'window:toggle-invisibles'
   ', S': 'window:reload'
   ', e i': 'application:open-your-init-script'
@@ -132,7 +134,7 @@
   'X': 'core:delete'
 
   ### t9md/open-this ###
-  
+
   ', space': 'vim-mode-plus:clear-persistent-selection'
 
   ### lloeki/ex-mode ###
@@ -191,3 +193,4 @@
 '.tree-view':
   'g g': 'core:move-to-top'
   'shift-g': 'core:move-to-bottom'
+  'o': 'tree-view:open-selected-entry'
