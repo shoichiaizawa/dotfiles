@@ -1,0 +1,120 @@
+" File:  ~/.vrapperrc@ -> ~/Dropbox/code/dotfiles/vrapperrc
+" Author: name <username@example.com>
+" Source: github-url
+
+let mapleader = ","
+set clipboard=unnamed
+
+" Editor UI {{{
+set nolist
+set number
+set cursorline
+" }}}
+
+" Scroll {{{
+set scrolloff=999
+" }}}
+
+" Indentation {{{
+set smartindent
+set autoindent
+" }}}
+
+" Search {{{
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set wrapscan
+" }}}
+
+" Tab Stops {{{
+set shiftround
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+}}}
+
+" Enables k/j to move <Up>/<Down> in the content-assist dropdown {{{
+set contentassistmode
+camap k <C-p>
+camap j <C-n>
+}}}
+
+" Mappings {{{
+" nnoremap <silent> k gk
+" nnoremap <silent> j gj
+" nnoremap <silent> gk k
+" nnoremap <silent> gj j
+" inoremap <silent> <Up> <Esc>gka
+" inoremap <silent> <Down> <Esc>gja
+
+inoremap jk <Esc><Esc>
+
+map Y y$
+
+" nmap <C-k> :tabnext<CR>
+" nmap <C-j> :tabprevious<CR>
+
+nnoremap <C-d> <PageDown>
+nnoremap <C-u> <PageUp>
+
+nnoremap va ggVG
+nnoremap vv ^vg_
+
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap x "_x
+nnoremap X "_X
+vnoremap x "_x
+vnoremap X "_X
+
+inoremap ,, <Esc>A,
+inoremap ;; <Esc>A;
+
+nnoremap <C-k> <C-W>k
+nnoremap <C-j> <C-W>j
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+nnoremap <Leader><Tab> <C-W>w
+
+" TODO: maybe not supported set listchars=tab:▸\ ,trail:⋅,nbsp:⋅,eol:¬,extends:❯,precedes:❮
+nmap <Leader>i :set list!<CR>
+
+nnoremap <Space> za
+nnoremap za zA
+nnoremap zA za
+nnoremap zr zR
+nnoremap zR zr
+nnoremap zm zM
+nnoremap zM zm
+
+nnoremap <leader>m :maximize<CR>
+
+nnoremap <Leader><Space> :nohlsearch<CR>
+
+" Add JavaDoc
+eclipseaction AddJavaDocComment org.eclipse.jdt.ui.edit.text.java.add.javadoc.comment
+nnoremap <Leader>j :AddJavaDocComment<CR>
+
+"definition ID of the source -> format action
+eclipseaction Format org.eclipse.jdt.ui.edit.text.java.format
+vnoremap = :Format<CR>
+
+" Toggle breakpoint
+eclipseaction eclipsetogglebp org.eclipse.debug.ui.commands.ToggleBreakpoint
+nnoremap <Leader>b :eclipsetogglebp<cr>
+
+"definition ID of the edit -> go to next member action
+eclipseaction GotoNextMember org.eclipse.jdt.ui.edit.text.java.goto.next.member
+nnoremap ]] :GotoNextMember<CR>
+
+"definition ID of the edit -> go to previous member action
+eclipseaction GotoPreviousMember org.eclipse.jdt.ui.edit.text.java.goto.previous.member
+nnoremap [[ :GotoPreviousMember<CR>
+
+"definition ID of the search -> references in workspace action
+eclipseaction SearchReferencesInWorkspace org.eclipse.jdt.ui.edit.text.java.search.references.in.workspace
+nnoremap <Leader>r :SearchReferencesInWorkspace<cr>
+" }}}
