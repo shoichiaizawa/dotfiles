@@ -1084,7 +1084,7 @@ inoremap [] []<Left>
 
 " Escape from Insert mode to Normal mode
 inoremap jk <Esc><Esc>
-inoremap kj <Esc><Esc>
+" inoremap kj <Esc><Esc>
 
 " }}}1
 " Mappings: Smart line movement {{{1
