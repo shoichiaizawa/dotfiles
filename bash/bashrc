@@ -14,10 +14,6 @@
 #         - functions
 #         - etc
 
-# Show uptime of the Mac
-#echo -n "Uptime: "; uptime
-#echo ""
-
 export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
 export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
