@@ -48,6 +48,7 @@ Plugin 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
+Plugin 'junegunn/vim-emoji'
 Plugin 'luochen1990/rainbow'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/emmet-vim'
@@ -803,6 +804,13 @@ nmap ]h <Plug>GitGutterNextHunk|            " default ]c
 " let g:gitgutter_realtime = 0  " to stop vim-gitgutter running in realtime
 " let g:gitgutter_eager = 0     " to stop vim-gitgutter running eagerly
 
+" silent! if emoji#available()
+"   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
+"   let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
+"   let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
+"   let g:gitgutter_sign_modified_removed = emoji#for('collision')
+" endif
+
 " }}}1
 " Plugin Settings: Vim Fugitive {{{1
 
@@ -934,6 +942,17 @@ let g:indent_guides_start_level = 1
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
 
 " }}}
+" Plugin Settings: vim-emoji {{{1
+"
+" NOTES: CTRL-X CTRL-U to use Emoji completion; see details at:
+" http://junegunn.kr/2014/06/emoji-completion-in-vim/
+
+augroup emoji_complete
+  autocmd!
+  autocmd FileType markdown setlocal completefunc=emoji#complete
+augroup END
+
+" }}}1
 
 " Mappings: Arrow keys deactivation, and map something useful instead {{{1
 "
