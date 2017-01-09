@@ -363,7 +363,7 @@ let &keywordprg=':help'     "       Quick help; press 'K' to look up
 " set list                    "       Show invisible characters with the following
                             "       char list
 set listchars=tab:▸\ ,trail:⋅,nbsp:⋅,eol:¬,extends:❯,precedes:❮ " trail:⌴ eol:↲
-nmap <silent> <Leader>i :set list!<CR>| " Toggle [i]nvisible characters (default off)
+nmap <silent> <Leader>ic :set list!<CR>| " Toggle [i]nvisible characters (default off)
 
 set nostartofline           "nosol: Stop certain movements from always going to
                             "       the first character of a line
