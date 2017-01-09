@@ -18,6 +18,9 @@ export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
 export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 ################################################################################
 # PATH Setting                                                                 #
 ################################################################################
