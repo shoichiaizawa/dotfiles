@@ -75,6 +75,8 @@ cobook
 codecademy
 CoffeeScript
 ColdFusion
+Commitizen
+commitizen
 config
 Cordova
 Couchbase
@@ -446,6 +448,7 @@ smartindent
 Solaris
 Solarized
 solarized
+sourceforge
 SourceTree
 sqlite
 sqlite3
@@ -545,6 +548,8 @@ vmap
 vms
 vnoremap
 VoiceOver
+Vrapper
+vrapper
 Vundle
 vundle
 W3C
