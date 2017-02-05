@@ -1016,9 +1016,9 @@ vmap <Leader>md :%!/usr/local/Cellar/markdown/1.0.1/bin/markdown --html4tag
 " Source $MYVIMRC reloads the saved $MYVIMRC
 nmap <silent> <Leader>S :source $MYVIMRC<CR>:call RefreshUI()<CR>
 
-nmap <silent> <Leader>ev :tabedit $MYVIMRC<CR>|      " Open $MYVIMRC for editing
-nmap <silent> <Leader>eb :tabedit ~/.bashrc<CR>|     " Open .bashrc for editing
-nmap <silent> <Leader>eg :tabedit ~/.gitconfig<CR>|  " Open .gitconfig for editing
+nmap <silent> <Leader>ev :edit $MYVIMRC<CR>|      " Open $MYVIMRC for editing
+nmap <silent> <Leader>eb :edit ~/.bashrc<CR>|     " Open ~/.bashrc for editing
+nmap <silent> <Leader>eg :edit ~/.gitconfig<CR>|  " Open ~/.gitconfig for editing
 " nnoremap <Leader>et :tabnew ~/dotfiles/tmux.conf<CR>
 " nnoremap <Leader>ez :tabnew ~/dotfiles/zshrc<CR>
 " nnoremap <Leader>em :tabnew ~/dotfiles/mutt/muttrc<CR>
