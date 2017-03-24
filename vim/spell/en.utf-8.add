@@ -132,6 +132,7 @@ evim
 eXist
 expr
 F2
+Fantasque
 faq
 FCFS
 FFF
@@ -428,6 +429,7 @@ SCMs
 screencapture
 Screenshot
 screenshot
+scrollback
 scrolloff
 sdk
 sed
@@ -529,6 +531,8 @@ URLs
 username
 usr
 UTF
+UTF8
+utf8
 UX
 VCS
 VelocityDB
