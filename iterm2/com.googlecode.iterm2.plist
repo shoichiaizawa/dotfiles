@@ -28,6 +28,8 @@
 	<true/>
 	<key>HideActivityIndicator</key>
 	<false/>
+	<key>HideFromDockAndAppSwitcher</key>
+	<false/>
 	<key>HideMenuBarInFullscreen</key>
 	<true/>
 	<key>HideScrollbar</key>
@@ -48,6 +50,8 @@
 	<integer>84</integer>
 	<key>HotkeyCode</key>
 	<integer>17</integer>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>HotkeyModifiers</key>
 	<integer>393475</integer>
 	<key>JobName</key>
@@ -101,19 +105,21 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>238 459 445 77 0 0 1280 777 </string>
+	<string>585 264 445 77 0 0 1280 777 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>330 289 620 392 0 0 1280 777 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1280 777 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>225 225 918 495 0 0 1280 777 </string>
+	<string>295 124 918 507 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>640 8 640 769 0 0 1280 777 </string>
+	<string>0 0 1280 800 0 0 1280 778 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -278,7 +284,7 @@
 				<real>0.74176257848739624</real>
 			</dict>
 			<key>Automatically Log</key>
-			<true/>
+			<false/>
 			<key>BM Growl</key>
 			<true/>
 			<key>Background Color</key>
@@ -700,11 +706,11 @@
 			<key>Name</key>
 			<string>Solarized Dark Transparent</string>
 			<key>Non Ascii Font</key>
-			<string>FantasqueSansMonoNerdFontC-Regular 11</string>
+			<string>FantasqueSansMonoNerdFontC-Regular 12</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FantasqueSansMono-Regular 13</string>
+			<string>FiraCode-Regular 12</string>
 			<key>Open Toolbelt</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -2148,6 +2154,10 @@
 		<string>0064</string>
 		<string>0065</string>
 	</array>
+	<key>OpenArrangementAtStartup</key>
+	<false/>
+	<key>OpenNoWindowsAtStartup</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2192,7 +2202,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-02-05T12:57:40Z</date>
+	<date>2017-03-10T02:05:38Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>Secure Input</key>
@@ -2219,10 +2229,12 @@
 	<true/>
 	<key>findIgnoreCase_iTerm</key>
 	<true/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.14</string>
+	<string>3.1.beta.1</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
