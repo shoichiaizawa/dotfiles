@@ -15,6 +15,9 @@
     html:
       indent_size: 2
       wrap_attributes_indent_size: 2
+  "atom-clock":
+    dateFormat: "HH:mm"
+    showClockIcon: true
   "atom-html-preview":
     triggerOnSave: true
   "atom-material-ui":
@@ -39,7 +42,12 @@
       "vim-mode-plus-ex-mode"
       "welcome"
       "markdown-format"
-      "terminal-plus"
+      "atom-pair"
+      "java-plus"
+      "java-import-wiz"
+      "java-generator"
+      "java-classpath-registry"
+      "autocomplete-java-minus"
     ]
     packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
@@ -50,6 +58,7 @@
   "cursor-history":
     flashOnLand: true
   editor:
+    fontFamily: "FiraCode-Regular"
     invisibles: {}
     scrollPastEnd: true
     showIndentGuide: true
@@ -62,7 +71,9 @@
   "exception-reporting":
     userId: "5f1fd872-de33-9d23-b5da-da0fbe791e6c"
   "file-icons": {}
-  "git-plus": {}
+  "git-plus":
+    general:
+      _analyticsUserId: "531f1de0-9539-4faa-9854-c3bf2d523b05"
   jumpy:
     fontSize: 1
   "markdown-preview":
@@ -87,6 +98,10 @@
   "one-dark-ui": {}
   pigments:
     markerType: "native-dot"
+  "platformio-ide-terminal":
+    style: {}
+    toggles:
+      autoClose: true
   "regex-railroad-diagram": {}
   script: {}
   "terminal-plus":
@@ -95,6 +110,7 @@
   "tree-view":
     alwaysOpenExisting: true
     hideVcsIgnoredFiles: true
+    showOnRightSide: true
   "vim-mode":
     useSmartcaseForSearch: true
     wrapLeftRightMotion: true
