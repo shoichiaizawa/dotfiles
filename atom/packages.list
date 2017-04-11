@@ -5,6 +5,7 @@ aligner-php
 ask-stack
 atom-beautify
 atom-bootstrap3
+atom-clock
 atom-html-preview
 atom-lorempixel
 atom-material-syntax
@@ -16,6 +17,7 @@ autocomplete-java
 autocomplete-java-minus
 autocomplete-paths
 busy
+busy-signal
 color-picker
 cursor-history
 emmet
@@ -24,14 +26,17 @@ file-icons
 git-plus
 git-time-machine
 highlight-selected
-html-entities
+html-entitize
+intentions
 java-classpath-registry
 java-generator
 java-import-wiz
 java-plus
+javascript-snippets
 jumpy
 linter
 linter-javac
+linter-ui-default
 markdown-format
 markdown-helpers
 markdown-scroll-sync
@@ -43,13 +48,12 @@ minimap-highlight-selected
 minimap-pigments
 open-this
 pigments
+platformio-ide-terminal
 regex-railroad-diagram
 script
 set-syntax
 tablr
-terminal-plus
 todo-show
 vim-mode-plus
 vim-mode-plus-ex-mode
-
 
