@@ -67,6 +67,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'Valloric/YouCompleteMe'
 
 " TODO: Not installed but want to try one day (or I am curious what it is):
 "Plugin 'honza/vim-snippets'
@@ -81,7 +82,6 @@ Plugin 'tpope/vim-unimpaired'
 "Plugin 'tpope/vim-commentary'  TODO: I use NERDCommenter but how about this?
 "Plugin 'tpope/vim-eunuch'  " Unix commands in Vim
 "Plugin 'tpope/vim-git'     " Support plugin for fugitive
-"Plugin 'Valloric/YouCompleteMe'
 
 " TODO: Not only Solarized but hopefully I want to rotate colour schemes:
 "Plugin 'chriskempson/base16-vim'
