@@ -682,6 +682,7 @@ alias which='type --all'                 # which:  Find executables
 alias where=which
 alias path='echo -e ${PATH//:/\\n}'     # path:   Echo all executable Paths
 #alias path='echo $PATH | tr -s ":" "\n"' # path: Same as above
+alias please='sudo !!'
 
 alias g='git'
 alias git=hub
