@@ -784,7 +784,10 @@ if type npm > /dev/null 2>&1; then
   alias npm-pkg-versions='npm list -g --depth=0'
 fi
 
-alias composer-pkg-versions='composer global show --installed'  # short for -i
+if type composer > /dev/null 2>&1; then
+  alias composer-pkg-versions='composer global show --installed'  # short for -i
+fi
+
 alias pip-all-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
 alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
 alias meteor-upgrade='curl https://install.meteor.com/ | sh'
