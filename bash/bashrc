@@ -819,7 +819,9 @@ heroku-static-test() {
 
 # file: /usr/libexec/java_home@ -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home
 # Running the `java_home` results in printing out the current Java JDK version
-alias java-versions='/usr/libexec/java_home -V'
+if type java > /dev/null 2>&1; then
+  alias java-versions='/usr/libexec/java_home -V'
+fi
 
 alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
 
