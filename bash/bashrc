@@ -672,7 +672,8 @@ alias empty-trash=" \
 # Homebrew and Homebrew Cask
 # --------------------------
 
-alias brew="env PATH=${PATH/\/Users\/${HOME}\/\.pyenv\/shims:/} brew"
+alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
+
 alias cask='brew cask'
 caskup() {
   # rm -rf "$(brew --cache)"
