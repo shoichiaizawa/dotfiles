@@ -774,7 +774,9 @@ alias rm~='rm *~'
 alias rm.~='rm .*~'
 alias rmpyc='find . -type f -name "*.pyc" -ls -delete'
 
-alias diff='colordiff'            # Requires `brew install colordiff`
+if type colordiff > /dev/null 2>&1; then
+  alias diff='colordiff'            # Requires `brew install colordiff`
+fi
 
 # Disable Spotlight
 alias spotoff="sudo mdutil -a -i off"
