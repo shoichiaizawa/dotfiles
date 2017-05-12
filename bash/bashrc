@@ -570,6 +570,13 @@ alias emacs='/usr/local/Cellar/emacs/25.2/Emacs.app/Contents/MacOS/Emacs -nw'
 alias purge='sudo purge'
 alias f='open -a Finder ./'       # Open the current working directory in Finder
 
+# Airport CLI alias
+airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+if [[ -x "${airport}" ]]; then
+  alias airport="${airport}"
+fi
+unset airport
+
 # Function: cdf -- cd to the path of the front Finder window
 # http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 
