@@ -392,28 +392,30 @@ alias sym="ls -al | grep '\->'"         # List all symlinks
 # tree (requires `brew install tree`)
 # -----------------------------------
 
-alias tree='tree -CF'
-alias tree1='tree -L 1'
-alias tree2='tree -L 2'
-alias tree3='tree -L 3'
-alias tree4='tree -L 4'
-alias tree5='tree -L 5'
-alias tree6='tree -L 6'
-alias treea='tree -a'
-alias treea1='tree -a -L 1'
-alias treea2='tree -a -L 2'
-alias treea3='tree -a -L 3'
-alias treea4='tree -a -L 4'
-alias treea5='tree -a -L 5'
-alias treea6='tree -a -L 6'
-alias tree.=treea
-alias tree.1=treea1
-alias tree.2=treea2
-alias tree.3=treea3
-alias tree.4=treea4
-alias tree.5=treea5
-alias tree.6=treea6
-alias trls='tree -CF | less -R'  # -C outputs colour, -R makes less understand color
+if type tree > /dev/null 2>&1; then
+  alias tree='tree -CF'
+  alias tree1='tree -L 1'
+  alias tree2='tree -L 2'
+  alias tree3='tree -L 3'
+  alias tree4='tree -L 4'
+  alias tree5='tree -L 5'
+  alias tree6='tree -L 6'
+  alias treea='tree -a'
+  alias treea1='tree -a -L 1'
+  alias treea2='tree -a -L 2'
+  alias treea3='tree -a -L 3'
+  alias treea4='tree -a -L 4'
+  alias treea5='tree -a -L 5'
+  alias treea6='tree -a -L 6'
+  alias tree.=treea
+  alias tree.1=treea1
+  alias tree.2=treea2
+  alias tree.3=treea3
+  alias tree.4=treea4
+  alias tree.5=treea5
+  alias tree.6=treea6
+  alias trls='tree -CF | less -R'  # -C outputs colour, -R makes less understand color
+fi
 
 # ---------
 # df and du
