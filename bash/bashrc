@@ -689,7 +689,9 @@ if type brew > /dev/null 2>&1 && type pyenv > /dev/null 2>&1; then
   alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
 fi
 
-alias cask='brew cask'
+if type _brew_cask > /dev/null 2>&1; then
+  alias cask='brew cask'
+fi
 
 # ------
 # Docker
