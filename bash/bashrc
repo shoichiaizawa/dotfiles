@@ -386,6 +386,8 @@ alias ll.=l.l
 alias ll='ls -alrthFG'                  # List all files in detail
 alias lll=ll
 
+alias sym="ls -al | grep '\->'"         # List all symlinks
+
 # -----------------------------------
 # tree (requires `brew install tree`)
 # -----------------------------------
