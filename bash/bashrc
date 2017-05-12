@@ -1034,7 +1034,7 @@ github-create() {
 # rbenv                                                                        #
 ################################################################################
 
-if which rbenv > /dev/null; then
+if type rbenv > /dev/null 2>&1; then
   eval "$(rbenv init -)";
 fi
 # eval "$(rbenv init -)"
@@ -1067,7 +1067,7 @@ fi
 # pyenv & pyenv-virtualenv                                                     #
 ################################################################################
 
-if which pyenv > /dev/null; then
+if type pyenv > /dev/null 2>&1; then
   export PYTHON_CONFIGURE_OPTS="--enable-framework"
   eval "$(pyenv init -)";
   eval "$(pyenv virtualenv-init -)";
@@ -1084,7 +1084,7 @@ fi
 # thefuck
 ################################################################################
 
-if which thefuck > /dev/null; then
+if type thefuck > /dev/null 2>&1; then
   eval "$(thefuck --alias)";
 fi
 
