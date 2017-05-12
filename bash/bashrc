@@ -774,6 +774,9 @@ alias rm~='rm *~'
 alias rm.~='rm .*~'
 alias rmpyc='find . -type f -name "*.pyc" -ls -delete'
 
+# Recursively delete `.DS_Store` files
+alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
+
 if type colordiff > /dev/null 2>&1; then
   alias diff='colordiff'            # Requires `brew install colordiff`
 fi
