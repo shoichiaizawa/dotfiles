@@ -690,12 +690,6 @@ if type brew > /dev/null 2>&1 && type pyenv > /dev/null 2>&1; then
 fi
 
 alias cask='brew cask'
-caskup() {
-  # rm -rf "$(brew --cache)"
-  brew update
-  brew cask uninstall --force "$@"
-  brew cask install "$@"
-}
 
 # ------
 # Docker
