@@ -680,8 +680,29 @@ caskup() {
 alias cl='clear'                        # c:      Clear terminal display
 alias which='type --all'                 # which:  Find executables
 alias where=which
-alias path='echo -e ${PATH//:/\\n}'     # path:   Echo all executable Paths
-#alias path='echo $PATH | tr -s ":" "\n"' # path: Same as above
+
+# alias path='echo -e ${PATH//:/\\n}'     # path:   Echo all executable Paths
+# alias path='echo $PATH | tr -s ":" "\n"' # path: Same as above
+# Display a neatly formatted executable paths
+path() {
+local red="\033[0;31m"
+local green="\033[0;32m"
+local yellow="\033[0;33m"
+local blue="\033[1;34m"
+local magenta="\033[0;35m"
+local cyan="\033[0;36m"
+local reset_color="\033[0m"
+  echo $PATH | tr ":" "\n" | \
+    awk "{ sub(\"/usr\",   \"$green/usr$reset_color\"); \
+           sub(\"/bin\",   \"$blue/bin$reset_color\"); \
+           sub(\"/sbin\",  \"$magenta/sbin$reset_color\"); \
+           sub(\"/opt\",   \"$cyan/opt$reset_color\"); \
+           sub(\"/local\", \"$yellow/local$reset_color\"); \
+           sub(\"/Users\", \"$red/Users$reset_color\"); \
+           sub(\"/home\", \"$red/home$reset_color\"); \
+           print }"
+}
+
 alias please='sudo !!'
 alias jobs='jobs -l'
 
