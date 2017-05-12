@@ -438,6 +438,15 @@ alias mn='less -N'                      # mn:       Show the position & linenumb
 # cd
 # --
 
+# Enable `cd filename` to move to its parent directory
+cd() {
+  if [ -e "$1" -a ! -d "$1" ]; then
+    builtin cd -- "$(dirname -- "$1")"
+  else
+    builtin cd "$@"
+  fi
+}
+
 alias cd..='cd ../'                     # Go back 1 directory level
 alias c..='cd ..'                       # Go back 1 directory level
 alias ..='cd ../'                       # Go back 1 directory level
