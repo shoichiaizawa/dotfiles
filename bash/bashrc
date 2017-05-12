@@ -753,7 +753,9 @@ alias please='sudo !!'
 alias jobs='jobs -l'
 
 alias g='git'
-alias git=hub
+if type hub > /dev/null 2>&1; then
+  alias git=hub
+fi
 
 # This creates a backup file for Atom packages installed by the user
 # To install, run: `apm install --packages-file packages.list`
