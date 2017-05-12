@@ -760,7 +760,9 @@ fi
 # This creates a backup file for Atom packages installed by the user
 # To install, run: `apm install --packages-file packages.list`
 # NOTE: For an alternative method, use `atom star|stars|starred`
-alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 >| ~/.atom/packages.list"
+if type apm > /dev/null 2>&1; then
+  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 >| ~/.atom/packages.list"
+fi
 
 alias speedtest='speedtest-cli'
 
