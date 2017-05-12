@@ -422,6 +422,7 @@ alias trls='tree -CF | less -R'  # -C outputs colour, -R makes less understand c
 alias df='df -H'                        # Human-readable using base 10
 alias du='du -ch'                       # Human-readable including grand total
 alias du1='du -d 1'                     # Human-readable, grand total, min-level
+alias dus='du -sckx * | sort -nr'
 
 # ----
 # less
