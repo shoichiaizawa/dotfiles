@@ -367,7 +367,7 @@ alias ln='ln -iv'         # interactive, verbose
 # Detect which `ls` flavour is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
   colorflag='--color'
-else # OS X `ls`
+else # macOS `ls`
   colorflag='-G'
 fi
 
@@ -558,9 +558,9 @@ alias e=vim
 alias emacs='/usr/local/Cellar/emacs/25.1/Emacs.app/Contents/MacOS/Emacs -nw'
 # alias subl="open -a 'Sublime Text'"
 
-# ----
-# OS X
-# ----
+# -----
+# macOS
+# -----
 
 alias purge='sudo purge'
 alias f='open -a Finder ./'       # Open the current working directory in Finder
@@ -577,10 +577,10 @@ cdf() {
   fi
 }
 
-# trash:  Moves a file to the MacOS trash
+# trash:  Moves a file to the macOS trash
 trash () { command mv "$@" ~/.Trash ; }
 
-# ql:    Opens any file in MacOS Quick Look Preview
+# ql:    Opens any file in macOS Quick Look Preview
 ql () { qlmanage -p "$*" >& /dev/null; }
 
 # ----------------
