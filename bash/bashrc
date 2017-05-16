@@ -229,9 +229,11 @@ fi
 # This function will allow you to run any Vagrant command from anywhere on your
 # system and will automatically point that command to your Homestead
 # installation
-function homestead() {
-  ( cd ~/Homestead && vagrant $* )
-}
+if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
+  function homestead() {
+    ( cd ~/Homestead && vagrant $* )
+  }
+fi
 
 # --------------------------------------
 # killall tab completion for common apps
