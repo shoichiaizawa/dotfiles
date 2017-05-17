@@ -206,33 +206,25 @@ if type _brew_cask &> /dev/null && [ -f /usr/local/etc/bash_completion.d/brew-ca
 fi
 
 # --------------------------------------------
-# vagrant completion with `homestead` function
+# Vagrant completion with `homestead` function
 # --------------------------------------------
-#
-# Enable tab completion for `homestead` by marking it as a function for `( cd
-# ~/Homestead && vagrant $* )`; see the function right below
-#
-# Dependency:
-#   - vagrant
-#   - `brew tap homebrew/completions/`
-#   - `brew install vagrant-completion`
-#
-# See the following GitHub repository for details:
-# https://github.com/mitchellh/vagrant/blob/master/contrib/bash/completion.sh
-if type _vagrant &> /dev/null && [ -f /usr/local/etc/bash_completion.d/vagrant ]; then
-  complete -o default -o nospace -F _vagrant homestead
-fi
 
-# Accessing Homestead Globally
-# See: https://laravel.com/docs/master/homestead#accessing-homestead-globally
-#
-# This function will allow you to run any Vagrant command from anywhere on your
-# system and will automatically point that command to your Homestead
-# installation
+# Dependency:
+#   - Vagrant            -> Run `brew cask install vagrant`
+#   - vagrant-completion -> Run `brew install vagrant-completion`
+#   - Homestead          -> Run `cd ~ && git clone https://github.com/laravel/homestead.git Homestead`
+
 if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
+  # Accessing Homestead Globally
+  # See: https://laravel.com/docs/master/homestead#accessing-homestead-globally
   function homestead() {
     ( cd ~/Homestead && vagrant $* )
   }
+
+  # Enable tab completion for the `homestead` function defined above
+  if [ -f /usr/local/etc/bash_completion.d/vagrant ]; then
+    complete -o default -o nospace -F _vagrant homestead
+  fi
 fi
 
 # --------------------------------------
