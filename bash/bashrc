@@ -722,6 +722,11 @@ if type docker > /dev/null 2>&1; then
   fi
 
   alias dclean='docker rm -v $(docker ps -aq -f status=exited)'
+
+  da() { docker start $1 && docker attach $1; }
+  if type _docker_start > /dev/null 2>&1 && [ -f /usr/local/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker_start da
+  fi
 fi
 
 # ------------
