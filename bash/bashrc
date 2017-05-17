@@ -717,11 +717,11 @@ fi
 
 if type docker > /dev/null 2>&1; then
   alias d='docker'
-  alias dclean='docker rm -v $(docker ps -aq -f status=exited)'
-fi
+  if [ -f /usr/local/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker d
+  fi
 
-if type _docker &> /dev/null && [ -f /usr/local/etc/bash_completion.d/docker ]; then
-  complete -o default -o nospace -F _docker d
+  alias dclean='docker rm -v $(docker ps -aq -f status=exited)'
 fi
 
 # ------------
