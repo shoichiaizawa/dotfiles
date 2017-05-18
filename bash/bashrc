@@ -41,7 +41,6 @@ export HISTFILESIZE=1000000
 export HISTTIMEFORMAT='%F %T -- '  # yyyy-mm-dd HH:MM:SS -- command
 export HISTCONTROL=ignoreboth      # ignoredups:ignorespace
 export HISTIGNORE='history:h:pwd:pdw:exit:eixt:quit:df:du:du1:ls:l1:l:la:la1:l1a:lal:lla:l.:l.l:ll.:ll:lll:ls -la:clear:cl'
-#export HISTTIMEFORMAT='%b %d %I:%M %p '     # using strftime format
 
 ################################################################################
 # Command Prompt Configuration                                                 #
@@ -196,7 +195,6 @@ fi;
 #
 # Dependency:
 #   - `brew tap caskroom/cask`
-#   - `brew tap homebrew/completions`
 #   - `brew install brew-cask-completion`
 #
 # See the following GitHub repository for details:
@@ -237,8 +235,6 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 
 # ------------------------------------------------------------------
 # Completion for Composer -- PHP package manager
-# TODO: Alternative option: homebrew/completions/composer-completion
-# ------------------------------------------------------------------
 # [Requirements]
 # Composer: `tap homebrew/php && brew install composer`
 # ------------------------------------------------------------------
@@ -461,7 +457,6 @@ alias abs='cd /'                        # abs:    Go to root of disk
 alias root='cd /'                       # root:   Go to root of disk
 
 alias ~='cd ~'                          # ~:      Go Home
-#alias home='cd ~'                       # home:   Go Home
 
 alias -- -='cd -'                       # -:      Go back to the previous cd
 alias cd-='cd -'                        # cd-:    Go back to the previous cd
@@ -566,7 +561,6 @@ alias vi=vim
 alias edit=vim
 alias e=vim
 alias emacs='/usr/local/Cellar/emacs/25.2/Emacs.app/Contents/MacOS/Emacs -nw'
-# alias subl="open -a 'Sublime Text'"
 
 # -----
 # macOS
@@ -972,18 +966,6 @@ function toggleiTerm() {
 # See Wikipedia and elsewhere for details:
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 
-#man() {
-  #env \
-  #LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-  #LESS_TERMCAP_md=$(printf "\e[1;31m") \
-  #LESS_TERMCAP_me=$(printf "\e[0m") \
-  #LESS_TERMCAP_se=$(printf "\e[0m") \
-  #LESS_TERMCAP_so=$(printf "\e[1;43;30m") \
-  #LESS_TERMCAP_ue=$(printf "\e[0m") \
-  #LESS_TERMCAP_us=$(printf "\e[1;32m") \
-  #man "$@"
-#}
-
 man() {
   env \
   LESS_TERMCAP_mb=$(printf "\e[1;38;5;166m") \
@@ -1005,7 +987,6 @@ man() {
 if type rbenv > /dev/null 2>&1; then
   eval "$(rbenv init -)";
 fi
-# eval "$(rbenv init -)"
 
 ################################################################################
 # nvm                                                                          #
