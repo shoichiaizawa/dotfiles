@@ -725,6 +725,8 @@ if type docker > /dev/null 2>&1; then
   fi
 fi
 
+daliases() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
 # ------------
 # To be sorted
 # ------------
