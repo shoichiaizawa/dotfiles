@@ -799,10 +799,6 @@ alias spoton="sudo mdutil -a -i on"
 # find . -name .gitattributes | map dirname
 alias map='xargs -n1'
 
-if type npm > /dev/null 2>&1; then
-  alias npm-pkg-versions='npm list -g --depth=0'
-fi
-
 if type composer > /dev/null 2>&1; then
   alias composer-pkg-versions='composer global show --installed'  # short for -i
 fi
@@ -930,6 +926,10 @@ export NVM_DIR="$HOME/.nvm"
 # An alias for manual upgrade
 if type nvm > /dev/null 2>&1; then
   alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
+fi
+
+if type npm > /dev/null 2>&1; then
+  alias npm-pkg-versions='npm list -g --depth=0'
 fi
 
 # NOTES: Source nvm for Homebrew version (not officially supported)
