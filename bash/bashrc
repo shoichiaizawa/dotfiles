@@ -928,8 +928,10 @@ if type nvm > /dev/null 2>&1; then
   alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
 fi
 
+# Aliases to list installed npm packages, globally and locally
 if type npm > /dev/null 2>&1; then
-  alias npm-pkg-versions='npm list -g --depth=0'
+  alias npm-gpkg-versions='npm list -g --depth=0'
+  alias npm-pkg-versions='npm list --depth=0'
 fi
 
 # NOTES: Source nvm for Homebrew version (not officially supported)
