@@ -161,14 +161,14 @@
 	diffsc = diff --staged --color-words
 
 	### status ###
-	st     = status
-	stat   = status
-	statsu = status
-	s      = status --short --branch
-	ss     = status --short --branch
-	stv    = status -v
-	stvv   = status -vv
-	si     = status --ignored
+	st      = status
+	stat    = status
+	statsu  = status
+	s       = status --short --branch
+	ss      = status --short --branch
+	stv     = status -v
+	stvv    = status -vv
+	si      = status --ignored
 	ignored = status --ignored
 
 	# ------
