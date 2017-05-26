@@ -346,7 +346,9 @@ command! -nargs=* Wrap set wrap linebreak nolist
 set linebreak               "lbr:   Vim will wrap long lines at a character
                             "       in 'breakat' rather than at the last character
                             "       that fits on the screen
-set breakindent             "bri:   Every wrapped line will continue visually
+if exists('+breakindent')
+  set breakindent           "bri:   Every wrapped line will continue visually
+endif
 set showbreak=↪             "sbr:   ↪ indicates linebreaks
 " set textwidth=80            "tw:    Maximum width of text that is being inserted
                             "       (default 0)
