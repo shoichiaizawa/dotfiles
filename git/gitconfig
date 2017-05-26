@@ -169,6 +169,7 @@
 	stv    = status -v
 	stvv   = status -vv
 	si     = status --ignored
+	ignored = status --ignored
 
 	# ------
 	# remote
