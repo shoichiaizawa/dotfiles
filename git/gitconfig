@@ -160,7 +160,10 @@
 	dfsc   = diff --staged --color-words
 	diffsc = diff --staged --color-words
 
-	### status ###
+	# ------
+	# status
+	# ------
+
 	st      = status
 	stat    = status
 	statsu  = status
