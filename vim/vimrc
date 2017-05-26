@@ -164,6 +164,7 @@ set fileencoding=utf-8      "fenc:  Set the character encoding for the file of
                             "       this buffer
 set termencoding=utf-8      "tenc:  Encoding used for the terminal
 
+set spellfile=~/.vim/spell/en.utf-8.add
 set spell                   "       Enable spell checking by default
 set spelllang=en            "spl:   Set spell check language (default "en")
 " Toggle spell checking with ',s' (default off)
