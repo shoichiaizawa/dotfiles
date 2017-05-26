@@ -168,7 +168,7 @@ set spell                   "       Enable spell checking by default
 set spelllang=en            "spl:   Set spell check language (default "en")
 " Toggle spell checking with ',s' (default off)
 map <silent> <Leader>s :set spell!<CR>
-" set complete+=kspell
+set complete+=kspell        "       CTRL-N/CTRL to match dictionary words
 
 " set timeout                 "to:    Time out on :mappings and key codes
 "                             "       (default on)
