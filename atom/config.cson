@@ -22,6 +22,7 @@
     triggerOnSave: true
   "atom-material-ui":
     colors:
+      accentColor: "#af0010"
       genAccent: true
       paintCursor: true
     fonts: {}
@@ -32,6 +33,8 @@
     ui:
       panelContrast: true
       panelShadows: true
+  "atom-package-deps":
+    ignored: []
   "atom-pair": {}
   "color-picker": {}
   core:
@@ -48,6 +51,8 @@
       "java-generator"
       "java-classpath-registry"
       "autocomplete-java-minus"
+      "autocomplete-java"
+      "linter-javac"
     ]
     packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
