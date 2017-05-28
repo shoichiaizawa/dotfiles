@@ -616,6 +616,8 @@ alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only
 alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
 alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
 alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+alias localip0='ipconfig getifaddr en0'             # localip:      Get info on connections for en0
+alias localip1='ipconfig getifaddr en1'             # localip:      Get info on connections for en1
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
 
