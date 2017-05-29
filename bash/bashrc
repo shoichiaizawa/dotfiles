@@ -621,11 +621,11 @@ alias localip1='ipconfig getifaddr en1'                         # localip:      
 alias openports='sudo lsof -i | grep LISTEN'                    # openports:    All listening connections
 alias showblocked='sudo ipfw list'                              # showblocked:  All ipfw rules inc/ blocked IPs
 
-# Function: ii - display useful host related informaton
+# Function: ii - display useful host related information
 
 ii() {
   echo -e "\nYou are logged on ${RED}$HOST"
-  echo -e "\nAdditionnal information:$NC " ; uname -a
+  echo -e "\nAdditional information:$NC " ; uname -a
   echo -e "\n${RED}Users logged on:$NC " ; w -h
   echo -e "\n${RED}Current date :$NC " ; date
   echo -e "\n${RED}Machine stats :$NC " ; uptime
