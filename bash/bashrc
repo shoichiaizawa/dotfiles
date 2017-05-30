@@ -506,6 +506,7 @@ alias pbs=pbsort
 
 alias h='history'
 alias histg='history | grep'
+alias hgrep=histg
 
 # ----
 # grep
