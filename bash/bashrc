@@ -965,6 +965,25 @@ export NVM_DIR="$HOME/.nvm"
 # Activate `bash_completion`
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
+# Function: nvm-install -- Install `nvm` and activate its `bash_completion`
+if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
+  nvm-install() {
+    export NVM_DIR="$HOME/.nvm" && (
+      git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+      cd "$NVM_DIR"
+      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
+    ) && . "$NVM_DIR/nvm.sh" \
+      && [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+    echo -e "\n--------------------------------------------------------------------------------\n"
+    echo "Woohoo! nvm has been installed successfully!"
+    echo "nvm-install command has been unset."
+    echo "Use nvm-upgrade command to upgrade nvm."
+    unset -f nvm-install
+    [[ -d $NVM_DIR ]] && alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
+  }
+fi
+
 # An alias for manual upgrade
 if type nvm > /dev/null 2>&1; then
   alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
