@@ -985,7 +985,7 @@ if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
 fi
 
 # An alias for manual upgrade
-if type nvm > /dev/null 2>&1; then
+if type nvm > /dev/null 2>&1 && [[ -d $NVM_DIR ]]; then
   alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
 fi
 
