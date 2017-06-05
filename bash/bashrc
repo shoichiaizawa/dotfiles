@@ -956,7 +956,7 @@ fi
 
 # NOTE:
 # Install nvm manually;
-# see details at https://github.com/creationix/nvm#manual-install
+# See details at https://github.com/creationix/nvm#manual-install
 
 export NVM_DIR="$HOME/.nvm"
 
@@ -984,7 +984,7 @@ else
   # Activate `bash_completion`
   [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
-  # An alias for manual upgrade
+  # An alias for `nvm` manual upgrade
   alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
 
   # Aliases to list installed npm packages, globally and locally
@@ -993,10 +993,6 @@ else
     alias npm-pkg-versions='npm list --depth=0'
   fi
 fi
-
-# NOTES: Source nvm for Homebrew version (not officially supported)
-# export NVM_DIR=~/.nvm
-# source $(brew --prefix nvm)/nvm.sh
 
 ################################################################################
 # pyenv & pyenv-virtualenv                                                     #
