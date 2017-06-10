@@ -1152,10 +1152,8 @@ nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 nnoremap <Leader><Tab> <C-W>w|    " Move to the next window
 
-nnoremap <Leader>v <C-W>v<C-W>l|  " Open a [v]ertical split, switch to it (,v)
-nnoremap <Leader>h <C-W>s<C-W>j|  " Open a [h]orizontal split, switch to it (,h)
-                                  " This requires <CR> as Fugitive has mappings
-                                  " prepending ",h" FIXME Try something else
+nnoremap <Leader>\ <C-W>v<C-W>l|  " Open a vertical split, switch to it (,\)
+nnoremap <Leader>- <C-W>s<C-W>j|  " Open a horizontal split, switch to it (,-)
 
 nnoremap <C-W>3 :vs<CR>:vs<CR><C-W>h<C-W>h
 nnoremap <C-W>4 :vs<CR>:sp<CR><C-W>h:sp<CR><C-W>k
