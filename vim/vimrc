@@ -1098,6 +1098,10 @@ map g; g;zz
 map g, g,zz
 map <C-O> <C-O>zz
 
+" Search and replace word under cursor (,*)
+nnoremap <Leader>* :%s/\<<C-R><C-W>\>//<Left>
+vnoremap <Leader>* "hy:%s/\V<C-R>h//<Left>
+
 " }}}1
 " Mappings: Smart brackets/quotation marks {{{1
 
