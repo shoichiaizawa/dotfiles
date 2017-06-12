@@ -432,6 +432,12 @@ augroup ft_javascript
 augroup END
 
 " }}}1
+" Autocmd: JSON {{{1
+
+autocmd BufWinEnter,BufRead,BufNewFile */.\=tern-config setlocal filetype=json
+autocmd BufWinEnter,BufRead,BufNewFile */.tern-project setlocal filetype=json
+
+" }}}1
 " Autocmd: Markdown {{{1
 
 augroup ft_markdown
