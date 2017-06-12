@@ -422,6 +422,16 @@ endif
 autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 
 " }}}1
+" Autocmd: JavaScript {{{1
+
+augroup ft_javascript
+  autocmd!
+
+  autocmd FileType javascript setlocal foldmethod=syntax
+  autocmd FileType javascript setlocal foldlevel=99
+augroup END
+
+" }}}1
 " Autocmd: Markdown {{{1
 
 augroup ft_markdown
