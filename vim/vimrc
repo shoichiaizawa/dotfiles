@@ -391,6 +391,9 @@ set virtualedit& virtualedit+=block
 set splitbelow              "sb:    Split a window below the current one
 set splitright              "spr:   Split a window right of the current one
 
+set nojoinspaces            "nojs:  Do not insert two spaces after ./?/! with
+                            "       a join command
+
 " }}}1
 " General Settings: Backups {{{1
 
