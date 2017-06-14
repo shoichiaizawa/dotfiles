@@ -692,7 +692,7 @@ augroup ps_nerdtree
   autocmd FileType nerdtree nnoremap <buffer> L :vertical resize +10<CR>
 augroup END
 
-let NERDTreeIgnore = ['\~$', '\.sw.$', '.*\.pyc$', '.DS_Store']  " TODO: Add more items
+let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']  " TODO: Add more items
 
 let NERDTreeHighlightCursorline = 1       " options: 0 or 1 (default 1)
 let g:NERDTreeWinSize=20        " options: [integer value] (default 31)
