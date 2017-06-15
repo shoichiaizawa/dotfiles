@@ -1314,7 +1314,7 @@ vnoremap <C-a> :call Incr()<CR>
 " This allows scrolling with ctrl-d/u/f/b smoothly rather than scrolling
 " instantaneously; hence, scrolling direction is now visible to eyes.
 "
-" Credits: cohama: https://github.com/cohama/.vim/blob/master/.vimrc#L1061
+" Credits: cohama: https://github.com/cohama/.vim/blob/master/.vimrc#L1106
 "
 let s:scroll_time_ms = 100
 let s:scroll_precision = 8
@@ -1325,7 +1325,7 @@ function! CohamaSmoothScroll(dir, windiv, factor)
   let height = winheight(0) / a:windiv
   let n = height / s:scroll_precision
   if n <= 0
-  let n = 1
+    let n = 1
   endif
   let wait_per_one_move_ms = s:scroll_time_ms / s:scroll_precision * a:factor
   let i = 0
@@ -1333,19 +1333,19 @@ function! CohamaSmoothScroll(dir, windiv, factor)
     \ "normal! " . n . "\<C-E>" . n ."j" :
     \ "normal! " . n . "\<C-Y>" . n ."k"
   while i < s:scroll_precision
-  let i = i + 1
-  execute scroll_command
-  execute "sleep " . wait_per_one_move_ms . "m"
-  redraw
+    let i = i + 1
+    execute scroll_command
+    execute "sleep " . wait_per_one_move_ms . "m"
+    redraw
   endwhile
   let &cursorline = cl
   let &cursorcolumn = cc
 endfunction
 
-nnoremap <silent> <C-D> :call CohamaSmoothScroll("down", 2, 1)<CR>
-nnoremap <silent> <C-U> :call CohamaSmoothScroll("up", 2, 1)<CR>
-nnoremap <silent> <C-F> :call CohamaSmoothScroll("down", 1, 2)<CR>
-nnoremap <silent> <C-B> :call CohamaSmoothScroll("up", 1, 2)<CR>
+nnoremap <silent><expr> <C-D> v:count == 0 ? ":call CohamaSmoothScroll('down', 2, 1)\<CR>" : "\<C-d>"
+nnoremap <silent><expr> <C-U> v:count == 0 ? ":call CohamaSmoothScroll('up', 2, 1)\<CR>" : "\<C-u>"
+nnoremap <silent><expr> <C-F> v:count == 0 ? ":call CohamaSmoothScroll('down', 1, 2)\<CR>" : "\<C-f>"
+nnoremap <silent><expr> <C-B> v:count == 0 ? ":call CohamaSmoothScroll('up', 1, 2)\<CR>" : "\<C-b>"
 
 " }}}1
 " Functions: Preserve() - Strip trailing whitespace {{{1
