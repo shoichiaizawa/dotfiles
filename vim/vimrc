@@ -430,9 +430,19 @@ autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 augroup ft_javascript
   autocmd!
 
-  autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd FileType javascript setlocal foldlevel=99
+  autocmd FileType javascript call JavaScriptFold()
 augroup END
+
+function! JavaScriptFold()
+  setlocal foldmethod=syntax
+  setlocal foldlevel=99
+  syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+
+  function! FoldText()
+    return substitute(getline(v:foldstart), '{.*', '{...}', '')
+  endfunction
+  setlocal foldtext=FoldText()
+endfunction
 
 " }}}1
 " Autocmd: JSON {{{1
