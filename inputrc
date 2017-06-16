@@ -38,6 +38,11 @@ set visible-stats on
 # (default off)
 set mark-symlinked-directories on
 
+# Do not expand "~" to the home directory when completing. (The actual value
+# passed on to the command still is expanded, though. Which is good.) "Off" is
+# the default value, but some servers override this, so I override the override.
+set expand-tilde off
+
 # Do not autocomplete hidden files ("dot files") unless the pattern explicitly
 # begins with a dot (default on)
 set match-hidden-files off
