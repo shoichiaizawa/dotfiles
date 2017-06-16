@@ -84,14 +84,6 @@ set completion-map-case on
 set menu-complete-display-prefix on
 
 # TODO: Add a short description
-# This alters the default behavior of the completion functions in a fashion
-# similar to show-all-if-ambiguous. If set to `on`, words which have more than
-# one possible completion without any possible partial completion (the possible
-# completions don't share a common prefix) cause the matches to be listed
-# immediately instead of ringing the bell. The default value is `off`.
-set show-all-if-unmodified on
-
-# TODO: Add a short description
 # The number of screen columns used to display possible matches when performing
 # completion. The value is ignored if it is less than 0 or greater than the
 # terminal screen width. A value of 0 will cause matches to be displayed one
