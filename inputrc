@@ -5,6 +5,9 @@
 "\e[B": history-search-forward
 "\e[A": history-search-backward
 
+# Try to stay at the same cursor position when moving through the history
+set history-preserve-point on
+
 # Autocompletion
 # -----------------------------------------------------------------------------
 # Use TAB for cycling through autocompletion matches
