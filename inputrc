@@ -1,40 +1,51 @@
-# Use the Option key to move forward and back in words
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
+# History
+# -----------------------------------------------------------------------------
+# Use more intelligent Up/Down behaviour: use the text that has already been
+# typed as the prefix for searching through commands, like in Vim
+"\e[B": history-search-forward
+"\e[A": history-search-backward
 
-# Use TAB through
+# Autocompletion
+# -----------------------------------------------------------------------------
+# Use TAB for cycling through autocompletion matches
+# Use Shift-TAB for reverse direction
 TAB: menu-complete
 "\e[Z": menu-complete-backward
 
-# Make Tab autocomplete regardless of filename case (default off)
+# Make Tab autocompletion case-insensitive (default off)
+# i.e. cd ~/dow<Tab> => cd ~/Downloads/
 set completion-ignore-case on
 
-# List all matches in case multiple possible completions are possible
-# (default off)
+# Treat hyphens (`-`) and underscores (`_`) as equivalent for autocompletion
+# when `completion-ignore-case` is enabled (default off)
+set completion-map-case on
+
+# Immediately show all possible completions (default off)
 set show-all-if-ambiguous on
+
+# Show the common prefix of the list of possible completions first, and then
+# cycle through it when hitting TAB for menu completion
+# (default off)
+set menu-complete-display-prefix on
+
+# Show extra file information when completing, like `ls -F` does (default off)
+set visible-stats on
 
 # Immediately add a trailing slash when autocompleting symlinks to directories
 # (default off)
 set mark-symlinked-directories on
 
-# Use the text that has already been typed as the prefix for searching through
-# commands (i.e. more intelligent Up/Down behavior)
-"\e[B": history-search-forward
-"\e[A": history-search-backward
-
-# Do not autocomplete hidden files unless the pattern explicitly begins with a
-# dot (default on)
+# Do not autocomplete hidden files ("dot files") unless the pattern explicitly
+# begins with a dot (default on)
 set match-hidden-files off
 
-# Show all autocomplete results at once (default on)
+# Show all autocomplete results at once without using Readline's built-in pager
+# (default on)
 set page-completions off
 
 # If there are more than 200 possible completions for a word, ask to show them
 # all (default 100)
 set completion-query-items 200
-
-# Show extra file information when completing, like `ls -F` does (default off)
-set visible-stats on
 
 # Be more intelligent when autocompleting by also looking at the text after
 # the cursor. For example, when the current line is "cd ~/src/mozil", and
@@ -44,6 +55,19 @@ set visible-stats on
 # (default off)
 set skip-completed-text on
 
+# TODO: Make the colours consistent with the ones of `ls` command
+# Show completions using different colours for their file types (default off)
+set colored-stats on
+
+# Show the partial match of possible completions using a different colour
+# (default off)
+set colored-completion-prefix on
+
+# Show possible matches in one column when performing completion (default -1)
+# set completion-display-width 1
+
+# Line editing
+# -----------------------------------------------------------------------------
 # Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
 # (default off)
 set input-meta on
@@ -52,40 +76,10 @@ set output-meta on
 # (default on)
 set convert-meta off
 
+# Use the Option key to move forward and back in words
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+
 # TODO: Not working
 # Use Alt/Meta + Delete to delete the preceding word
 # "\e[3;3~": kill-word
-
-################################################################################
-
-# TODO: Add a short description
-# If set to `on`, Readline displays possible completions using different
-# colors to indicate their file type. The color definitions are taken from the
-# value of the LS_COLORS environment variable. The default is `off`.
-set colored-stats on
-
-# TODO: Add a short description
-# If set to `on', Readline displays possible completions using different colors
-# to indicate their file type. The color definitions are taken from the value
-# of the LS_COLORS environment variable. The default is `off'.
-set colored-completion-prefix on
-
-# TODO: Add a short description
-# If set to `on`, and completion-ignore-case is enabled, Readline treats
-# hyphens (`-`) and underscores (`_`) as equivalent when performing
-# case-insensitive filename matching and completion.
-set completion-map-case on
-
-# TODO: Add a short description
-# If set to `on`, menu completion displays the common prefix of the list of
-# possible completions (which may be empty) before cycling through the list.
-# The default is `off`.
-# (default off)
-set menu-complete-display-prefix on
-
-# TODO: Add a short description
-# The number of screen columns used to display possible matches when performing
-# completion. The value is ignored if it is less than 0 or greater than the
-# terminal screen width. A value of 0 will cause matches to be displayed one
-# per line. The default value is -1.
-# set completion-display-width 1
