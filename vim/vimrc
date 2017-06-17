@@ -181,8 +181,15 @@ set ttimeoutlen=10          "ttm:   The time for key code delay (default -1)
 
 set mouse=a                 "       Enable mouse scrolling
 set mousehide               "mh:    Hide mouse cursor when typing (default on)
-set clipboard=unnamed       "       Allow copy text to clipboard with * register
-set clipboard+=unnamedplus  "TODO   Allow copy text to clipboard with + register
+
+if has('clipboard')
+  if has('unnamedplus')     " When possible use + register for copy-paste
+    set clipboard^=unnamed,unnamedplus
+  else              " On macOS and Windows, use * register for copy-paste
+    set clipboard=unnamed
+  endif
+endif
+
 " set shellslash              "ssl    TODO something to do with Windows OS
 set ttyfast                 "tf:    Faster terminal connection
 set hidden                  "hid:   Hide buffers when not displayed instead of
