@@ -702,28 +702,30 @@ endfunction
 
 " TODO: Enhance the settings
 
-augroup ps_nerdtree
-  autocmd!
-  autocmd FileType nerdtree setlocal nolist
-  autocmd FileType nerdtree nnoremap <buffer> H :vertical resize -10<CR>
-  autocmd FileType nerdtree nnoremap <buffer> L :vertical resize +10<CR>
-augroup END
+if isdirectory(expand("~/.vim/bundle/nerdtree/"))
+  augroup ps_nerdtree
+    autocmd!
+    autocmd FileType nerdtree setlocal nolist
+    autocmd FileType nerdtree nnoremap <buffer> H :vertical resize -10<CR>
+    autocmd FileType nerdtree nnoremap <buffer> L :vertical resize +10<CR>
+  augroup END
 
-let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']  " TODO: Add more items
+  let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']  " TODO: Add more items
 
-let NERDTreeHighlightCursorline = 1       " options: 0 or 1 (default 1)
-let g:NERDTreeWinSize=20        " options: [integer value] (default 31)
-let g:NERDTreeWinPos = "left"   " options: [left, right] (default left)
-let g:NERDTreeShowHidden = 1    " Show hidden files by default;
-                                " press "I" to toggle (default 0)
-let g:NERDTreeShowBookmarks = 1 " Show the bookmarks table by default (default 0)
-let g:NERDTreeMinimalUI = 1     " Disables the 'Bookmarks' label 'Press ? for help' (default 0)
-let NERDTreeChDirMode = 2       " options: 0, 1 or 2 (default 0)
-let NERDTreeMouseMode=2         " options: 1, 2 or 3 (default 1)
+  let NERDTreeHighlightCursorline = 1       " options: 0 or 1 (default 1)
+  let g:NERDTreeWinSize=20        " options: [integer value] (default 31)
+  let g:NERDTreeWinPos = "left"   " options: [left, right] (default left)
+  let g:NERDTreeShowHidden = 1    " Show hidden files by default;
+                                  " press "I" to toggle (default 0)
+  let g:NERDTreeShowBookmarks = 1 " Show the bookmarks table by default (default 0)
+  let g:NERDTreeMinimalUI = 1     " Disables the 'Bookmarks' label 'Press ? for help' (default 0)
+  let NERDTreeChDirMode = 2       " options: 0, 1 or 2 (default 0)
+  let NERDTreeMouseMode=2         " options: 1, 2 or 3 (default 1)
 
-map <silent> <Leader>nn :NERDTreeToggle<CR>|   " Toggle NERDTree
-map <silent> <Leader>nb :NERDTreeFromBookmark| " TODO: What is this?
-map <silent> <Leader>nf :NERDTreeFind<CR>|     " Find the current file in the tree
+  map <silent> <Leader>nn :NERDTreeToggle<CR>|   " Toggle NERDTree
+  map <silent> <Leader>nb :NERDTreeFromBookmark| " TODO: What is this?
+  map <silent> <Leader>nf :NERDTreeFind<CR>|     " Find the current file in the tree
+endif
 
 " }}}1
 " Plugin Settings: Emmet {{{1
