@@ -696,7 +696,6 @@ if isdirectory(expand("~/.vim/bundle/vim-airline/"))
   let g:airline_symbols.branch = ''
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
-
 endif
 
 function! RefreshUI()
@@ -743,7 +742,9 @@ endif
 
 " TODO: Enhance the settings
 
-let g:user_emmet_leader_key='<C-E>'
+if isdirectory(expand("~/.vim/bundle/emmet-vim/"))
+  let g:user_emmet_leader_key='<C-E>'
+endif
 
 " }}}1
 " Plugin Settings: EasyMotion {{{1
