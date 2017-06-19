@@ -853,26 +853,29 @@ endif
 " }}}1
 " Plugin Settings: Vim Git Gutter {{{1
 
-" let g:gitgutter_map_keys = 0  " To disable the default mappings
+if isdirectory(expand("~/.vim/bundle/vim-gitgutter/"))
+  " let g:gitgutter_map_keys = 0  " To disable the default mappings
 
-nmap [h <Plug>GitGutterPrevHunk|            " default [c
-nmap ]h <Plug>GitGutterNextHunk|            " default ]c
+  nmap [h <Plug>GitGutterPrevHunk|            " default [c
+  nmap ]h <Plug>GitGutterNextHunk|            " default ]c
 
-" nmap <Leader>hs <Plug>GitGutterStageHunk|   " default map
-" nmap <Leader>hr <Plug>GitGutterRevertHunk|  " default map
-" nmap <Leader>hp <Plug>GitGutterPreviewHunk| " default map
+  " nmap <Leader>hs <Plug>GitGutterStageHunk|   " default map
+  " nmap <Leader>hr <Plug>GitGutterRevertHunk|  " default map
+  " nmap <Leader>hu <Plug>GitGutterUndoHunk|    " default map
+  " nmap <Leader>hp <Plug>GitGutterPreviewHunk| " default map
 
-" let g:gitgutter_max_signs = 500             " default value
+  " let g:gitgutter_max_signs = 500             " default value
 
-" let g:gitgutter_realtime = 0  " to stop vim-gitgutter running in realtime
-" let g:gitgutter_eager = 0     " to stop vim-gitgutter running eagerly
+  " let g:gitgutter_realtime = 0  " to stop vim-gitgutter running in realtime
+  " let g:gitgutter_eager = 0     " to stop vim-gitgutter running eagerly
 
-" silent! if emoji#available()
-"   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
-"   let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
-"   let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
-"   let g:gitgutter_sign_modified_removed = emoji#for('collision')
-" endif
+  " silent! if emoji#available()
+  "   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
+  "   let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
+  "   let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
+  "   let g:gitgutter_sign_modified_removed = emoji#for('collision')
+  " endif
+endif
 
 " }}}1
 " Plugin Settings: Vim Fugitive {{{1
