@@ -839,14 +839,16 @@ endif
 " }}}1
 " Plugin Settings: Vim Markdown {{{1
 
-" Type 'gx' to open an URL under the cursor; this is a standard Vim command
-" <Plug>Markdown_OpenUrlUnderCursor
+if isdirectory(expand("~/.vim/bundle/vim-markdown/"))
+  " Type 'gx' to open an URL under the cursor; this is a standard Vim command
+  " <Plug>Markdown_OpenUrlUnderCursor
 
-autocmd FileType markdown setlocal foldmethod=manual
+  autocmd FileType markdown setlocal foldmethod=manual
 
-let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_math=1
-let g:vim_markdown_frontmatter=1
+  let g:vim_markdown_folding_disabled=1
+  let g:vim_markdown_math=1
+  let g:vim_markdown_frontmatter=1
+endif
 
 " }}}1
 " Plugin Settings: Vim Git Gutter {{{1
