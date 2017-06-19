@@ -58,7 +58,7 @@ Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'reedes/vim-pencil'
-Plugin 'ryanoasis/vim-devicons'   " FIXME: Not working with CtrlP
+Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -795,7 +795,6 @@ endif
 " Plugin Settings: vim-devicons {{{1
 
 " TODO: Enhance the settings
-" FIXME: Fix devicons are not shown when using CtrlP
 
 if isdirectory(expand("~/.vim/bundle/vim-devicons/"))
   set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
