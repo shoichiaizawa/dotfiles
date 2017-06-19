@@ -931,40 +931,42 @@ endif
 
 " }}}1
 " Plugin Settings: Goyo.vim {{{1
-"
+
 " FIXME: Fix any settings not restored upon leaving Goyo (if any)
 " TODO:  Find a way to come back to the original location when leaving Goyo
 "        by :q (:Goyo! works okay but not for :q)
-"
-function! s:goyo_enter()
-  " silent !tmux set status off
-  set nocursorline
-  set noshowmode
-  set noshowcmd
-  set scrolloff=5
-  " GitGutterEnable
-  " Limelight
-endfunction
 
-function! s:goyo_leave()
-  " silent !tmux set status on
-  set cursorline
-  set showmode
-  set showcmd
-  set scrolloff=999
-  highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
-  " highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
-  highlight Visual cterm=NONE ctermfg=254 ctermbg=125
-  " highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
-  highlight WildMenu cterm=bold ctermfg=254 ctermbg=125
-  " highlight WildMenu gui=NONE guifg=NONE guibg=NONE
-  " Limelight!
-endfunction
+if isdirectory(expand("~/.vim/bundle/goyo.vim/"))
+  function! s:goyo_enter()
+    " silent !tmux set status off
+    set nocursorline
+    set noshowmode
+    set noshowcmd
+    set scrolloff=5
+    " GitGutterEnable
+    " Limelight
+  endfunction
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+  function! s:goyo_leave()
+    " silent !tmux set status on
+    set cursorline
+    set showmode
+    set showcmd
+    set scrolloff=999
+    highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
+    " highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
+    highlight Visual cterm=NONE ctermfg=254 ctermbg=125
+    " highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
+    highlight WildMenu cterm=bold ctermfg=254 ctermbg=125
+    " highlight WildMenu gui=NONE guifg=NONE guibg=NONE
+    " Limelight!
+  endfunction
 
-nnoremap <silent> <Leader>gy :Goyo<CR>
+  autocmd! User GoyoEnter nested call <SID>goyo_enter()
+  autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+  nnoremap <silent> <Leader>gy :Goyo<CR>
+endif
 
 " NOTES: See below for some examples of customisation:
 " https://github.com/junegunn/goyo.vim/wiki/Customization
