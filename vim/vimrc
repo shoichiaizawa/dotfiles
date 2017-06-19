@@ -797,7 +797,12 @@ endif
 " TODO: Enhance the settings
 " FIXME: Fix devicons are not shown when using CtrlP
 
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
+if isdirectory(expand("~/.vim/bundle/vim-devicons/"))
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
+
+  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+  " let g:DevIconsEnableFoldersOpenClose = 1
+endif
 
 " }}}1
 " Plugin Settings: Rainbow Parentheses Improved {{{1
