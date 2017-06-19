@@ -1029,30 +1029,32 @@ endif
 " }}}1
 " Plugin Settings: ctrlp.vim {{{1
 
-augroup ctrlp_config
-  autocmd!
+if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
+  augroup ctrlp_config
+    autocmd!
 
-  let g:ctrlp_clear_cache_on_exit = 0 " Do not clear filenames cache, to improve CtrlP startup
-  let g:ctrlp_lazy_update = 350 " Set delay to prevent extra search
-  " let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' } " Use python fuzzy matcher for better performance
+    let g:ctrlp_clear_cache_on_exit = 0 " Do not clear filenames cache, to improve CtrlP startup
+    let g:ctrlp_lazy_update = 350 " Set delay to prevent extra search
+    " let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' } " Use python fuzzy matcher for better performance
 
-  " g:ctrlp_match_window:
-  "   - Position: bottom
-  "   - Order of results: from bottom to top
-  "   - Minimum height: 1
-  "   - Maximum height: 40
-  "   - Maximum number of results: 40
-  let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40,results:40'
-  let g:ctrlp_max_files = 0 " Set no file limit
-  let g:ctrlp_switch_buffer = 'Et' " Jump to tab AND buffer if already open
-  let g:ctrlp_open_new_file = 'r' " Open newly created files in the current window
-  let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
+    " g:ctrlp_match_window:
+    "   - Position: bottom
+    "   - Order of results: from bottom to top
+    "   - Minimum height: 1
+    "   - Maximum height: 40
+    "   - Maximum number of results: 40
+    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40,results:40'
+    let g:ctrlp_max_files = 0 " Set no file limit
+    let g:ctrlp_switch_buffer = 'Et' " Jump to tab AND buffer if already open
+    let g:ctrlp_open_new_file = 'r' " Open newly created files in the current window
+    let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
 
-  let g:ctrlp_custom_ignore = {
-    \ 'dir': 'node_modules$',
-    \ 'file': '^\.DS_Store$',
-    \ }
-augroup END
+    let g:ctrlp_custom_ignore = {
+      \ 'dir': 'node_modules$',
+      \ 'file': '^\.DS_Store$',
+      \ }
+  augroup END
+endif
 
 " }}}1
 " Plugin Settings: vim-javascript {{{1
