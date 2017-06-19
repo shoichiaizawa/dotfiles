@@ -1015,14 +1015,16 @@ endif
 
 " }}}
 " Plugin Settings: vim-emoji {{{1
-"
+
 " NOTES: CTRL-X CTRL-U to use Emoji completion; see details at:
 " http://junegunn.kr/2014/06/emoji-completion-in-vim/
 
-augroup emoji_complete
-  autocmd!
-  autocmd FileType markdown setlocal completefunc=emoji#complete
-augroup END
+if isdirectory(expand("~/.vim/bundle/vim-emoji/"))
+  augroup emoji_complete
+    autocmd!
+    autocmd FileType markdown setlocal completefunc=emoji#complete
+  augroup END
+endif
 
 " }}}1
 " Plugin Settings: ctrlp.vim {{{1
