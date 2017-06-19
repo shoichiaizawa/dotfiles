@@ -920,7 +920,7 @@ if isdirectory(expand("~/.vim/bundle/tagbar/"))
   let g:tagbar_iconchars = ['▸', '▾']
 
   " TODO: Find out a mapping key works best for me
-  nmap <Leader>tt :TagbarToggle<CR>
+  nmap <silent> <Leader>tt :TagbarToggle<CR>
 
   " TODO: Support for additional filetypes
   "
