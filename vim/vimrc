@@ -555,11 +555,13 @@ let g:solarized_hitrail=0
 
 " TODO: Enhance the settings
 
-let NERDSpaceDelims=1
-let NERDCompactSexyComs=1
+if isdirectory(expand("~/.vim/bundle/nerdcommenter/"))
+  let NERDSpaceDelims=1
+  let NERDCompactSexyComs=1
 
-nmap <Leader>ca <Plug>NERDCommenterAppend
-nmap <Leader>cA <Plug>NERDCommenterAltDelims
+  nmap <Leader>ca <Plug>NERDCommenterAppend
+  nmap <Leader>cA <Plug>NERDCommenterAltDelims
+endif
 
 " }}}1
 " Plugin Settings: Syntastic {{{1
