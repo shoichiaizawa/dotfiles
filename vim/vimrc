@@ -1273,11 +1273,6 @@ nnoremap <C-W>6 :vs<CR>:vs<CR>:sp<CR><C-W>h:sp<CR><C-W>h:sp<CR><C-W>k
 
 " FIXME: Settings are poor in this resize section
 
-nnoremap <Tab><CR> :resize +10<CR>|   " Resize with window size +10
-nnoremap <S-Tab><CR> :resize -10<CR>| " Resize with window size -10
-nnoremap <Tab>v<CR> :vertical :resize +10<CR>|   " Resize with window size +10
-nnoremap <S-Tab>v<CR> :vertical :resize -10<CR>| " Resize with window size -10
-
 nnoremap <buffer> H :vertical resize -10<CR>
 nnoremap <buffer> L :vertical resize +10<CR>
 
