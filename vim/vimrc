@@ -62,7 +62,6 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'suan/vim-instant-markdown'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
@@ -94,6 +93,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'Lokaltog/vim-powerline'          " Airline replaced this
 "Plugin 'ryanoasis/vim-webdevicons'
 "Plugin 'severin-lemaignan/vim-minimap'   " Not complete yet and unusable
+"Plugin 'suan/vim-instant-markdown'
 call vundle#end()           " required, all of your Plugins must be added
 " before the following line
 
