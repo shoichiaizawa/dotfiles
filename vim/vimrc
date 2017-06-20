@@ -44,6 +44,7 @@ Plugin 'vim-airline/vim-airline'  " Requires powerline/fonts
 Plugin 'vim-airline/vim-airline-themes' " Requires vim-airline/vim-airline
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'henrik/vim-indexed-search'
