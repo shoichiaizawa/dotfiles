@@ -1203,10 +1203,10 @@ map N Nzzzv
 map n nzzzv
 
 " Same when jumping around
-map g; g;zz
-map g, g,zz
-map <C-O> <C-O>zz
-map <C-I> <C-I>zz
+map g; g;zzzv
+map g, g,zzzv
+map <C-O> <C-O>zzzv
+map <C-I> <C-I>zzzv
 
 " Search and replace word under cursor (,*)
 nnoremap <Leader>* :%s/\<<C-R><C-W>\>//<Left>
