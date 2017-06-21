@@ -1201,6 +1201,10 @@ nnoremap va ggVG
 " on the line it's found in.
 map N Nzzzv
 map n nzzzv
+map # #zzzv
+map * *zzzv
+map g# g#zzzv
+map g* g*zzzv
 
 " Same when jumping around
 map g; g;zzzv
