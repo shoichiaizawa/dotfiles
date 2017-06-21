@@ -1206,6 +1206,7 @@ map n nzzzv
 map g; g;zz
 map g, g,zz
 map <C-O> <C-O>zz
+map <C-I> <C-I>zz
 
 " Search and replace word under cursor (,*)
 nnoremap <Leader>* :%s/\<<C-R><C-W>\>//<Left>
