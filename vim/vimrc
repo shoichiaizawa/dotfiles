@@ -1066,6 +1066,15 @@ if isdirectory(expand("~/.vim/bundle/vim-javascript/"))
 endif
 
 " }}}1
+" Plugin Settings: vim-indexed-search {{{1
+
+if isdirectory(expand("~/.vim/bundle/vim-indexed-search/"))
+  let g:indexed_search_center = 1
+  let g:indexed_search_shortmess = 1
+  let g:indexed_search_numbered_only = 1
+endif
+
+" }}}1
 
 " Mappings: Arrow keys deactivation, and map something useful instead {{{1
 "
