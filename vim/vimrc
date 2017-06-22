@@ -51,6 +51,7 @@ Plugin 'henrik/vim-indexed-search'
 Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
 Plugin 'junegunn/vim-emoji'
+Plugin 'junegunn/vim-slash'
 Plugin 'luochen1990/rainbow'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/emmet-vim'
@@ -1072,6 +1073,18 @@ if isdirectory(expand("~/.vim/bundle/vim-indexed-search/"))
   let g:indexed_search_center = 1
   let g:indexed_search_shortmess = 1
   let g:indexed_search_numbered_only = 1
+endif
+
+" }}}1
+" Plugin Settings: vim-slash {{{1
+
+if isdirectory(expand("~/.vim/bundle/vim-slash/"))
+  if has('timers')
+    " Blink 2 times with 50ms interval
+    noremap <expr> <plug>(slash-after) 'zzzv'.slash#blink(2, 50)
+  else
+    noremap <plug>(slash-after) zzzv
+  endi
 endif
 
 " }}}1
