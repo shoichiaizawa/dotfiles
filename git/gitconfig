@@ -205,6 +205,12 @@
 
 	unstage    = reset HEAD
 
+	# ------
+	# rebase
+	# ------
+
+	edit = rebase --interactive
+
 	# -----
 	# merge
 	# -----
