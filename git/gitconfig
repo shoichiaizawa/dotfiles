@@ -201,7 +201,7 @@
 	discard    = checkout --
 	discardall = reset --hard
 
-	uncommit   = HEAD^
+	uncommit   = reset HEAD^
 
 	unstage    = reset HEAD
 
