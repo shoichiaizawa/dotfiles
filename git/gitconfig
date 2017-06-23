@@ -221,6 +221,8 @@
 	# reset
 	# -----
 
+	uncommit = HEAD^
+
 	unstage = reset HEAD
 	uns     = reset HEAD
 
