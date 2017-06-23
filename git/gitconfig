@@ -176,9 +176,9 @@
 	log5   = log -5
 	log10  = log -10
 
-	l      = log --graph --decorate --oneline --abbrev-commit --all
-	l5     = log --graph --decorate --oneline --abbrev-commit --all -5
-	l10    = log --graph --decorate --oneline --abbrev-commit --all -10
+	l      = log --graph --decorate --oneline --all
+	l5     = log --graph --decorate --oneline --all -5
+	l10    = log --graph --decorate --oneline --all -10
 
 	# ---
 	# tag
