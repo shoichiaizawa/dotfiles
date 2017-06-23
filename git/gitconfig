@@ -211,6 +211,12 @@
 	tags = tag -l
 
 	# -----
+	# stash
+	# -----
+
+	stashes = stash list
+
+	# -----
 	# reset
 	# -----
 
