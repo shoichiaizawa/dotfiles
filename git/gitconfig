@@ -52,7 +52,6 @@
 
 	# Adopted from @tpope
 	# List the commits for this week in reverse order
-	; summary = log --abbrev-commit --pretty=oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
 	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
 
 	# ---
@@ -120,7 +119,6 @@
 	cam    = commit -am
 
 	amend  = commit --verbose --amend
-	ammend = commit --verbose --amend
 
 	# Adopted from @mathiasbynens
 	# Credit an author on the latest commit
@@ -130,20 +128,11 @@
 	# config
 	# ------
 
-	cf-ls    = config --global --list
-	cfl-ls   = config --local  --list
 	conf-ls  = config --global --list
 	confl-ls = config --local  --list
-	cf-e     = config --global --edit
-	cfl-e    = config --local  --edit
+
 	conf-e   = config --global --edit
 	confl-e  = config --local  --edit
-	ed       = config --global --edit
-	edl      = config --local	--edit
-	edit     = config --global --edit
-	editl    = config --local --edit
-	econf    = config --global --edit
-	econfl   = config --local --edit
 
 	# ----
 	# diff
@@ -157,34 +146,21 @@
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
 	df     = diff
-
 	ds     = diff --staged
-	dfs    = diff --staged
-	diffs  = diff --staged
-
 	dc     = diff --color-words
-	dfc    = diff --color-words
-	diffc  = diff --color-words
-
 	dsc    = diff --staged --color-words
-	dfsc   = diff --staged --color-words
-	diffsc = diff --staged --color-words
 
 	# ------
 	# status
 	# ------
 
 	st      = status
-	stat    = status
-	statsu  = status
 
 	s       = status --short --branch
-	ss      = status --short --branch
 
 	stv     = status -v
 	stvv    = status -vv
 
-	si      = status --ignored
 	ignored = status --ignored
 
 	# ------
@@ -199,28 +175,14 @@
 
 	log5   = log -5
 	log10  = log -10
-	lg     = log
-	lg5    = log -5
-	lg10   = log -10
-	ls     = log
-	ls5    = log -5
-	ls10   = log -10
 
 	l      = log --graph --decorate --oneline --abbrev-commit --all
 	l5     = log --graph --decorate --oneline --abbrev-commit --all -5
 	l10    = log --graph --decorate --oneline --abbrev-commit --all -10
-	ll     = log --graph --decorate --oneline --abbrev-commit --all
-	ll5    = log --graph --decorate --oneline --abbrev-commit --all -5
-	ll10   = log --graph --decorate --oneline --abbrev-commit --all -10
-	logg   = log --graph --decorate --oneline --abbrev-commit --all
-	logg5  = log --graph --decorate --oneline --abbrev-commit --all -5
-	logg10 = log --graph --decorate --oneline --abbrev-commit --all -10
 
 	# ---
 	# tag
 	# ---
-
-	; TODO:
 
 	tags = tag -l
 
@@ -240,7 +202,6 @@
 	uncommit   = HEAD^
 
 	unstage    = reset HEAD
-	uns        = reset HEAD
 
 	# -----
 	# merge
