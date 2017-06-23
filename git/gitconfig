@@ -222,6 +222,7 @@
 	# -----
 
 	discard = checkout --
+	discardall = reset --hard
 
 	uncommit = HEAD^
 
