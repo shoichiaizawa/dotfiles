@@ -221,13 +221,13 @@
 	# reset
 	# -----
 
-	discard = checkout --
+	discard    = checkout --
 	discardall = reset --hard
 
-	uncommit = HEAD^
+	uncommit   = HEAD^
 
-	unstage = reset HEAD
-	uns     = reset HEAD
+	unstage    = reset HEAD
+	uns        = reset HEAD
 
 	# -----
 	# merge
