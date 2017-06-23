@@ -175,10 +175,12 @@
 
 	log5   = log -5
 	log10  = log -10
+	log20  = log -20
 
 	l      = log --graph --decorate --oneline --all
 	l5     = log --graph --decorate --oneline --all -5
 	l10    = log --graph --decorate --oneline --all -10
+	l20    = log --graph --decorate --oneline --all -20
 
 	# ---
 	# tag
