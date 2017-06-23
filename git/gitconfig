@@ -59,8 +59,8 @@
 	# add
 	# ---
 
-	aa     = add --all
-	addall = add --all
+	aa          = add --all
+	addall      = add --all
 	interactive = add --patch
 
 	# ------
