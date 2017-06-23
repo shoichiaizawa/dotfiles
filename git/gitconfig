@@ -221,6 +221,8 @@
 	# reset
 	# -----
 
+	discard = checkout --
+
 	uncommit = HEAD^
 
 	unstage = reset HEAD
