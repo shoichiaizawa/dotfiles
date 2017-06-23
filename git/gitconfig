@@ -140,15 +140,15 @@
 
 	# Adapted from @mathiasbynens
 	# Show the diff between the latest commit and the current state
-	d  = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	d   = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	di  = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
-	df     = diff
-	ds     = diff --staged
-	dc     = diff --color-words
-	dsc    = diff --staged --color-words
+	df  = diff
+	ds  = diff --staged
+	dc  = diff --color-words
+	dsc = diff --staged --color-words
 
 	# ------
 	# status
@@ -173,14 +173,14 @@
 	# log
 	# ---
 
-	log5   = log -5
-	log10  = log -10
-	log20  = log -20
+	log5  = log -5
+	log10 = log -10
+	log20 = log -20
 
-	l      = log --graph --decorate --oneline --all
-	l5     = log --graph --decorate --oneline --all -5
-	l10    = log --graph --decorate --oneline --all -10
-	l20    = log --graph --decorate --oneline --all -20
+	l     = log --graph --decorate --oneline --all
+	l5    = log --graph --decorate --oneline --all -5
+	l10   = log --graph --decorate --oneline --all -10
+	l20   = log --graph --decorate --oneline --all -20
 
 	# ---
 	# tag
