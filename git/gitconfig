@@ -61,6 +61,7 @@
 
 	aa          = add --all
 	addall      = add --all
+
 	interactive = add --patch
 
 	# ------
@@ -69,6 +70,7 @@
 
 	branch   = branch --verbose
 	br       = branch --verbose
+
 	branches = branch --all --verbose
 
 	# Adopted from @mathiasbynens
@@ -82,6 +84,7 @@
 	b               = browse
 	repo            = browse
 	gh              = browse
+
 	gh-branches     = browse -- branches
 	gh-commits      = browse -- commits
 	gh-contributors = browse -- contributors
@@ -112,8 +115,10 @@
 
 	commit = commit --verbose
 	ci     = commit --verbose
+
 	cm     = commit -m
 	cam    = commit -am
+
 	amend  = commit --verbose --amend
 	ammend = commit --verbose --amend
 
@@ -147,16 +152,20 @@
 	# Adapted from @mathiasbynens
 	# Show the diff between the latest commit and the current state
 	d  = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
 	df     = diff
+
 	ds     = diff --staged
 	dfs    = diff --staged
 	diffs  = diff --staged
+
 	dc     = diff --color-words
 	dfc    = diff --color-words
 	diffc  = diff --color-words
+
 	dsc    = diff --staged --color-words
 	dfsc   = diff --staged --color-words
 	diffsc = diff --staged --color-words
@@ -168,10 +177,13 @@
 	st      = status
 	stat    = status
 	statsu  = status
+
 	s       = status --short --branch
 	ss      = status --short --branch
+
 	stv     = status -v
 	stvv    = status -vv
+
 	si      = status --ignored
 	ignored = status --ignored
 
@@ -193,6 +205,7 @@
 	ls     = log
 	ls5    = log -5
 	ls10   = log -10
+
 	l      = log --graph --decorate --oneline --abbrev-commit --all
 	l5     = log --graph --decorate --oneline --abbrev-commit --all -5
 	l10    = log --graph --decorate --oneline --abbrev-commit --all -10
