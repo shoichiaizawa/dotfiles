@@ -1,4 +1,6 @@
-# file: ~/.octaverc@ -> ~/Dropbox/code/dotfiles/octaverc
+# File:   octaverc
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/octaverc
 
 setenv ("GNUTERM", "X11");
 
