@@ -1,3 +1,7 @@
+# File:   inputrc
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/inputrc
+
 # History
 # -----------------------------------------------------------------------------
 # Use more intelligent Up/Down behaviour: use the text that has already been
