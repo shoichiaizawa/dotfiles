@@ -1,6 +1,6 @@
-; File: ~/.emacs.d/init.el@ -> ~/Dropbox/code/dotfiles/emacs.d
-; Author: name <username@example.com>
-; Source: github-url
+; File:   init.el
+; Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+; Source: https://github.com/shoichiaizawa/dotfiles/tree/master/emacs.d/init.el
 
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
