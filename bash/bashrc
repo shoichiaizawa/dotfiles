@@ -1,6 +1,6 @@
-# File: ~/.bashrc@ -> ~/Dropbox/code/dotfiles/bash/bashrc
-# Author: name <username@example.com>
-# Source: github-url
+# File:   bashrc
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/bash/bashrc
 
 # TODO: Organise the bashrc settings for code visibility.
 #
