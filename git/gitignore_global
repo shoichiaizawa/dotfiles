@@ -1,4 +1,6 @@
-# File: ~/.gitignore_global@ -> ~/Dropbox/code/dotfiles/git/gitignore_global
+# File:   gitignore_global
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/git/gitignore_global
 
 # Vim generated files #
 #######################
