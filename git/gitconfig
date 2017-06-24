@@ -1,6 +1,6 @@
-# File: ~/.gitconfig@ -> ~/Dropbox/code/dotfiles/git/gitconfig
-# Author: name <username@example.com>
-# Source: github-url
+# File:   gitconfig
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/git/gitconfig
 
 [user]
 	name     = Shoichi Aizawa
