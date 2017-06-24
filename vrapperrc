@@ -1,6 +1,6 @@
-" File:  ~/.vrapperrc@ -> ~/Dropbox/code/dotfiles/vrapperrc
-" Author: name <username@example.com>
-" Source: github-url
+" File:   vrapperrc
+" Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+" Source: https://github.com/shoichiaizawa/dotfiles/tree/master/vrapperrc
 
 let mapleader = ","
 set clipboard=unnamed
