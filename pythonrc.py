@@ -1,3 +1,7 @@
+# File:   pythonrc.py
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/pythonrc.py
+
 try:
     import readline
 except ImportError:
