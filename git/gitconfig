@@ -50,10 +50,6 @@
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
-	# Adopted from @tpope
-	# List the commits for this week in reverse order
-	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
-
 	# ---
 	# add
 	# ---
@@ -150,25 +146,6 @@
 	dc  = diff --color-words
 	dsc = diff --staged --color-words
 
-	# ------
-	# status
-	# ------
-
-	st      = status
-
-	s       = status --short --branch
-
-	stv     = status -v
-	stvv    = status -vv
-
-	ignored = status --ignored
-
-	# ------
-	# remote
-	# ------
-
-	remotes = remote --verbose
-
 	# ---
 	# log
 	# ---
@@ -182,34 +159,9 @@
 	l10   = log --graph --decorate --oneline --all -10
 	l20   = log --graph --decorate --oneline --all -20
 
-	# ---
-	# tag
-	# ---
-
-	tags = tag -l
-
-	# -----
-	# stash
-	# -----
-
-	stashes = stash list
-
-	# -----
-	# reset
-	# -----
-
-	discard    = checkout --
-	discardall = reset --hard
-
-	uncommit   = reset HEAD^
-
-	unstage    = reset HEAD
-
-	# ------
-	# rebase
-	# ------
-
-	edit = rebase --interactive
+	# Adopted from @tpope
+	# List the commits for this week in reverse order
+	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
 
 	# -----
 	# merge
@@ -227,6 +179,54 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi \
 	}; f"
+
+	# ------
+	# rebase
+	# ------
+
+	edit = rebase --interactive
+
+	# ------
+	# remote
+	# ------
+
+	remotes = remote --verbose
+
+	# -----
+	# reset
+	# -----
+
+	discard    = checkout --
+	discardall = reset --hard
+
+	uncommit   = reset HEAD^
+
+	unstage    = reset HEAD
+
+	# -----
+	# stash
+	# -----
+
+	stashes = stash list
+
+	# ------
+	# status
+	# ------
+
+	st      = status
+
+	s       = status --short --branch
+
+	stv     = status -v
+	stvv    = status -vv
+
+	ignored = status --ignored
+
+	# ---
+	# tag
+	# ---
+
+	tags = tag -l
 
 [filter "lfs"]
 	clean    = git-lfs clean %f
