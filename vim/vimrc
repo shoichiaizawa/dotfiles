@@ -1,6 +1,6 @@
-" File:  ~/.vimrc@ -> ~/Dropbox/code/dotfiles/vim/vimrc
-" Author: name <username@example.com>
-" Source: github-url
+" File:   vimrc
+" Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+" Source: https://github.com/shoichiaizawa/dotfiles/tree/master/vim/vimrc
 "
 " This is my .vimrc file, a shameless ripoff of countless Vim settings
 " discovered out there on teh interweb.
