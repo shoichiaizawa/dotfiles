@@ -1,4 +1,6 @@
-# File: ~/.bash_profile@ -> ~/Dropbox/code/dotfiles/bash/bash_profile
+# File:   bash_profile
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/bash/bash_profile
 
 # This only runs on user login
 echo ""
