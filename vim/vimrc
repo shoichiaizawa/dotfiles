@@ -38,6 +38,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'  " Let Vundle manage itself, required
 
 Plugin 'airblade/vim-gitgutter'
+Plugin 'alpertuna/vim-header'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ap/vim-css-color'
 Plugin 'vim-airline/vim-airline'  " Requires powerline/fonts
@@ -1087,6 +1088,19 @@ if isdirectory(expand("~/.vim/bundle/vim-slash/"))
   else
     noremap <plug>(slash-after) zzzv
   endi
+endif
+
+" }}}1
+" Plugin Settings: vim-header {{{1
+
+if isdirectory(expand("~/.vim/bundle/vim-header/"))
+  let g:header_field_filename = 1                   " (default 1)
+  let g:header_field_author = 'Shoichi Aizawa'
+  let g:header_field_author_email = 'shoichiaizawa@gmail.com'
+  let g:header_field_timestamp = 1                  " (default 1)
+  let g:header_field_modified_timestamp = 1         " (default 1)
+  let g:header_field_timestamp_format = '%Y-%m-%d'  " (default %d.%m.%Y)
+  let g:header_auto_add_header = 1                  " (default 1)
 endif
 
 " }}}1
