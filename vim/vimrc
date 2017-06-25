@@ -459,6 +459,8 @@ endfunction
 autocmd BufWinEnter,BufRead,BufNewFile */.\=tern-config setlocal filetype=json
 autocmd BufWinEnter,BufRead,BufNewFile */.tern-project setlocal filetype=json
 
+autocmd BufWinEnter,BufRead,BufNewFile */.\=tldrrc setlocal filetype=json
+
 " }}}1
 " Autocmd: Markdown {{{1
 
