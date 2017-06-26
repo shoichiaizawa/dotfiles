@@ -54,7 +54,9 @@
       "autocomplete-java"
       "linter-javac"
     ]
-    packagesWithKeymapsDisabled: []
+    packagesWithKeymapsDisabled: [
+      "file-header"
+    ]
     telemetryConsent: "limited"
     themes: [
       "atom-material-ui"
@@ -75,12 +77,20 @@
     splitright: true
   "exception-reporting":
     userId: "5f1fd872-de33-9d23-b5da-da0fbe791e6c"
+  "file-header":
+    dateTimeFormat: "YYYY-MM-DD HH:mm:ss ZZ"
+    email: "shoichiaizawa@gmail.com"
+    license: "MIT"
+    realname: "Shoichi Aizawa"
+    username: "shoichiaizawa"
   "file-icons": {}
   "git-plus":
     general:
       _analyticsUserId: "531f1de0-9539-4faa-9854-c3bf2d523b05"
   jumpy:
     fontSize: 1
+  "linter-ui-default":
+    panelHeight: 81
   "markdown-preview":
     liveUpdate: false
     useGitHubStyle: true
