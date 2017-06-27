@@ -545,6 +545,7 @@ alias evimrc='vim ~/.vimrc'       # Edit .vimrc from anywhere
 alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
 alias egitconf='vim ~/.gitconfig'  # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global' # Edit .gitignore_global from anywhere
+alias etmuxconf='vim ~/.tmux.conf'  # Edit .tmux.conf from anywhere
 alias eapache='vim /usr/local/etc/apache2/2.4/httpd.conf'
 
 # XXX: find a better way to achieve the following command
