@@ -40,7 +40,7 @@ export HISTSIZE=32768              # Save 32³ items in history (default 500)
 export HISTFILESIZE=1000000
 export HISTTIMEFORMAT='%F %T -- '  # yyyy-mm-dd HH:MM:SS -- command
 export HISTCONTROL=ignoreboth      # ignoredups:ignorespace
-export HISTIGNORE='history:h:pwd:pdw:exit:eixt:quit:df:du:du1'
+export HISTIGNORE='&:[ ]*:history:h:pwd:pdw:exit:eixt:quit:df:du:du1'
 export HISTIGNORE=$HISTIGNORE':ls:l1:l:la:la1:l1a:lal:lla:l.:l.l:ll.:ll:lll:ls -la'
 export HISTIGNORE=$HISTIGNORE':clear:cl:histg:hgrep'
 
