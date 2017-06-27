@@ -39,7 +39,7 @@ shopt -s histappend
 export HISTSIZE=32768              # Save 32³ items in history (default 500)
 export HISTFILESIZE=1000000
 export HISTTIMEFORMAT='%F %T -- '  # yyyy-mm-dd HH:MM:SS -- command
-export HISTCONTROL=ignoreboth      # ignoredups:ignorespace
+export HISTCONTROL=ignoreboth:erasedups  # ignoredups:ignorespace:erasedups
 export HISTIGNORE='&:[ ]*:?:??'
 export HISTIGNORE=$HISTIGNORE':history:pwd:pdw:exit:eixt:quit:du1'
 export HISTIGNORE=$HISTIGNORE':la1:l1a:lal:lla:l.l:ll.:lll:ls -la'
