@@ -1169,7 +1169,7 @@ nmap <silent> <Leader>S :source $MYVIMRC<CR>:call RefreshUI()<CR>
 nmap <silent> <Leader>ev :edit $MYVIMRC<CR>|      " Open $MYVIMRC for editing
 nmap <silent> <Leader>eb :edit ~/.bashrc<CR>|     " Open ~/.bashrc for editing
 nmap <silent> <Leader>eg :edit ~/.gitconfig<CR>|  " Open ~/.gitconfig for editing
-" nnoremap <Leader>et :tabnew ~/dotfiles/tmux.conf<CR>
+nmap <silent> <Leader>et :edit ~/.tmux.conf<CR>|  " Open ~/.tmux.conf for editing
 " nnoremap <Leader>ez :tabnew ~/dotfiles/zshrc<CR>
 " nnoremap <Leader>em :tabnew ~/dotfiles/mutt/muttrc<CR>
 
