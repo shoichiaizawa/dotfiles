@@ -540,13 +540,14 @@ alias ssh-change-pass='ssh-keygen -p -f' # Change the passphrase of a private ke
 # Edit configuration files
 # ------------------------
 
-alias ebashrc='vim ~/.bashrc'     # Edit .bashrc from anywhere
-alias evimrc='vim ~/.vimrc'       # Edit .vimrc from anywhere
+alias ebashrc='vim ~/.bashrc'           # Edit .bashrc from anywhere
+alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
 alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
-alias egitconf='vim ~/.gitconfig'  # Edit .gitconfig from anywhere
-alias egitig='vim ~/.gitignore_global' # Edit .gitignore_global from anywhere
-alias etmuxconf='vim ~/.tmux.conf'  # Edit .tmux.conf from anywhere
+alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
+alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
+alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
 alias eapache='vim /usr/local/etc/apache2/2.4/httpd.conf'
+                                        # Edit httpd.conf from anywhere
 
 # XXX: find a better way to achieve the following command
 alias ephp="vim /usr/local/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
