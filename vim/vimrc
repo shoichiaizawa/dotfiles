@@ -1099,7 +1099,7 @@ if isdirectory(expand("~/.vim/bundle/vim-header/"))
   let g:header_field_author_email = 'shoichiaizawa@gmail.com'
   let g:header_field_timestamp = 1                  " (default 1)
   let g:header_field_modified_timestamp = 1         " (default 1)
-  let g:header_field_timestamp_format = '%Y-%m-%d'  " (default %d.%m.%Y)
+  let g:header_field_timestamp_format = '%Y-%m-%d %H:%M:%S %z'  " (default %d.%m.%Y)
   let g:header_auto_add_header = 1                  " (default 1)
 endif
 
