@@ -50,6 +50,7 @@ Plugin 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/gv.vim'
 Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
 Plugin 'junegunn/vim-emoji'
 Plugin 'junegunn/vim-slash'
@@ -1103,6 +1104,13 @@ if isdirectory(expand("~/.vim/bundle/vim-header/"))
   let g:header_field_modified_timestamp = 1         " (default 1)
   let g:header_field_timestamp_format = '%Y-%m-%d %H:%M:%S %z'  " (default %d.%m.%Y)
   let g:header_auto_add_header = 1                  " (default 1)
+endif
+
+" }}}1
+" Plugin Settings: gv.vim {{{1
+
+if isdirectory(expand("~/.vim/bundle/gv.vim/"))
+  nnoremap <silent> <Leader>gv :GV<CR>
 endif
 
 " }}}1
