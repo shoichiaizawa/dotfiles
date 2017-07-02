@@ -103,53 +103,12 @@ Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "Plug 'chriskempson/base16-vim'
 "Plug 'sjl/badwolf'
 "Plug 'tomasr/molokai'
-
-" Previously installed but deleted:
-"Plug 'bling/vim-airline'               " Requires powerline/fonts
-"Plug 'kien/ctrlp.vim'                  " Deprecated, use ctrlpvim/ctrlp.vim
-"Plug 'Lokaltog/vim-powerline'          " Airline replaced this
-"Plug 'ryanoasis/vim-webdevicons'
-"Plug 'severin-lemaignan/vim-minimap'   " Not complete yet and unusable
-"Plug 'suan/vim-instant-markdown'
 call plug#end()
 
 filetype plugin indent on   " required
 "           │     │    └───── Enable file type detection
 "           │     └────────── Enable loading of indent file
 "           └──────────────── Enable loading of plugin files
-
-" Quick help notes for Vundle {{{2
-"
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" https://github.com/gmarik/Vundle.vim
-" https://github.com/gmarik/Vundle.vim/wiki
-"
-" }}}2
-" TODO: I don't understand what the following lines are doing: {{{2
-"
-"       I believe they suddenly appeared around the time installing Vundle;
-"       to be investigated later.
-"
-"       Update (2016-10-03):
-"       See http://stackoverflow.com/questions/9850360/what-is-netrwhist
-"
-" let g:netrw_dirhistmax  =10
-" let g:netrw_dirhist_cnt =8
-" let g:netrw_dirhist_1='/Users/Shoichi'
-" let g:netrw_dirhist_2='/Users/Shoichi/.git'
-" let g:netrw_dirhist_3='/Users/Shoichi/.vim'
-" let g:netrw_dirhist_4='/Users/Shoichi/.vim/bundle/Vundle.vim'
-" let g:netrw_dirhist_5='/Users/Shoichi/.vim'
-" let g:netrw_dirhist_6='/Users/Shoichi/.config'
-" let g:netrw_dirhist_7='/Users/Shoichi/.dropbox'
-" let g:netrw_dirhist_8='/Users/Shoichi/Dropbox/SHO/Backup/dotfiles/vim/.vim'
-
-" }}}2
 
 " }}}1 End of vim-plug settings; put your non-Plugin stuff after this line
 
