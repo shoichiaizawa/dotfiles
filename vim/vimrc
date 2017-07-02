@@ -28,80 +28,90 @@
 "         - etc
 "
 " }}}1
-" Preamble: Vundle settings {{{1
+" Preamble: vim-plug settings {{{1
 
 set nocompatible            " be iMproved, required
-filetype off                " required
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'  " Let Vundle manage itself, required
 
-Plugin 'airblade/vim-gitgutter'
-Plugin 'alpertuna/vim-header'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'ap/vim-css-color'
-Plugin 'vim-airline/vim-airline'  " Requires powerline/fonts
-Plugin 'vim-airline/vim-airline-themes' " Requires vim-airline/vim-airline
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'henrik/vim-indexed-search'
-Plugin 'junegunn/goyo.vim'
-Plugin 'junegunn/gv.vim'
-Plugin 'junegunn/limelight.vim'   " Best served with Goyo.vim
-Plugin 'junegunn/vim-emoji'
-Plugin 'junegunn/vim-slash'
-Plugin 'luochen1990/rainbow'
-Plugin 'majutsushi/tagbar'
-Plugin 'mattn/emmet-vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'reedes/vim-pencil'
-Plugin 'Xuyuanp/nerdtree-git-plugin'  " Load before vim-devicons
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'Valloric/YouCompleteMe'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'alpertuna/vim-header'
+Plug 'altercation/vim-colors-solarized'
+Plug 'ap/vim-css-color', { 'for': 'css' }
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
+Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'henrik/vim-indexed-search'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/limelight.vim', { 'for': 'markdown' } " Best served with Goyo.vim
+Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-slash'
+Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/emmet-vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'reedes/vim-pencil'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }  " Load before vim-devicons
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/syntastic'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer --tern-completer
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " TODO: Not installed but want to try one day (or I am curious what it is):
-"Plugin 'honza/vim-snippets'
-"Plugin 'jiangmiao/auto-pairs'  Alternative: 'Raimondi/delimitMate'
-"Plugin 'junegunn/vim-easy-align'  TODO: I have tabular but how about this?
-"Plugin 'kchmck/vim-coffee-script'
-"Plugin 'klen/python-mode'
-"Plugin 'moll/vim-node'
-"Plugin 'othree/html5-syntax.vim'
-"Plugin 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
-"Plugin 'tpope/vim-commentary'  TODO: I use NERDCommenter but how about this?
-"Plugin 'tpope/vim-eunuch'  " Unix commands in Vim
-"Plugin 'tpope/vim-git'     " Support plugin for fugitive
+"Plug 'honza/vim-snippets'
+"Plug 'jiangmiao/auto-pairs'  Alternative: 'Raimondi/delimitMate'
+"Plug 'junegunn/vim-easy-align'  TODO: I have tabular but how about this?
+"Plug 'kchmck/vim-coffee-script'
+"Plug 'klen/python-mode'
+"Plug 'moll/vim-node'
+"Plug 'othree/html5-syntax.vim'
+"Plug 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
+"Plug 'tpope/vim-commentary'  TODO: I use NERDCommenter but how about this?
+"Plug 'tpope/vim-eunuch'  " Unix commands in Vim
+"Plug 'tpope/vim-git'     " Support plugin for fugitive
 
 " TODO: Not only Solarized but hopefully I want to rotate colour schemes:
-"Plugin 'chriskempson/base16-vim'
-"Plugin 'sjl/badwolf'
-"Plugin 'tomasr/molokai'
+"Plug 'chriskempson/base16-vim'
+"Plug 'sjl/badwolf'
+"Plug 'tomasr/molokai'
 
 " Previously installed but deleted:
-"Plugin 'bling/vim-airline'               " Requires powerline/fonts
-"Plugin 'kien/ctrlp.vim'                  " Deprecated, use ctrlpvim/ctrlp.vim
-"Plugin 'Lokaltog/vim-powerline'          " Airline replaced this
-"Plugin 'ryanoasis/vim-webdevicons'
-"Plugin 'severin-lemaignan/vim-minimap'   " Not complete yet and unusable
-"Plugin 'suan/vim-instant-markdown'
-call vundle#end()           " required, all of your Plugins must be added
-" before the following line
+"Plug 'bling/vim-airline'               " Requires powerline/fonts
+"Plug 'kien/ctrlp.vim'                  " Deprecated, use ctrlpvim/ctrlp.vim
+"Plug 'Lokaltog/vim-powerline'          " Airline replaced this
+"Plug 'ryanoasis/vim-webdevicons'
+"Plug 'severin-lemaignan/vim-minimap'   " Not complete yet and unusable
+"Plug 'suan/vim-instant-markdown'
+call plug#end()
 
 filetype plugin indent on   " required
 "           │     │    └───── Enable file type detection
@@ -141,7 +151,7 @@ filetype plugin indent on   " required
 
 " }}}2
 
-" }}}1 End of Vundle settings; put your non-Plugin stuff after this line
+" }}}1 End of vim-plug settings; put your non-Plugin stuff after this line
 
 " My unique .vimrc settings --------------------------------------------------
 "
@@ -563,7 +573,7 @@ let g:solarized_hitrail=0
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/nerdcommenter/"))
+if isdirectory(expand("~/.vim/plugged/nerdcommenter/"))
   let NERDSpaceDelims=1
   let NERDCompactSexyComs=1
 
@@ -574,7 +584,7 @@ endif
 " }}}1
 " Plugin Settings: Syntastic {{{1
 
-if isdirectory(expand("~/.vim/bundle/syntastic/"))
+if isdirectory(expand("~/.vim/plugged/syntastic/"))
 
   " -------
   " General
@@ -640,10 +650,10 @@ endif
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/vim-airline/"))
+if isdirectory(expand("~/.vim/plugged/vim-airline/"))
   "set guifont=Liberation\ Mono\ for\ Powerline\ 10
 
-  if isdirectory(expand("~/.vim/bundle/vim-airline-themes/"))
+  if isdirectory(expand("~/.vim/plugged/vim-airline-themes/"))
     let g:airline_theme="solarized"
     " let g:airline_theme=""
   endif
@@ -720,7 +730,7 @@ endfunction
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/nerdtree/"))
+if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   augroup ps_nerdtree
     autocmd!
     autocmd FileType nerdtree setlocal nolist
@@ -775,7 +785,7 @@ endif
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/emmet-vim/"))
+if isdirectory(expand("~/.vim/plugged/emmet-vim/"))
   let g:user_emmet_leader_key='<C-E>'
 endif
 
@@ -784,7 +794,7 @@ endif
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/vim-easymotion/"))
+if isdirectory(expand("~/.vim/plugged/vim-easymotion/"))
   highlight link EasyMotionTarget IncSearch
   highlight link EasyMotionShade  Comment
 
@@ -804,7 +814,7 @@ endif
 
 " TODO: Enhance the settings
 
-if isdirectory(expand("~/.vim/bundle/vim-devicons/"))
+if isdirectory(expand("~/.vim/plugged/vim-devicons/"))
   set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
 
   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -814,7 +824,7 @@ endif
 " }}}1
 " Plugin Settings: Rainbow Parentheses Improved {{{1
 
-if isdirectory(expand("~/.vim/bundle/rainbow/"))
+if isdirectory(expand("~/.vim/plugged/rainbow/"))
   " Default color settings for terminal:
   " \ 'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
 
@@ -847,7 +857,7 @@ endif
 " }}}1
 " Plugin Settings: Vim Markdown {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-markdown/"))
+if isdirectory(expand("~/.vim/plugged/vim-markdown/"))
   " Type 'gx' to open an URL under the cursor; this is a standard Vim command
   " <Plug>Markdown_OpenUrlUnderCursor
 
@@ -861,7 +871,7 @@ endif
 " }}}1
 " Plugin Settings: Vim Git Gutter {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-gitgutter/"))
+if isdirectory(expand("~/.vim/plugged/vim-gitgutter/"))
   " let g:gitgutter_map_keys = 0  " To disable the default mappings
 
   nmap [h <Plug>GitGutterPrevHunk|            " default [c
@@ -888,7 +898,7 @@ endif
 " }}}1
 " Plugin Settings: Vim Fugitive {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+if isdirectory(expand("~/.vim/plugged/vim-fugitive/"))
   nnoremap <silent> <Leader>gs :Gstatus<CR>
   nnoremap <silent> <Leader>ga :Git add %<CR>
   nnoremap <silent> <Leader>gd :Gdiff<CR>
@@ -909,7 +919,7 @@ endif
 
 " TODO: Enhance the setting
 
-if isdirectory(expand("~/.vim/bundle/tagbar/"))
+if isdirectory(expand("~/.vim/plugged/tagbar/"))
   let g:tagbar_autoclose = 1    " If 1, close Tagbar once open (default 0)
   let g:tagbar_autofocus = 1    " If 1, move to Tagbar window when open (default 0)
   let g:tagbar_autopreview = 1  " If 1, automatically show tags along the cursor (default 0)
@@ -944,7 +954,7 @@ endif
 " TODO:  Find a way to come back to the original location when leaving Goyo
 "        by :q (:Goyo! works okay but not for :q)
 
-if isdirectory(expand("~/.vim/bundle/goyo.vim/"))
+if isdirectory(expand("~/.vim/plugged/goyo.vim/"))
   function! s:goyo_enter()
     " silent !tmux set status off
     set nocursorline
@@ -1013,7 +1023,7 @@ endif
 " }}}1
 " Plugin Settings: vim-indent-guides {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
+if isdirectory(expand("~/.vim/plugged/vim-indent-guides/"))
   let g:indent_guides_enable_on_vim_startup = 0
   let g:indent_guides_auto_colors = 0
   let g:indent_guides_guide_size = 0
@@ -1027,7 +1037,7 @@ endif
 " NOTES: CTRL-X CTRL-U to use Emoji completion; see details at:
 " http://junegunn.kr/2014/06/emoji-completion-in-vim/
 
-if isdirectory(expand("~/.vim/bundle/vim-emoji/"))
+if isdirectory(expand("~/.vim/plugged/vim-emoji/"))
   augroup emoji_complete
     autocmd!
     autocmd FileType markdown setlocal completefunc=emoji#complete
@@ -1037,7 +1047,7 @@ endif
 " }}}1
 " Plugin Settings: ctrlp.vim {{{1
 
-if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
+if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
   augroup ctrlp_config
     autocmd!
 
@@ -1067,7 +1077,7 @@ endif
 " }}}1
 " Plugin Settings: vim-javascript {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-javascript/"))
+if isdirectory(expand("~/.vim/plugged/vim-javascript/"))
   let g:javascript_plugin_jsdoc = 1
   let g:javascript_plugin_flow = 1
 endif
@@ -1075,7 +1085,7 @@ endif
 " }}}1
 " Plugin Settings: vim-indexed-search {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-indexed-search/"))
+if isdirectory(expand("~/.vim/plugged/vim-indexed-search/"))
   let g:indexed_search_center = 1
   let g:indexed_search_shortmess = 1
   let g:indexed_search_numbered_only = 1
@@ -1084,7 +1094,7 @@ endif
 " }}}1
 " Plugin Settings: vim-slash {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-slash/"))
+if isdirectory(expand("~/.vim/plugged/vim-slash/"))
   if has('timers')
     " Blink 2 times with 50ms interval
     noremap <expr> <plug>(slash-after) 'zzzv'.slash#blink(2, 50)
@@ -1096,7 +1106,7 @@ endif
 " }}}1
 " Plugin Settings: vim-header {{{1
 
-if isdirectory(expand("~/.vim/bundle/vim-header/"))
+if isdirectory(expand("~/.vim/plugged/vim-header/"))
   let g:header_field_filename = 1                   " (default 1)
   let g:header_field_author = 'Shoichi Aizawa'
   let g:header_field_author_email = 'shoichiaizawa@gmail.com'
@@ -1109,7 +1119,7 @@ endif
 " }}}1
 " Plugin Settings: gv.vim {{{1
 
-if isdirectory(expand("~/.vim/bundle/gv.vim/"))
+if isdirectory(expand("~/.vim/plugged/gv.vim/"))
   nnoremap <silent> <Leader>gv :GV<CR>
 endif
 
