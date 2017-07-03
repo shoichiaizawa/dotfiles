@@ -737,6 +737,17 @@ if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   autocmd VimEnter * call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
   autocmd VimEnter * call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
   autocmd VimEnter * call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
+
+  augroup nerd_loader
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+      \  if isdirectory(expand('<amatch>'))
+      \|   call plug#load('nerdtree-git-plugin')
+      \|   call plug#load('nerdtree')
+      \|   execute 'autocmd! nerd_loader'
+      \| endif
+  augroup END
 endif
 
 " }}}1
