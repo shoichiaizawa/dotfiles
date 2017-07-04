@@ -287,6 +287,8 @@ set t_vb=                   "       Disable error flash and beep
 set showmatch               "sm:    Show matching brackets [{()}]
 set matchtime=2             "mat:   How many tenths of a seconds to blink
                             "       when matching brackets
+set matchpairs+=<:>         "mps:   Set match pairs beyond default
+                            "       {...}. (...), and [...]
 
 "--------
 " Search
