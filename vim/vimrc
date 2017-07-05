@@ -130,7 +130,7 @@ let mapleader = ","         "       Use ',' for the mapleader (default '\')
 let maplocalleader = "\\"   "       Use '\' for the mappings local to buffer
 set t_Co=256                " Tell the term has 256 colors set background=dark
 set background=dark
-colorscheme solarized
+silent! colorscheme solarized
 " syntax enable               "      TODO: Use syntax highlighting
 syntax on                   "       TODO: Use syntax highlighting
 
