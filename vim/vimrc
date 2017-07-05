@@ -1106,21 +1106,23 @@ endif
 " NOTES: See details for mmozuras's blog:
 " http://codingfearlessly.com/2012/08/21/vim-putting-arrows-to-use/
 
-" Map up/down arrow keys to move the current line up/down in Normal mode;
-" this requires "tpope/vim-unimpaired" plugin
-nmap <Up> [e
-nmap <Down> ]e
-" Map up/down arrow keys to  in Normal mode
-" nnoremap <silent> <Up> :m .-2<CR>==
-" nnoremap <silent> <Down> :m .+1<CR>==
-"
-" Map up/down arrow keys to move the selected line(s) up/down in Visual mode;
-" this requires "tpope/vim-unimpaired" plugin
-vmap <Up> [egv
-vmap <Down> ]egv
-" Map up/down arrow keys to move the selected line(s) in Visual mode;
-" vnoremap <silent> <Up> :m '<-2<CR>gv=gv
-" vnoremap <silent> <Down> :m '>+1<CR>gv=gv
+" Map up/down arrow keys to move the current line up/down in Normal mode
+if exists(expand("~/.vim/plugged/vim-unimpaired/"))
+  nmap <Up> [e
+  nmap <Down> ]e
+else
+  nnoremap <silent> <Up> :m .-2<CR>==
+  nnoremap <silent> <Down> :m .+1<CR>==
+endif
+
+" Map up/down arrow keys to move the selected line(s) up/down in Visual mode
+if exists(expand("~/.vim/plugged/vim-unimpaired/"))
+  vmap <Up> [egv
+  vmap <Down> ]egv
+else
+  vnoremap <silent> <Up> :m '<-2<CR>gv=gv
+  vnoremap <silent> <Down> :m '>+1<CR>gv=gv
+endif
 
 " Map left/right arrow keys to indent in Normal mode, instead of setting <Nop>
 nmap <Left> <<
