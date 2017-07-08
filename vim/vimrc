@@ -695,8 +695,8 @@ if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   augroup ps_nerdtree
     autocmd!
     autocmd FileType nerdtree setlocal nolist
-    autocmd FileType nerdtree nnoremap <buffer> H :vertical resize -10<CR>
-    autocmd FileType nerdtree nnoremap <buffer> L :vertical resize +10<CR>
+    autocmd FileType nerdtree nnoremap <silent> <buffer> H :vertical resize -10<CR>
+    autocmd FileType nerdtree nnoremap <silent> <buffer> L :vertical resize +10<CR>
   augroup END
 
   let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']  " TODO: Add more items
@@ -1321,8 +1321,8 @@ nnoremap <C-W>6 :vs<CR>:vs<CR>:sp<CR><C-W>h:sp<CR><C-W>h:sp<CR><C-W>k
 
 " FIXME: Settings are poor in this resize section
 
-nnoremap <buffer> H :vertical resize -10<CR>
-nnoremap <buffer> L :vertical resize +10<CR>
+nnoremap <silent> <buffer> H :vertical resize -10<CR>
+nnoremap <silent> <buffer> L :vertical resize +10<CR>
 
 nnoremap <Tab>= <C-W>=|   " Make all windows (almost) equally high and wide
 nnoremap <Tab>o <C-W>o|   " Close all other windows except the current one
