@@ -1180,6 +1180,10 @@ nmap <silent> <Leader>et :edit ~/.tmux.conf<CR>|  " Open ~/.tmux.conf for editin
 map <silent> <Leader>p :!open -a "Marked" %<CR><CR>
 map <silent> <Leader>mo :!open -a "Markoff" %<CR><CR>
 
+inoremap <silent> <Leader>todo <C-R>=strftime('%Y-%m-%d %a')<CR>
+inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
+inoremap <silent> <Leader>time <C-R>=strftime('%H:%M:%S')<CR>
+
 " }}}1
 " Mappings: Regular char enhancement {{{1
 
