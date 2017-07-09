@@ -49,6 +49,7 @@ Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 Plug 'henrik/vim-indexed-search'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/gv.vim'
