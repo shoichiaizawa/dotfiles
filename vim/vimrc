@@ -410,6 +410,15 @@ endif
 autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 
 " }}}1
+" Autocmd: CSON {{{1
+
+augroup ft_cson
+  autocmd!
+
+  autocmd BufWinEnter,BufRead,BufNewFile *.cson setlocal filetype=coffee
+augroup END
+
+" }}}1
 " Autocmd: JavaScript {{{1
 
 augroup ft_javascript
