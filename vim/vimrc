@@ -56,6 +56,7 @@ Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim', { 'for': 'markdown' } " Best served with Goyo.vim
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-slash'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
@@ -92,7 +93,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "Plug 'honza/vim-snippets'
 "Plug 'jiangmiao/auto-pairs'  Alternative: 'Raimondi/delimitMate'
 "Plug 'junegunn/vim-easy-align'  TODO: I have tabular but how about this?
-"Plug 'kchmck/vim-coffee-script'
 "Plug 'klen/python-mode'
 "Plug 'othree/html5-syntax.vim'
 "Plug 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
