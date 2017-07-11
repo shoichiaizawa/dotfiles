@@ -488,8 +488,7 @@ mcd () { mkdir -p "$1" && cd "$1"; }    # mcd:    Makes new Dir and jumps inside
 # Time and Date
 # -------------
 
-alias now='date +"%T"'
-alias nowtime=now
+alias nowtime='date +"%T"'
 alias nowdate='date +"%Y-%m-%d"'
 alias week='date +%V'
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
