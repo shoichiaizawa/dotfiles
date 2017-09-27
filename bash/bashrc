@@ -810,11 +810,6 @@ if type composer > /dev/null 2>&1; then
   alias composer-pkg-versions='composer global show --installed'  # short for -i
 fi
 
-if type pip > /dev/null 2>&1; then
-  alias pip-all-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
-  alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
-fi
-
 alias meteor-upgrade='curl https://install.meteor.com/ | sh'
 
 # How to deploy a static website to Heroku:
@@ -1013,6 +1008,11 @@ fi
 
 if type jupyter > /dev/null 2>&1; then
   alias note='jupyter notebook'
+fi
+
+if type pip > /dev/null 2>&1; then
+  alias pip-all-upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
+  alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
 fi
 
 ################################################################################
