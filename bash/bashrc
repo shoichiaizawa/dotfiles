@@ -974,7 +974,20 @@ if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
     echo "nvm-install command has been unset."
     echo "Use nvm-upgrade command to upgrade nvm."
     unset -f nvm-install
-    [[ -d $NVM_DIR ]] && alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
+    [[ -d $NVM_DIR ]] &&
+    nvm-upgrade() {
+      local tmp_currentpwd=$(pwd)
+      local tmp_oldpwd=$OLDPWD
+      (
+        cd "$NVM_DIR"
+        git fetch origin
+        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
+      ) && . "$NVM_DIR/nvm.sh"
+      cd $tmp_currentpwd
+      OLDPWD=$tmp_oldpwd
+      unset tmp_currentpwd
+      unset tmp_oldpwd
+    }
   }
 else
   # Automatically source `nvm` upon login
@@ -983,8 +996,20 @@ else
   # Activate `bash_completion`
   [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
-  # An alias for `nvm` manual upgrade
-  alias nvm-upgrade='cd "$NVM_DIR" && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` && . "$NVM_DIR/nvm.sh" && cd $OLDPWD'
+  # A function for `nvm` manual upgrade, preserving the both current and old working directory paths
+  nvm-upgrade() {
+    local tmp_currentpwd=$(pwd)
+    local tmp_oldpwd=$OLDPWD
+    (
+      cd "$NVM_DIR"
+      git fetch origin
+      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
+    ) && . "$NVM_DIR/nvm.sh"
+    cd $tmp_currentpwd
+    OLDPWD=$tmp_oldpwd
+    unset tmp_currentpwd
+    unset tmp_oldpwd
+  }
 
   # Aliases to list installed npm packages, globally and locally
   if type npm > /dev/null 2>&1; then
