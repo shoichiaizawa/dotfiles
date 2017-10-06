@@ -971,8 +971,8 @@ if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
 
     echo -e "\n--------------------------------------------------------------------------------\n"
     echo "Woohoo! nvm has been installed successfully!"
-    echo "nvm-install command has been unset."
-    echo "Use nvm-upgrade command to upgrade nvm."
+    echo "\`nvm-install\` command has been unset."
+    echo "Use \`nvm-upgrade\` command to upgrade nvm."
     unset -f nvm-install
     [[ -d $NVM_DIR ]] &&
     nvm-upgrade() {
