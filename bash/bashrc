@@ -950,9 +950,7 @@ fi
 # Install nvm manually;
 # See details at https://github.com/creationix/nvm#manual-install
 
-export NVM_DIR="$HOME/.nvm"
-
-if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
+if ! type nvm > /dev/null 2>&1 && [[ ! -d $HOME/.nvm ]]; then
   # Function: nvm-install -- Install `nvm` and activate its `bash_completion`
   nvm-install() {
     export NVM_DIR="$HOME/.nvm" && (
@@ -983,6 +981,8 @@ if ! type nvm > /dev/null 2>&1 && [[ ! -d $NVM_DIR ]]; then
     }
   }
 else
+  export NVM_DIR="$HOME/.nvm"
+
   # Automatically source `nvm` upon login
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
