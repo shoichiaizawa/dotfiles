@@ -10,6 +10,9 @@ emacs.d/auto-save-list/*
 emacs.d/packages/*
 emacs.d/url/cache/*
 
+matplotlib/*
+!matplotlib/matplotlibrc
+
 mutt/temp/*
 mutt/cache/*
 mutt/muttrc
