@@ -17,7 +17,7 @@ mutt/temp/*
 mutt/cache/*
 mutt/muttrc
 
-newsbeuter/cache.db
+newsboat/cache.db
 
 vim/bundle/*
 vim/plugged/*
