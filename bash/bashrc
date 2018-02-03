@@ -551,6 +551,8 @@ alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
 alias eapache='vim /usr/local/etc/httpd/httpd.conf'
                                         # Edit httpd.conf from anywhere
+alias enginx='vim /usr/local/etc/nginx/nginx.conf'
+                                        # Edit nginx.conf from anywhere
 
 # XXX: find a better way to achieve the following command
 alias ephp="vim /usr/local/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
