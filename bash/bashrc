@@ -472,7 +472,6 @@ alias dl='cd ~/Downloads/'              # dl:     Go to Downloads
 alias dr='cd ~/Dropbox/'                # dr:     Go to Dropbox
 
 alias blogging='cd ~/Dropbox/code/github/sho-repos/shoichiaizawa.github.io'
-alias code='cd ~/Dropbox/code'
 alias sandbox='cd ~/Dropbox/code/examples-code/sandbox' # sandbox: Go to sandbox
 alias drafts='cd ~/Dropbox/code/examples-code/sandbox/drafts'
 
