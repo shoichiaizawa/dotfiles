@@ -525,6 +525,11 @@ alias magenta-grep="GREP_COLOR='1;35' grep --color=always"
 alias cyan-grep="GREP_COLOR='1;36' grep --color=always"
 alias white-grep="GREP_COLOR='1;37' grep --color=always"
 
+# Search a string in an entire directory
+# Usage: dgrep 'pattern' '/directory/to/be/searched'
+# See: https://stackoverflow.com/q/16956810/1334728
+alias dgrep='grep -nrw $1 $2'
+
 # ----------
 # ssh-keygen
 # ----------
