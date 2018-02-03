@@ -771,6 +771,11 @@ if type hub > /dev/null 2>&1; then
   alias git=hub
 fi
 
+# Deploying a subfolder to GitHub Pages
+# See: https://gist.github.com/cobyism/4730490
+# Courtesy of Coby Chapple (@cobyism)
+alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
+
 # This creates a backup file for Atom packages installed by the user
 # To install, run: `apm install --packages-file packages.list`
 # NOTE: For an alternative method, use `atom star|stars|starred`
