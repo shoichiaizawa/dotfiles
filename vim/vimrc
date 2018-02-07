@@ -61,6 +61,7 @@ Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'moll/vim-node'
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['html.mustache', 'html.handlebars'] }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
