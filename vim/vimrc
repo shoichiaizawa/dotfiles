@@ -1234,7 +1234,7 @@ map Q gq
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" Map Y to act like D and C, i.e. to yank until EOL, otherwise same as yy
+" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy
 map Y y$
 
 " gi already moves to "last place you exited insert mode", so we'll map gI to
