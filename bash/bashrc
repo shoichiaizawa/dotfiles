@@ -1126,3 +1126,13 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+################################################################################
+# Google Cloud SDK                                                             #
+################################################################################
+
+# Google Cloud SDK installed via Homebrew Cask
+if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cloud-sdk ]]; then
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+fi
