@@ -16,7 +16,7 @@
 
 export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
-export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+export LESSOPEN='| $(brew --prefix)/bin/src-hilite-lesspipe.sh %s'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -28,7 +28,7 @@ export EDITOR="$VISUAL"
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 export PATH=$PATH:~/.composer/vendor/bin
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+export PATH=$PATH:$(brew --prefix)/share/git-core/contrib/diff-highlight
 
 ################################################################################
 # History Settings                                                             #
@@ -185,7 +185,7 @@ fi
 #
 # Enable tab completion for `g` by marking it as an alias for `git`
 # https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L35
-if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+if type _git &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
   complete -o default -o nospace -F _git g;
 fi;
 
@@ -202,7 +202,7 @@ fi;
 #
 # See the following GitHub repository for details:
 # https://github.com/xyb/homebrew-cask-completion
-if type _brew_cask &> /dev/null && [ -f /usr/local/etc/bash_completion.d/brew-cask ]; then
+if type _brew_cask &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/brew-cask ]; then
   complete -o default -o nospace -F _brew_cask cask
 fi
 
@@ -223,7 +223,7 @@ if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
   }
 
   # Enable tab completion for the `homestead` function defined above
-  if [ -f /usr/local/etc/bash_completion.d/vagrant ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion.d/vagrant ]; then
     complete -o default -o nospace -F _vagrant homestead
   fi
 fi
@@ -310,7 +310,7 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
 # export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
 
-export ANDROID_HOME=/usr/local/opt/android-sdk  # Homebrew version
+export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
 # export ANDROID_HOME=~/Library/Android/sdk/      # Android Studio default
 
 ################################################################################
@@ -549,13 +549,13 @@ alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
 alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
-alias eapache='vim /usr/local/etc/httpd/httpd.conf'
+alias eapache="vim $(brew --prefix)/etc/httpd/httpd.conf"
                                         # Edit httpd.conf from anywhere
-alias enginx='vim /usr/local/etc/nginx/nginx.conf'
+alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
                                         # Edit nginx.conf from anywhere
 
 # XXX: find a better way to achieve the following command
-alias ephp="vim /usr/local/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
+alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
 
 # --------------
 # mute and unmute
@@ -571,7 +571,7 @@ alias unmute="osascript -e 'set volume output muted false'"
 alias vi=vim
 alias edit=vim
 alias e=vim
-alias emacs='/usr/local/Cellar/emacs/25.2/Emacs.app/Contents/MacOS/Emacs -nw'
+alias emacs="$(brew --prefix)/Cellar/emacs/25.3/Emacs.app/Contents/MacOS/Emacs -nw"
 
 # -----
 # macOS
@@ -709,7 +709,7 @@ if type docker-machine > /dev/null 2>&1; then
   alias dmenv='eval "$(docker-machine env)"'
 fi
 
-if type _docker_machine &> /dev/null && [ -f /usr/local/etc/bash_completion.d/docker-machine.bash ]; then
+if type _docker_machine &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/docker-machine.bash ]; then
   complete -o default -o nospace -F _docker_machine dm
 fi
 
@@ -717,7 +717,7 @@ fi
 
 if type docker > /dev/null 2>&1; then
   alias d='docker'
-  if [ -f /usr/local/etc/bash_completion.d/docker ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker d
   fi
 
@@ -726,7 +726,7 @@ if type docker > /dev/null 2>&1; then
   db() { docker build -t "$1" .; }
 
   da() { docker start $1 && docker attach $1; }
-  if type _docker_start > /dev/null 2>&1 && [ -f /usr/local/etc/bash_completion.d/docker ]; then
+  if type _docker_start > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker_start da
   fi
 fi
