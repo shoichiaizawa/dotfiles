@@ -780,11 +780,7 @@ alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
 # To install, run: `apm install --packages-file packages.list`
 # NOTE: For an alternative method, use `atom star|stars|starred`
 if type apm > /dev/null 2>&1; then
-  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 >| ~/.atom/packages.list"
-fi
-
-if type speedtest-cli > /dev/null 2>&1; then
-  alias speedtest='speedtest-cli'
+  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 | grep -v '^$' >| ~/.atom/packages.list"
 fi
 
 alias reload='exec $SHELL -l'     # Invoke the default shell ($SHELL) as a login shell
