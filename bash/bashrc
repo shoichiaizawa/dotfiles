@@ -278,6 +278,14 @@ function _composercomplete {
 
 complete -F _composercomplete composer;
 
+# -----------------------------
+# Bash completion for Terraform
+# -----------------------------
+
+if type brew > /dev/null 2>&1 && type terraform > /dev/null 2>&1; then
+  complete -C $(brew --prefix)/opt/terraform/bin/terraform terraform
+fi
+
 ################################################################################
 # Python                                                                       #
 ################################################################################
