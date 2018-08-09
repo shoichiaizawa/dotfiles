@@ -579,7 +579,7 @@ alias unmute="osascript -e 'set volume output muted false'"
 alias vi=vim
 alias edit=vim
 alias e=vim
-alias emacs="$(brew --prefix)/Cellar/emacs/25.3/Emacs.app/Contents/MacOS/Emacs -nw"
+alias emacs="emacs -nw"
 
 # -----
 # macOS
