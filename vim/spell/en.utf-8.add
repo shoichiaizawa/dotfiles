@@ -4,6 +4,7 @@ ActiveRecord
 admin
 admins
 aeiou
+Airbnb
 AllegroGraph
 AngularJS
 ansible
@@ -29,6 +30,7 @@ Autocorrect
 Autodesk
 autoindent
 autoindenting
+AutoML
 Autosave
 awk
 AWS
@@ -45,6 +47,7 @@ baz
 bc
 BetterTouchTool
 BFGS
+BigQuery
 Bigtable
 Bitbucket
 BitKeeper
@@ -58,7 +61,9 @@ bool
 bootcamp
 bootcamps
 BootstrapCDN
+BQ
 Browserify
+BT
 bugfix
 caskroom
 cd
@@ -81,6 +86,7 @@ ColdFusion
 colordiff
 Commitizen
 commitizen
+conda
 config
 Cordova
 Couchbase
@@ -99,6 +105,10 @@ ctrl
 CtrlP
 cursorcolumn
 CVS
+Dataflow
+Datalab
+Dataprep
+Dataproc
 dayone
 dayoneapp
 DB2
@@ -108,11 +118,13 @@ denormalization
 Deutsche
 dev
 df
+Dialogflow
 diff
 DiffOrig
 dir
 Disqus
 Django
+DL
 dmg
 DNS
 Dockerfile
@@ -126,6 +138,7 @@ Driessen's
 Dropbox
 DS
 du
+DWH
 EasyMotion
 edX
 ejs
@@ -176,9 +189,19 @@ FreeCodeCamp's
 frontend
 frontends
 ftplugin
+GAE
+GAEFE
+GAESE
 GameKit
 gaussian
 gcc
+GCE
+GCF
+GCLB
+gcloud
+GCP
+GCPUG
+GCS
 Gemfile
 GFM
 gif
@@ -200,12 +223,14 @@ Gitter
 GitWeb
 GitX
 gitx
+GKE
 globbing
 gnuplot
 google
 Goyo
 goyo
 grep
+gsutil
 gui
 guifont
 guioptions
@@ -217,6 +242,7 @@ H3
 H4
 H5
 H6
+HashiCorp
 HBase
 HDD
 Helvetica
@@ -235,6 +261,7 @@ https
 https
 hyperlink
 Hypertable
+IAM
 iCal
 iCloud
 IDE
@@ -259,6 +286,7 @@ interweb
 interwebs
 io
 iOS
+IoT
 iPad
 iPhone
 iPhoto
@@ -267,6 +295,7 @@ IPv4
 IPv6
 ish
 iso
+Istio
 iTerm
 iTerm2
 iTunes
@@ -278,6 +307,8 @@ JDBC
 JDK
 jdk
 jekyll
+Jinja
+Jinja2
 JIT
 JLL
 jpeg
@@ -298,17 +329,22 @@ keymapping
 keymappings
 keymaps
 killall
+Knative
 Knightsbridge
 Konqueror
 kramdown
+kubectl
+Kubernetes
 laravel
 LaunchAgents
 lazyredraw
 LF
 LHS
 LINQ
+Linuxbrew
 ln
 localhost
+LTS
 lua
 lynda
 MacBook
@@ -323,6 +359,8 @@ master
 mathiasbynens
 MathJax
 MathWorks
+matplotlib
+MAU
 MaxCDN
 md
 mdfind
@@ -370,8 +408,10 @@ NERDTree's
 NERDTreeFromBookmark
 NetBeans
 newsbeuter
+newsboat
 NeXTSTEP
 NHibernate
+NLP
 nnoremap
 noautoindent
 nocindent
@@ -395,6 +435,7 @@ Octocat
 OLDPWD
 OMG
 oneline
+OpenCV
 openssl
 OpenVMS
 org
@@ -432,6 +473,7 @@ POSIX
 PostCSS
 PostgreSQL
 powerline
+preemptible
 PreferencePanes
 print0
 printf
@@ -470,6 +512,7 @@ RHS
 Riak
 rmdir
 rnu
+Roomba
 rsa
 RubyMine
 rvm
@@ -483,6 +526,7 @@ Screenshot
 screenshot
 scrollback
 scrolloff
+scss
 sdk
 sed
 servlets
@@ -508,10 +552,12 @@ Solarized
 solarized
 sourceforge
 SourceTree
+Sourcetree
 sqlite
 sqlite3
 src
 SSD
+Stackdriver
 stackoverflow
 stderr
 stdin
@@ -522,6 +568,7 @@ strikethrough
 stylesheet
 subchapter
 subshell
+subtree
 sudo
 sudoers
 SVG
@@ -545,6 +592,7 @@ TextEdit
 TextMate
 textwidth
 timestamp
+Tkinter
 tldr
 tmp
 tmux
@@ -586,6 +634,7 @@ uniq
 unix
 unsets
 unsetting
+Unsplash
 Unstaging
 unsupervised
 unsupervised
@@ -617,8 +666,10 @@ vmap
 vms
 vnoremap
 VoiceOver
+VPC
 Vrapper
 vrapper
+Vue
 Vundle
 vundle
 W3C
@@ -626,6 +677,7 @@ WAMP
 WampServer
 wc
 WebKit
+webpack
 WebPlatform
 wget
 WHATWG
