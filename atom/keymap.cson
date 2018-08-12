@@ -207,3 +207,11 @@
   'g g': 'core:move-to-top'
   'shift-g': 'core:move-to-bottom'
   'o': 'tree-view:open-selected-entry'
+
+# GitHub for Atom
+# -------------------------
+'.github-Panel':
+  'k': 'core:move-up'
+  'j': 'core:move-down'
+  'ctrl-p': 'core:move-up'
+  'ctrl-n': 'core:move-down'
