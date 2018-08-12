@@ -35,6 +35,13 @@
 
 'atom-text-editor[mini]':
 
+  # The keymaps below allow the user to move the cursor up and down when
+  # Command Palette and Fuzzy Finder are toggled:
+  'ctrl-k': 'core:move-up'
+  'ctrl-j': 'core:move-down'
+  'ctrl-p': 'core:move-up'
+  'ctrl-n': 'core:move-down'
+
   'ctrl-u': 'editor:delete-to-beginning-of-line'
   'ctrl-w': 'editor:delete-to-beginning-of-word'
 
