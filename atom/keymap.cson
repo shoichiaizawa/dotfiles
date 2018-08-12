@@ -135,6 +135,10 @@
   'x': 'core:delete'
   'X': 'core:delete'
 
+  ### Editor ###
+
+  ', c c': 'editor:toggle-line-comments'
+
   ### t9md/open-this ###
 
   ', space': 'vim-mode-plus:clear-persistent-selection'
