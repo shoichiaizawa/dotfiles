@@ -53,6 +53,7 @@
       "autocomplete-java-minus"
       "autocomplete-java"
       "linter-javac"
+      "file-header"
     ]
     packagesWithKeymapsDisabled: [
       "file-header"
@@ -65,7 +66,7 @@
   "cursor-history":
     flashOnLand: true
   editor:
-    fontFamily: "FiraCode-Regular"
+    fontFamily: "FiraCode-Medium"
     invisibles: {}
     scrollPastEnd: true
     showIndentGuide: true
@@ -89,8 +90,7 @@
       _analyticsUserId: "531f1de0-9539-4faa-9854-c3bf2d523b05"
   jumpy:
     fontSize: 1
-  "linter-ui-default":
-    panelHeight: 81
+  "linter-ui-default": {}
   "markdown-preview":
     liveUpdate: false
     useGitHubStyle: true
@@ -99,17 +99,31 @@
     userId: "1fb1a4b11cc74709a8f29f6ea5dd2b441a8e95cb"
   minimap:
     absoluteMode: true
-    autoToggle: false
     plugins:
+      bookmarks: true
+      bookmarksDecorationsZIndex: 0
+      codeglance: true
+      codeglanceDecorationsZIndex: 0
+      cursorline: false
+      cursorlineDecorationsZIndex: 0
       "find-and-replace": true
       "find-and-replaceDecorationsZIndex": 0
       "git-diff": true
       "git-diffDecorationsZIndex": 0
       "highlight-selected": true
       "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+      "minimap-autohider": true
+      "minimap-autohiderDecorationsZIndex": 0
       pigments: true
       pigmentsDecorationsZIndex: 0
+      selection: true
+      selectionDecorationsZIndex: 0
     scrollAnimation: true
+  "minimap-autohider": {}
+  "minimap-selection":
+    highlightCursorsLines: true
   "one-dark-ui": {}
   pigments:
     markerType: "native-dot"
