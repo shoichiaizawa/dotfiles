@@ -148,6 +148,13 @@
 	dc  = diff --color-words
 	dsc = diff --staged --color-words
 
+	# ----
+	# help
+	# ----
+
+	commands = help --all
+	guides   = help --guides
+
 	# ---
 	# log
 	# ---
