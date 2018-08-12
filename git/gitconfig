@@ -238,9 +238,10 @@
 	tags = tag -l
 
 [filter "lfs"]
-	clean    = git-lfs clean %f
-	smudge   = git-lfs smudge %f
+	clean    = git-lfs clean -- %f
+	smudge   = git-lfs smudge -- %f
 	required = true
+	process  = git-lfs filter-process
 [pager]
 	log  = diff-highlight | less -FRXK
 	show = diff-highlight | less -FRXK
