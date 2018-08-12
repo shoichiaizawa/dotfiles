@@ -9,7 +9,7 @@
 [github]
 	user     = shoichiaizawa
 [core]
-	excludesfile = /Users/sho/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor       = vim
 	; editor       = vim -wl1  ; suggested -wl1 options, which did not work
 	pager        = less -FRXK  ; --quit-if-one-screen, --RAW-CONTROL-CHARS, --no-init, --quit-on-intr
