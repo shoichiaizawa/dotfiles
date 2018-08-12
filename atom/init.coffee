@@ -31,3 +31,8 @@ atom.commands.add 'atom-text-editor', 'exit-insert-mode-if-preceded-by-j': (e) -
   else
     editor.backspace()
     atom.commands.dispatch(e.currentTarget, 'vim-mode-plus:activate-normal-mode')
+
+atom.commands.add 'atom-text-editor', 'select-character-line': (e) ->
+  editor = @getModel()
+  editor.moveToFirstCharacterOfLine()
+  editor.selectToEndOfLine()

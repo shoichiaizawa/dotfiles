@@ -42,6 +42,8 @@
 
 "atom-text-editor.vim-mode-plus.normal-mode":
 
+  'v v': 'select-character-line'
+
   'v a': 'core:select-all'
 
   ', i': 'window:toggle-invisibles'
