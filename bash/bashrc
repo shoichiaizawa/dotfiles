@@ -1089,12 +1089,177 @@ fi
 # pyenv & pyenv-virtualenv                                                     #
 ################################################################################
 
-if type pyenv > /dev/null 2>&1; then
-  # export PYTHON_CONFIGURE_OPTS="--enable-framework"
-  eval "$(pyenv init -)";
-  if type pyenv-virtualenv-init > /dev/null 2>&1; then
-    eval "$(pyenv virtualenv-init -)";
+# Function: `pyenv-git-upgrade-init`
+#
+# Call the `pyenv-git-upgrade` function.
+# Please unset this function immediately after applied.
+#
+pyenv-git-upgrade-init() {
+  # Function: `pyenv-git-upgrade`
+  #
+  # Upgrade `pyenv` while preserving the both current and old working directory
+  # paths information.
+  #
+  pyenv-git-upgrade() {
+    if [[ -d $PYENV_ROOT/.git ]]; then
+      local tmp_currentpwd=$(pwd)
+      local tmp_oldpwd=$OLDPWD
+      cd $PYENV_ROOT
+      git pull origin master
+      cd $tmp_currentpwd
+      OLDPWD=$tmp_oldpwd
+      unset tmp_currentpwd
+      unset tmp_oldpwd
+    else
+      brew upgrade pyenv
+    fi
+  }
+}
+
+# Function: `pyenv-virtualenv-git-upgrade-init`
+#
+# Call the `pyenv-virtualenv-git-upgrade` function.
+# Please unset this function immediately after applied.
+#
+pyenv-virtualenv-git-upgrade-init() {
+  # Function: `pyenv-virtualenv-git-upgrade`
+  #
+  # Upgrade `pyenv-virtualenv` while preserving the both current and old
+  # working directory paths information
+  #
+  pyenv-virtualenv-git-upgrade() {
+    if [[ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]]; then
+      local tmp_currentpwd=$(pwd)
+      local tmp_oldpwd=$OLDPWD
+      cd $PYENV_VIRTUALENV_ROOT
+      git pull
+      cd $tmp_currentpwd
+      OLDPWD=$tmp_oldpwd
+      unset tmp_currentpwd
+      unset tmp_oldpwd
+    else
+      brew upgrade pyenv-virtualenv
+    fi
+  }
+}
+
+# Case 1: `pyenv` is installed via (1) basic Git checkout or (2) Homebrew
+#
+# This block loads:
+#
+# - `pyenv`, installed either via:
+#   1. the basic Git checkout; or
+#   2. Homebrew
+# - Bash completion scripts for `pyenv`
+# - a `pyenv-git-upgrade` function
+#
+# See:
+# - https://github.com/pyenv/pyenv#basic-github-checkout
+# - https://github.com/pyenv/pyenv#homebrew-on-mac-os-x
+#
+if [[ -d $HOME/.pyenv/.git ]] || type pyenv > /dev/null 2>&1; then
+  # Set an environment variable for pyenv root directory
+  export PYENV_ROOT="$HOME/.pyenv"
+
+  # Set PATH for the pyenv executable
+  [[ -d $PYENV_ROOT/.git ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+
+  # Enable shims and autocompletion
+  type pyenv > /dev/null 2>&1 && eval "$(pyenv init -)";
+
+  # Set the `pyenv-git-upgrade` function and unset its initialisation function
+  pyenv-git-upgrade-init && unset -f pyenv-git-upgrade-init
+
+  if [[ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]] || type pyenv-virtualenv-init > /dev/null 2>&1; then
+    # Set an environment variable for pyenv-virtualenv root directory only when
+    # it is installed via Git
+    [[ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]] && export PYENV_VIRTUALENV_ROOT="$PYENV_ROOT/plugins/pyenv-virtualenv"
+
+    # Disable prompt changing for pyenv
     export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+    # Automatically load pyenv-virtualenv upon login
+    [[ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]] || type pyenv-virtualenv-init > /dev/null 2>&1 && eval "$(pyenv virtualenv-init -)";
+
+    # Set the `pyenv-virtualenv-git-upgrade` function and unset its initialisation function
+    pyenv-virtualenv-git-upgrade-init && unset -f pyenv-virtualenv-git-upgrade-init
+
+  else
+    # Function: `pyenv-virtualenv-git-install`
+    #
+    # Install `pyenv-virtualenv`.
+    #
+    pyenv-virtualenv-git-install() {
+      if [[ -d $PYENV_ROOT/plugins ]]; then
+        export PYENV_VIRTUALENV_ROOT="$PYENV_ROOT/plugins/pyenv-virtualenv"
+        git clone https://github.com/pyenv/pyenv-virtualenv.git $PYENV_VIRTUALENV_ROOT
+      else
+        echo "Install \`pyenv-virtualenv\` via Homebrew..."
+        brew install pyenv-virtualenv
+      fi
+
+      # Disable prompt changing for pyenv
+      export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+      # Automatically load pyenv-virtualenv upon login
+      [[ -d $PYENV_VIRTUALENV_ROOT ]] || type pyenv-virtualenv-init > /dev/null 2>&1 && eval "$(pyenv virtualenv-init -)";
+
+      # Set the `pyenv-virtualenv-git-upgrade` function and unset its initialisation function
+      pyenv-virtualenv-git-upgrade-init && unset -f pyenv-virtualenv-git-upgrade-init
+
+      # Unset the `pyenv-virtualenv-git-install` function
+      unset -f pyenv-virtualenv-git-install
+
+      echo -e "\n--------------------------------------------------------------------------------\n"
+      echo "Woohoo! \`pyenv-virtualenv\` has been installed successfully!"
+      echo "The \`pyenv-virtualenv-git-install\` command has been unset."
+      echo "Use the \`pyenv-virtualenv-git-upgrade\` command to upgrade \`pyenv-virtualenv\`."
+    }
+  fi
+
+# Case 2: `pyenv` and `pyenv-virtualenv` are not installed
+#
+# This block loads:
+#
+# - a `pyenv-git-install` function:
+#   - this function will be unset immediately after `pyenv` is installed
+# - a `pyenv-virtualenv-git-install` function:
+#   - this function will be unset immediately after `pyenv-virtualenv` is installed
+#
+else
+  if [[ ! -d $(brew --prefix pyenv) ]]; then
+    # Function: `pyenv-git-install`
+    #
+    # Install `pyenv` and activate its Bash completion script.
+    #
+    pyenv-git-install() {
+      export PYENV_ROOT="$HOME/.pyenv"
+
+      # TODO: Hack from here.
+      # (
+      #   [[ -d $PYENV_ROOT ]] && \
+      #   echo "Please remove the \`~/.pyenv\` directory before running the \`pyenv-git-install\` function!"
+      #   return 0
+      # )
+
+      export PATH="$PYENV_ROOT/bin:$PATH"
+
+      git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT && (
+        echo -e "\n--------------------------------------------------------------------------------\n"
+        echo "Woohoo! \`pyenv\` has been installed successfully!"
+        echo "The \`pyenv-git-install\` command has been unset."
+        echo "Use the \`pyenv-git-upgrade\` command to upgrade \`pyenv\`."
+      )
+
+      # Enable shims and autocompletion
+      type pyenv > /dev/null 2>&1 && eval "$(pyenv init -)";
+
+      # Set the `pyenv-git-upgrade` function and unset its initialisation function
+      pyenv-git-upgrade-init && unset -f pyenv-git-upgrade-init
+
+      # Unset the `pyenv-git-install` function
+      unset -f pyenv-git-install
+    }
   fi
 fi
 
