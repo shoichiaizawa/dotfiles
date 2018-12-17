@@ -196,13 +196,7 @@ fi;
 # Enable tab completion for `cask` by marking it as an alias for `brew cask`
 # Inspired by the above script by mathiasbynens :D
 #
-# Dependency:
-#   - `brew tap caskroom/cask`
-#   - `brew install brew-cask-completion`
-#
-# See the following GitHub repository for details:
-# https://github.com/xyb/homebrew-cask-completion
-if type _brew_cask &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/brew-cask ]; then
+if type _brew_cask &> /dev/null; then
   complete -o default -o nospace -F _brew_cask cask
 fi
 
