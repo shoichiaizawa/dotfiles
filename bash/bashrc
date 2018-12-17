@@ -963,26 +963,23 @@ fi
 ################################################################################
 
 # NOTE:
-# Install nvm manually;
+# Install `nvm` manually;
 # See details at https://github.com/creationix/nvm#manual-install
 
-if ! type nvm > /dev/null 2>&1 && [[ ! -d $HOME/.nvm ]]; then
-  # Function: nvm-install -- Install `nvm` and activate its `bash_completion`
-  nvm-install() {
-    export NVM_DIR="$HOME/.nvm" && (
-      git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-      cd "$NVM_DIR"
-      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
-    ) && . "$NVM_DIR/nvm.sh" \
-      && [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+# Function: `nvm-upgrade-init`
+#
+# Call the `nvm-upgrade` function.
+# Please unset this function immediately after applied.
+#
+nvm-upgrade-init() {
 
-    echo -e "\n--------------------------------------------------------------------------------\n"
-    echo "Woohoo! nvm has been installed successfully!"
-    echo "\`nvm-install\` command has been unset."
-    echo "Use \`nvm-upgrade\` command to upgrade nvm."
-    unset -f nvm-install
-    [[ -d $NVM_DIR ]] &&
-    nvm-upgrade() {
+  # Function: `nvm-upgrade`
+  #
+  # Upgrade `nvm` while preserving the both current and old working directory
+  # paths information
+  #
+  nvm-upgrade() {
+    if [[ ! -f $NVM_DIR/.git/shallow ]]; then
       local tmp_currentpwd=$(pwd)
       local tmp_oldpwd=$OLDPWD
       (
@@ -994,37 +991,98 @@ if ! type nvm > /dev/null 2>&1 && [[ ! -d $HOME/.nvm ]]; then
       OLDPWD=$tmp_oldpwd
       unset tmp_currentpwd
       unset tmp_oldpwd
-    }
+    else
+      # TODO: find out if there is any way to compare the currently installed
+      #       nvm version and the newer available version
+      echo "Your nvm is installed via the install script!"
+      echo "Please check if the newer version is available at:"
+      echo "https://github.com/creationix/nvm#install-script"
+    fi
   }
-else
+
+}
+
+# Case 1: `nvm` is installed via an official installation method (ideal)
+#
+# This block loads:
+#
+# - `nvm`, installed either via:
+#   1. manual Git full clone; or
+#   2. install script (shallow clone)
+# - Bash completion script for nvm
+# - A `nvm-upgrade` function
+#
+if [[ -d $HOME/.nvm/.git ]]; then
+  # Set an environment variable for nvm root directory
   export NVM_DIR="$HOME/.nvm"
 
   # Automatically source `nvm` upon login
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
   # Activate `bash_completion`
-  [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+  [ -r $NVM_DIR/bash_completion ] && . $NVM_DIR/bash_completion
 
-  # A function for `nvm` manual upgrade, preserving the both current and old working directory paths
-  nvm-upgrade() {
-    local tmp_currentpwd=$(pwd)
-    local tmp_oldpwd=$OLDPWD
-    (
+  # Set the `nvm-upgrade` function and unset its initialisation function
+  nvm-upgrade-init && unset -f nvm-upgrade-init
+
+# Case 2: `nvm` is installed via Homebrew (non-official)
+#
+# This block loads:
+#
+# - `nvm` (Homebrew version)
+# - a warning message regarding Homebrew installation
+#
+# NOTE: Homebrew installation is not supported by the nvm developers.
+# See: https://github.com/creationix/nvm#important-notes
+#
+elif [[ -d $(brew --prefix nvm) ]]; then
+  if [[ ! -d $NVM_DIR ]]; then
+    echo -e "The \`.nvm\` directory has been created at $HOME\n"
+    mkdir $NVM_DIR
+  fi
+  source $(brew --prefix nvm)/nvm.sh
+  echo -e "\033[0;33mWarning: \033[0mYour nvm is installed via Homebrew."
+  echo "The Homebrew version of nvm is not officially supported by the nvm developers."
+  echo "While you can continue using the Homebrew version, please consider installing"
+  echo "nvm via one of the official installation methods; see the details at:"
+  echo "  https://github.com/creationix/nvm#installation"
+
+# Case 3: `nvm` is not installed
+#
+# This block loads:
+#
+# - `nvm-install` function, once nvm is installed it is unset
+#
+else
+  # Function: `nvm-install`
+  #
+  # Install `nvm` and activate its Bash completion script.
+  #
+  nvm-install() {
+    export NVM_DIR="$HOME/.nvm" && (
+      git clone https://github.com/creationix/nvm.git "$NVM_DIR"
       cd "$NVM_DIR"
       git fetch origin
       git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
-    ) && . "$NVM_DIR/nvm.sh"
-    cd $tmp_currentpwd
-    OLDPWD=$tmp_oldpwd
-    unset tmp_currentpwd
-    unset tmp_oldpwd
-  }
+    ) && . "$NVM_DIR/nvm.sh" \
+      && [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
-  # Aliases to list installed npm packages, globally and locally
-  if type npm > /dev/null 2>&1; then
-    alias npm-gpkg-versions='npm list -g --depth=0'
-    alias npm-pkg-versions='npm list --depth=0'
-  fi
+    # Set the `nvm-upgrade` function and unset its initialisation function
+    nvm-upgrade-init && unset -f nvm-upgrade-init
+
+    unset -f nvm-install
+
+    echo -e "\n--------------------------------------------------------------------------------\n"
+    echo "Woohoo! nvm has been installed successfully!"
+    echo "The \`nvm-install\` command has been unset."
+    echo "Use the \`nvm-upgrade\` command to upgrade nvm."
+  }
+fi
+
+# Aliases to list installed npm packages, globally and locally
+if type npm > /dev/null 2>&1; then
+  alias npm-gpkg-versions='npm list -g --depth=0'
+  alias npm-pkg-versions='npm list --depth=0'
 fi
 
 ################################################################################
