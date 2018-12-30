@@ -414,6 +414,8 @@ set backupskip=/tmp/*,/private/tmp/*
 
 autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 
+autocmd BufWinEnter,BufRead,BufNewFile */.\=gitconfig setlocal filetype=gitconfig
+
 " }}}1
 " Autocmd: CSON {{{1
 
