@@ -42,7 +42,19 @@
 	grep        = auto
 	interactive = auto
 	status      = auto
-	ui          = auto
+	ui          = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [alias]
 	git  = !git
 	init = init -g  ; `alias git=hub` in your profile
@@ -248,9 +260,9 @@
 	required = true
 	process  = git-lfs filter-process
 [pager]
-	log  = diff-highlight | less -FRXK
-	show = diff-highlight | less -FRXK
-	diff = diff-highlight | less -FRXK
+	log  = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
+	show = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
+	diff = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
 [diff]
 	compactionHeuristic = true
 [interactive]
