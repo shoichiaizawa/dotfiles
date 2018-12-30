@@ -134,7 +134,9 @@ set t_Co=256                " Tell the term has 256 colors set background=dark
 set background=dark
 silent! colorscheme solarized
 " syntax enable               "      TODO: Use syntax highlighting
-syntax on                   "       TODO: Use syntax highlighting
+if has('syntax') && !exists('g:syntax_on')
+  syntax on                 "       TODO: Use syntax highlighting
+endif
 
 set encoding=utf-8          "enc:   Set the character encoding used inside Vim
 set fileencoding=utf-8      "fenc:  Set the character encoding for the file of
