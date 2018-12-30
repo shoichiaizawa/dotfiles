@@ -1,0 +1,34 @@
+{
+  "ecmaVersion": 6,
+  "libs": [
+    "browser",
+    "chai",
+    "ecmascript",
+    "jquery",
+    "react",
+    "underscore"
+  ],
+  "plugins": {
+    "angular": {},
+    "commonjs": {},
+    "complete_strings": {},
+    "doc_comment": {
+      "fullDocs": true,
+      "strong": true
+    },
+    "es_modules":{},
+    "modules": {},
+    "node": {},
+    "node_resolve": {},
+    "requirejs": {},
+    "webpack.js": {}
+  },
+  "loadEagerly": [
+    "app/**/*.js",
+    "src/**/*.js"
+  ],
+  "dontLoad" : [
+    "bundle/**/*.js",
+    "node_modules/**"
+  ]
+}
