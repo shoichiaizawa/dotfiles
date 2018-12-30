@@ -257,3 +257,6 @@
 	diffFilter = (diff-highlight 2> /dev/null || cat) | less -FRXK
 [help]
 	autocorrect = 1
+[log]
+	date = format:%Y-%m-%d(%a) %H:%M:%S(%z)
+	; date = rfc2822
