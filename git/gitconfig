@@ -18,6 +18,7 @@
 	quotepath = false
 [commit]
 	template = ~/.stCommitMsg
+	verbose = true
 [difftool "sourcetree"]
 	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
