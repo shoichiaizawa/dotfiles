@@ -254,4 +254,4 @@
 [diff]
 	compactionHeuristic = true
 [interactive]
-	diffFilter = diff-highlight
+	diffFilter = (diff-highlight 2> /dev/null || cat) | less -FRXK
