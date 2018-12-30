@@ -1197,6 +1197,7 @@ nmap <silent> <Leader>et :edit ~/.tmux.conf<CR>|  " Open ~/.tmux.conf for editin
 
 map <silent> <Leader>p :!open -a "Marked" %<CR><CR>
 map <silent> <Leader>mo :!open -a "Markoff" %<CR><CR>
+map <silent> <Leader>pre :!open -a "MacDown" % > /dev/null &<CR>:redraw!<CR>
 
 inoremap <silent> <Leader>todo <C-R>=strftime('%Y-%m-%d %a')<CR>
 inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
