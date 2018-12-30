@@ -65,6 +65,7 @@ BQ
 Browserify
 BT
 bugfix
+CamelCase
 caskroom
 cd
 CDN
@@ -75,6 +76,7 @@ chmod
 chown
 chsh
 cindent
+CIO
 CLI
 clickable
 cmdline
@@ -101,6 +103,7 @@ CSS
 css
 CSS3
 csv
+CTO
 ctrl
 CtrlP
 cursorcolumn
@@ -109,6 +112,7 @@ Dataflow
 Datalab
 Dataprep
 Dataproc
+Datastore
 dayone
 dayoneapp
 DB2
@@ -232,6 +236,7 @@ goyo
 grep
 gsutil
 gui
+GUID
 guifont
 guioptions
 Gurunavi
@@ -242,6 +247,7 @@ H3
 H4
 H5
 H6
+Hadoop
 HashiCorp
 HBase
 HDD
@@ -591,6 +597,7 @@ termcolors
 TextEdit
 TextMate
 textwidth
+Theano
 timestamp
 Tkinter
 tldr
