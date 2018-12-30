@@ -15,6 +15,9 @@
 	editor       = vim
 	; editor       = vim -wl1  ; suggested -wl1 options, which did not work
 	pager        = less -FRXK  ; --quit-if-one-screen, --RAW-CONTROL-CHARS, --no-init, --quit-on-intr
+	quotepath = false
+[commit]
+	template = ~/.stCommitMsg
 [difftool "sourcetree"]
 	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
