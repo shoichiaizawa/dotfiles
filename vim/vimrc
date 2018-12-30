@@ -30,6 +30,10 @@
 " }}}1
 " Preamble: vim-plug settings {{{1
 
+if has('python3') && !has('patch-8.1.201')
+  silent! python3 1
+endif
+
 if &compatible
   set nocompatible            " be iMproved, required
 endif
