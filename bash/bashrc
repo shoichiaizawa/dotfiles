@@ -555,6 +555,7 @@ alias eapache="vim $(brew --prefix)/etc/httpd/httpd.conf"
                                         # Edit httpd.conf from anywhere
 alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
                                         # Edit nginx.conf from anywhere
+alias emacos='vim ~/.macos'             # Edit .macos from anywhere
 
 # XXX: find a better way to achieve the following command
 alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
