@@ -30,7 +30,9 @@
 " }}}1
 " Preamble: vim-plug settings {{{1
 
-set nocompatible            " be iMproved, required
+if &compatible
+  set nocompatible            " be iMproved, required
+endif
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
