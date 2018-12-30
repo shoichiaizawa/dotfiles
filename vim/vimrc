@@ -406,6 +406,8 @@ if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
 endif
 
+set backupskip=/tmp/*,/private/tmp/*
+
 " }}}1
 
 " Autocmd: Files (Unsorted) {{{1
