@@ -1235,6 +1235,10 @@ nnoremap X "_X|  " X deletes char(s) backwards using black hole register "_
 vnoremap x "_x|  " x deletes char(s) in Visual mode using black hole register "_
 vnoremap X "_X|  " X deletes char(s) in Visual mode using black hole register "_
 
+" Do not overwrite register when pasting in Visual mode (p/P, gv, y)
+vnoremap p pgvy
+vnoremap P Pgvy
+
 " Create Blank Newlines and stay in Normal mode
 nnoremap <silent> zj o<Esc>
 nnoremap <silent> zk O<Esc>
