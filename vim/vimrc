@@ -1270,6 +1270,10 @@ nnoremap vv ^vg_
 " Select entire buffer
 nnoremap va ggVG
 
+" Increment/decrement the character under the cursor using `+`/`-`.
+nnoremap + <C-A>
+nnoremap - <C-X>
+
 " }}}1
 " Mappings: Search mappings {{{1
 
