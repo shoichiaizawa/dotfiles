@@ -1017,6 +1017,10 @@ if [[ -d $HOME/.nvm/.git ]]; then
   # Set an environment variable for nvm root directory
   export NVM_DIR="$HOME/.nvm"
 
+  # Create a `current` symlink to the active Node.js version every time
+  # the `nvm use` command is run
+  export NVM_SYMLINK_CURRENT=true
+
   # Automatically source `nvm` upon login
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
@@ -1060,7 +1064,7 @@ else
   # Install `nvm` and activate its Bash completion script.
   #
   nvm-install() {
-    export NVM_DIR="$HOME/.nvm" && (
+    export NVM_DIR="$HOME/.nvm" && export NVM_SYMLINK_CURRENT=true && (
       git clone https://github.com/creationix/nvm.git "$NVM_DIR"
       cd "$NVM_DIR"
       git fetch origin
