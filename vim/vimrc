@@ -1385,7 +1385,7 @@ nnoremap <silent> <C-T> :tabnew<CR>|          " New Tab
 nnoremap <Tab>k :bnext<CR>|                   " bn: Go to the next buffer
 nnoremap <Tab>j :bprevious<CR>|               " bp: Go to the previous buffer
 
-nnoremap <Leader>dd :bdelete<CR>
+nnoremap <Leader>dd :bprevious\|bdelete#<CR>
 nnoremap <Leader>DD :%bdelete<CR>
 
 " map <Leader>tn :tabnew<CR>
