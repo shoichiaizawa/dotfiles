@@ -10,6 +10,8 @@
 	user     = shoichiaizawa
 [include]
 	path     = ~/.gitconfig.local
+[includeIf "gitdir:~/work/"]
+	path     = ~/work/.gitconfig
 [core]
 	excludesfile = ~/.gitignore_global
 	editor       = vim
