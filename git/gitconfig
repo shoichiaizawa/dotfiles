@@ -277,3 +277,5 @@
 [log]
 	date = format:%Y-%m-%d(%a) %H:%M:%S(%z)
 	; date = rfc2822
+[credential "https://source.developers.google.com"]
+	helper = gcloud.sh
