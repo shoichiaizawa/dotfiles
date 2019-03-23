@@ -66,6 +66,7 @@ Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
+Plug 'mechatroner/rainbow_csv'
 Plug 'moll/vim-node'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['html.mustache', 'html.handlebars'] }
 Plug 'nathanaelkane/vim-indent-guides'
