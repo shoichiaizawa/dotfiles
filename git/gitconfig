@@ -2,14 +2,14 @@
 # Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/git/gitconfig
 
-[include]
-	path     = ~/.gitconfig.local
 [user]
 	name     = Shoichi Aizawa
 	email    = shoichiaizawa@gmail.com
 	username = shoichiaizawa
 [github]
 	user     = shoichiaizawa
+[include]
+	path     = ~/.gitconfig.local
 [core]
 	excludesfile = ~/.gitignore_global
 	editor       = vim
