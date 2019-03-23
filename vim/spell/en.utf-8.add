@@ -8,6 +8,7 @@ Airbnb
 AllegroGraph
 AngularJS
 ansible
+AoG
 API
 APIs
 apm
@@ -123,6 +124,7 @@ Deutsche
 dev
 df
 Dialogflow
+Dialogflow's
 diff
 DiffOrig
 dir
@@ -159,6 +161,7 @@ eol
 erasedups
 ESC
 esc
+ESLint
 etc
 eval
 evim
@@ -180,6 +183,7 @@ filesystem
 filetype
 FileType
 filetypes
+Firestore
 FIXME
 Flexbox
 flexbox
@@ -231,6 +235,8 @@ GKE
 globbing
 gnuplot
 google
+Googler
+Googlers
 Goyo
 goyo
 grep
@@ -276,6 +282,7 @@ IFTTT
 ignoreboth
 ignoredups
 ignorespace
+IIFE
 IIS
 imagemagick
 img
@@ -299,6 +306,7 @@ iPhoto
 iPod
 IPv4
 IPv6
+ISC
 ish
 iso
 Istio
@@ -321,6 +329,7 @@ jpeg
 jpg
 jQuery
 js
+JSDoc
 JSON
 json
 JSP
@@ -432,6 +441,8 @@ NoSQL
 nothing
 nowrap
 npm
+npx
+NTT
 nvm
 nvm
 Obama
@@ -475,6 +486,7 @@ plugins
 PluginSearch
 PluginUpdate
 png
+PoC
 POSIX
 PostCSS
 PostgreSQL
@@ -535,6 +547,7 @@ scrolloff
 scss
 sdk
 sed
+SemVer
 servlets
 SGR
 SHA
@@ -682,6 +695,7 @@ vundle
 W3C
 WAMP
 WampServer
+WBS
 wc
 WebKit
 webpack
@@ -711,6 +725,7 @@ xargs
 xkcd
 xls
 XQuery
+YAGNI
 YAML
 yaml
 yml
