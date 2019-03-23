@@ -19,7 +19,7 @@
 	pager        = less -FRXK  ; --quit-if-one-screen, --RAW-CONTROL-CHARS, --no-init, --quit-on-intr
 	quotepath = false
 [commit]
-	template = ~/.stCommitMsg
+	; template = ~/.stCommitMsg
 	verbose = true
 [difftool "sourcetree"]
 	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
