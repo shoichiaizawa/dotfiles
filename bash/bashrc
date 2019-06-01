@@ -1417,5 +1417,16 @@ if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cl
       fi
     }
     alias gactivate=gactivate
+
+    # Function: gssh -- SSH into a GCE instance effortlessly
+    gssh() {
+      local vminfo=$(gcloud compute instances list | tail -n +2 | fzf --height 40% --reverse --exit-0)
+      local instance_name=$(echo ${vminfo} | awk '{print $1}')
+      local zone_name=$(echo ${vminfo} | awk '{print $2}')
+      if [ -n "${instance_name}" ] && [ -n "${zone_name}" ]; then
+        gcloud compute ssh "${instance_name}" --zone "${zone_name}"
+      fi
+    }
+    alias gssh=gssh
   fi
 fi
