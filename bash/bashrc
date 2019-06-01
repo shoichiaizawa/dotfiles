@@ -514,6 +514,22 @@ alias h='history'
 alias histg='history | grep'
 alias hgrep=histg
 
+# Function: rmh -- remove the most recent previous command from command history
+#
+# This helps the user to maintain his/her command history clean without invalid
+# commands
+#
+rmh() {
+  local lastcmdhist=$(history 1)
+  local lastcmdnum=$(echo "${lastcmdhist}" | awk '{print $1}')
+  local lastcmd=$(echo "${lastcmdhist}" | cut -d ' ' -f 7-)
+  if [ -n "${lastcmdnum}" ]; then
+    history -d "$lastcmdnum"
+    echo "Removed the last command: ${lastcmd}"
+  fi
+}
+alias rmh=rmh
+
 # ----
 # grep
 # ----
