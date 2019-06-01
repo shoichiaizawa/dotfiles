@@ -1408,5 +1408,14 @@ if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cl
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 
-  alias gactivate='gcloud config configurations activate'
+  if type fzf > /dev/null 2>&1; then
+    # Function: gactivate -- switch between GCP configurations effortlessly
+    gactivate() {
+      local confname=$(gcloud config configurations list | tail -n +2 | fzf --height 40% --reverse --exit-0 | awk '{print $1}')
+      if [ -n "${confname}" ]; then
+        gcloud config configurations activate "${confname}"
+      fi
+    }
+    alias gactivate=gactivate
+  fi
 fi
