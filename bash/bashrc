@@ -1296,6 +1296,10 @@ if type pip > /dev/null 2>&1; then
   alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
 fi
 
+if type pip3 > /dev/null 2>&1; then
+  alias pip3-all-upgrade="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
+fi
+
 # A workaround to remove error messages when running `brew doctor`
 # This occurs when both Homebrew and pyenv are installed
 # See: https://github.com/pyenv/pyenv/issues/106
