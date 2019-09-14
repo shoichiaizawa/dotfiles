@@ -1585,6 +1585,52 @@ nmap <silent> <Leader>w :call Preserve("%s/\\s\\+$//e")<CR>
 " }}}2
 
 " }}}1
+" Functions: CycleMetasyntacticVariables() – Cycle metasyntactic variables {{{1
+"
+" The metasyntactic variables (i.e. foo, bar, baz and so forth) under the
+" cursor cycle through one after another. This behaviour is achieved using the
+" register.
+"
+" Credits:
+"   - hail2u (Kyo Nagashima)
+"
+" NOTE: https://gist.github.com/hail2u/6561431
+"
+function! s:CycleMetasyntacticVariables(num)
+  if type(a:num) != type(0)
+    return
+  endif
+
+  let vars = ['foo', 'bar', 'baz', 'qux', 'quux', 'quuz', 'corge', 'grault', 'garply', 'waldo', 'fred', 'plugh', 'xyzzy', 'thud']
+  let cvar = expand('<cword>')
+  let i = index(vars, cvar)
+
+  if (i == -1)
+    if (a:num > 0)
+      execute "normal! \<C-a>"
+    else
+      execute "normal! \<C-x>"
+    endif
+
+    return
+  endif
+
+  let i += a:num
+
+  if (i == -1)
+    let i = len(vars) - 1
+  elseif (i == len(vars))
+    let i = 0
+  endif
+
+  call setreg('w', vars[i])
+  normal! "_viw"wp
+endfunction
+
+nnoremap <C-a> :call <SID>CycleMetasyntacticVariables(1)<Enter>
+nnoremap <C-x> :call <SID>CycleMetasyntacticVariables(-1)<Enter>
+
+" }}}1
 " End of my unique .vimrc settings -------------------------------------------
 
 " TODO: Merge the following Bram's example vimrc settings into my settings
