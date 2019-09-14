@@ -1129,11 +1129,13 @@ endif
 " }}}1
 " Plugin Settings: vim-node {{{1
 
-autocmd User Node
-  \ if &filetype == "javascript" |
-  \   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
-  \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
-  \ endif
+if isdirectory(expand("~/.vim/plugged/vim-node/"))
+  autocmd User Node
+    \ if &filetype == "javascript" |
+    \   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
+    \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
+    \ endif
+endif
 
 " }}}1
 
