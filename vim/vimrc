@@ -389,6 +389,10 @@ set splitright              "spr:   Split a window right of the current one
 set nojoinspaces            "nojs:  Do not insert two spaces after ./?/! with
                             "       a join command
 
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
+
 " }}}1
 " General Settings: Backups {{{1
 
