@@ -190,6 +190,8 @@
 	l10   = log --graph --decorate --oneline --all -10
 	l20   = log --graph --decorate --oneline --all -20
 
+	la    = log --patch
+
 	# Adopted from @tpope
 	# List the commits for this week in reverse order
 	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
