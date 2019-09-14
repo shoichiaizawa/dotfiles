@@ -906,6 +906,8 @@ endif
 if isdirectory(expand("~/.vim/plugged/vim-gitgutter/"))
   " let g:gitgutter_map_keys = 0  " To disable the default mappings
 
+  autocmd BufWritePost * GitGutter
+
   nmap [h <Plug>GitGutterPrevHunk|            " default [c
   nmap ]h <Plug>GitGutterNextHunk|            " default ]c
 
