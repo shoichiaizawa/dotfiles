@@ -64,6 +64,7 @@ Plug 'junegunn/limelight.vim', { 'for': 'markdown' } " Best served with Goyo.vim
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-slash'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'leafgarland/typescript-vim'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
