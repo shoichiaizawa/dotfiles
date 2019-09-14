@@ -75,6 +75,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'posva/vim-vue'
 Plug 'reedes/vim-pencil'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } |
   \ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } |
@@ -538,6 +539,33 @@ augroup END
 "
 "   - zz: Redraw, line [count] at center of window in the same column
 "         (also see "z." for difference)
+
+" }}}1
+" Autocmd: Vue.js {{{1
+
+if isdirectory(expand("~/.vim/plugged/vim-vue/"))
+  autocmd FileType vue syntax sync fromstart
+
+  let g:ft = ''
+  function! NERDCommenter_before()
+    if &ft == 'vue'
+      let g:ft = 'vue'
+      let stack = synstack(line('.'), col('.'))
+      if len(stack) > 0
+        let syn = synIDattr((stack)[0], 'name')
+        if len(syn) > 0
+          exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+        endif
+      endif
+    endif
+  endfunction
+  function! NERDCommenter_after()
+    if g:ft == 'vue'
+      setf vue
+      let g:ft = ''
+    endif
+  endfunction
+endif
 
 " }}}1
 
