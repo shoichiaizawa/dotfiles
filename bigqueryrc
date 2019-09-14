@@ -1,0 +1,8 @@
+[mk]
+--use_legacy_sql=false
+
+[query]
+--use_legacy_sql=false
+
+[update]
+--use_legacy_sql=false
