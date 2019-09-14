@@ -1429,4 +1429,22 @@ if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cl
     }
     alias gssh=gssh
   fi
+
+  if type bq > /dev/null 2>&1; then
+    if type jq > /dev/null 2>&1; then
+      # Function: bqschema -- show a BigQuery table schema with colours
+      #
+      # This requires an argument as follows:
+      #
+      # bq schema []
+      #
+      bqschema() {
+        bq show --schema --format=prettyjson $1 | jq
+      }
+      alias bqschema=bqschema
+    else
+      # Show a BigQuery table schema without colours if `jq` is not installed
+      alias bqschema="bq show --schema --format=prettyjson $1"
+    fi
+  fi
 fi
