@@ -908,13 +908,13 @@ if isdirectory(expand("~/.vim/plugged/vim-gitgutter/"))
 
   autocmd BufWritePost * GitGutter
 
-  nmap [h <Plug>GitGutterPrevHunk|            " default [c
-  nmap ]h <Plug>GitGutterNextHunk|            " default ]c
+  nmap [h <Plug>(GitGutterPrevHunk)|            " default [c
+  nmap ]h <Plug>(GitGutterNextHunk)|            " default ]c
 
-  " nmap <Leader>hs <Plug>GitGutterStageHunk|   " default map
-  " nmap <Leader>hr <Plug>GitGutterRevertHunk|  " default map
-  " nmap <Leader>hu <Plug>GitGutterUndoHunk|    " default map
-  " nmap <Leader>hp <Plug>GitGutterPreviewHunk| " default map
+  " nmap <Leader>hs <Plug>(GitGutterStageHunk)|   " default map
+  " nmap <Leader>hr <Plug>(GitGutterRevertHunk)|  " default map
+  " nmap <Leader>hu <Plug>(GitGutterUndoHunk)|    " default map
+  " nmap <Leader>hp <Plug>(GitGutterPreviewHunk)| " default map
 
   " let g:gitgutter_max_signs = 500             " default value
 
