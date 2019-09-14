@@ -1446,5 +1446,19 @@ if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cl
       # Show a BigQuery table schema without colours if `jq` is not installed
       alias bqschema="bq show --schema --format=prettyjson $1"
     fi
+
+    # Function: bqtables -- show BigQuery tables in the current GCP project
+    bqtables() {
+      # get list of tables
+      local datasets=$(bq ls "$project:$dataset" | awk '{print $1}' | tail +3)
+
+      # extract into storage
+      for dataset in $datasets; do
+        echo "${dataset}"
+        bq ls --format=pretty $dataset
+        echo
+      done
+    }
+    alias bqtables=bqtables
   fi
 fi
