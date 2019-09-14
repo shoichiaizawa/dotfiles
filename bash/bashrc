@@ -305,8 +305,14 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 # Java
 # ----
 
-export JAVA_HOME=$(/usr/libexec/java_home)
-# export JAVA_HOME=`/usr/libexec/java_home -v 1.x.0_xx` # Choose your Java version
+export SDKMAN_DIR="$HOME/.sdkman"
+
+if [ -d $SDKMAN_DIR ]; then
+  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+else
+  unset SDKMAN_DIR
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 # -------
 # Android
