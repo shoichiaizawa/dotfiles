@@ -369,7 +369,17 @@ else # macOS `ls`
   colorflag='-G'
 fi
 
-alias ls='ls -hF ${colorflag}'          # Default human-readable & symbol after pathname
+if type lsd > /dev/null 2>&1; then
+  alias ls='lsd -F'
+  alias sym="ls -al | grep '⇒ '"         # List all symlinks
+else
+  alias ls='ls -hF ${colorflag}'          # Default human-readable & symbol after pathname
+  alias l.='ls -d .*'                     # List all dotfiles
+  alias l.l='ls -ld .*'                   # List all dotfiles in long format
+  alias ll.=l.l
+  alias sym="ls -al | grep '\->'"         # List all symlinks
+fi
+
 alias l1='ls -1'                        # List all files per line
 alias l='ls -l'                         # List all files in long format
 alias la='ls -a'                        # List all files, including dotfiles
@@ -377,14 +387,8 @@ alias la1='ls -a1'                      # List all files per line, including dot
 alias l1a=la1                           # List all files per line, including dotfiles
 alias lal='ls -al'                      # List all files in long format, including dotfiles
 alias lla=lal
-alias l.='ls -d .*'                     # List all dotfiles
-alias l.l='ls -ld .*'                   # List all dotfiles in long format
-alias ll.=l.l
-#alias lsd
-alias ll='ls -alrthFG'                  # List all files in detail
+alias ll='ls -alrthF'                  # List all files in detail
 alias lll=ll
-
-alias sym="ls -al | grep '\->'"         # List all symlinks
 
 # -----------------------------------
 # tree (requires `brew install tree`)
