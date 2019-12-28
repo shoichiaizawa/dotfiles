@@ -7,4 +7,5 @@ init-author-license MIT
 init-author-name "Shoichi Aizawa"
 init-author-url "https://shoichiaizawa.github.io"
 init-version "0.1.0"
-lastUpdateCheck 1567769076856
+lastUpdateCheck 1577425515975
+save-prefix ""
