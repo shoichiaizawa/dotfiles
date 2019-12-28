@@ -1472,3 +1472,11 @@ if type _brew_cask > /dev/null 2>&1 && [[ -d $(brew --prefix)/Caskroom/google-cl
     alias bqtables=bqtables
   fi
 fi
+
+################################################################################
+# direnv
+################################################################################
+
+if type direnv > /dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi
