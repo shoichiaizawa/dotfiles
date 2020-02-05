@@ -1170,6 +1170,14 @@ if isdirectory(expand("~/.vim/plugged/vim-node/"))
 endif
 
 " }}}1
+" Plugin Settings: vim-multiple-cursors {{{1
+
+if isdirectory(expand("~/.vim/plugged/vim-multiple-cursors/"))
+  let g:multi_cursor_select_all_word_key = 'g<C-N>'  " (default <A-n>)
+  " let g:multi_cursor_select_all_key      = 'g<C-N>'  " (default g<A-n>)
+endif
+
+" }}}1
 
 " Mappings: Arrow keys deactivation, and map something useful instead {{{1
 "
