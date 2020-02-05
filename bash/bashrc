@@ -1480,3 +1480,38 @@ fi
 if type direnv > /dev/null 2>&1; then
   eval "$(direnv hook bash)"
 fi
+
+################################################################################
+# goenv
+################################################################################
+
+if [[ -d $HOME/.goenv/.git ]]; then
+  export GOENV_ROOT="$HOME/.goenv"
+  export PATH="$GOENV_ROOT/bin:$PATH"
+  eval "$(goenv init -)"
+  export GOPATH=$HOME/.go
+  export PATH="$GOROOT/bin:$PATH"
+  export PATH="$GOPATH/bin:$PATH"
+
+  [[ -x $GOPATH/bin/gocomplete ]] && complete -C $GOPATH/bin/gocomplete go
+
+  # Function: `goenv-git-upgrade`
+  #
+  # Upgrade `goenv` while preserving the both current and old working directory
+  # paths information.
+  #
+  goenv-git-upgrade() {
+    if [[ -d $GOENV_ROOT/.git ]]; then
+      local tmp_currentpwd=$(pwd)
+      local old_currentpwd=$OLDPWD
+      cd $GOENV_ROOT
+      git pull
+      cd $tmp_currentpwd
+      OLDPWD=$tmp_oldpwd
+      unset tmp_currentpwd
+      unset tmp_oldpwd
+    else
+      brew upgrade goenv
+    fi
+  }
+fi
