@@ -1217,6 +1217,7 @@ nnoremap <Leader>3 I### <Esc>
 nnoremap <Leader>4 I#### <Esc>
 nnoremap <Leader>5 I##### <Esc>
 nnoremap <Leader>6 I###### <Esc>
+nnoremap <Leader>7 I### <Esc> A ###<Esc>
 
 " }}}1
 " Mappings: Markdown to HTML {{{1
