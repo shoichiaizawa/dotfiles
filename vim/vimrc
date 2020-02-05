@@ -1449,6 +1449,8 @@ nnoremap zM zm|         " Swap zM with zm; zM to fold by one level
 " Mappings: Unhighlighting {{{1
 
 nnoremap <silent> <Leader><Space> :nohlsearch<CR>
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
+nnoremap <silent> <C-[><C-[> :nohlsearch<CR>
 
 " nohls: Make <C-l> clear the highlight as well as redraw.
 " nnoremap <C-L> :nohlsearch<CR><C-L>
