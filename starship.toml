@@ -1,0 +1,508 @@
+# File:   starship.toml
+# Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
+# Source: https://github.com/shoichiaizawa/dotfiles/tree/master/starship.toml
+
+################################################################################
+# Prompt
+################################################################################
+
+# add_newline	 = true                       # (default: true)
+
+# prompt_order = [
+#   "username",
+#   "hostname",
+#   "kubernetes",
+#   "directory",
+#   "git_branch",
+#   "git_commit",
+#   "git_state",
+#   "git_status",
+#   "hg_branch",
+#   "docker_context",
+#   "package",
+#   "dotnet",
+#   "elixir",
+#   "elm",
+#   "erlang",
+#   "golang",
+#   "haskell",
+#   "java",
+#   "julia",
+#   "nodejs",
+#   "php",
+#   "python",
+#   "ruby",
+#   "rust",
+#   "terraform",
+#   "nix_shell",
+#   "conda",
+#   "memory_usage",
+#   "aws",
+#   "env_var",
+#   "crystal",
+#   "cmd_duration",
+#   "custom",
+#   "line_break",
+#   "jobs",
+#   "battery",
+#   "time",
+#   "character",
+# ]
+
+# scan_timeout = 30                         # (default: 30)
+
+# TODO: No support?
+# style = "bold white"
+
+################################################################################
+# Username
+################################################################################
+
+[username]
+# style_root  = "bold red"                  # (default: "bold red")
+style_user  = "bold fg:166"               # (default: "bold yellow")
+show_always = true                        # (default: false)
+disabled    = false                       # (default: false)
+
+################################################################################
+# Hostname
+################################################################################
+
+[hostname]
+ssh_only = false                          # (default: true)
+prefix   = " "                           # (default: "")
+# suffix   = ""                             # (default: "")
+# trim_at  = ".companyname.com"             # (default: ".")
+style    = "bold yellow"                  # (default: "bold dimmed green")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Kubernetes
+################################################################################
+
+[kubernetes]
+# symbol          = "☸ "                    # (default: "☸ ")
+# style           = "bold blue"             # (default: "bold blue")
+disabled        = true                    # (default: false)
+
+[kubernetes.context_aliases]
+# "dev.local.cluster.k8s" = "dev"           # (default: )
+
+################################################################################
+# Directory
+################################################################################
+
+[directory]
+truncation_length = 5                     # (default: 3)
+# truncate_to_repo  = true                  # (default: false)
+# prefix            = "in "                 # (default: "in ")
+style             = "bold blue"           # (default: "bold cyan")
+# disabled          = false                 # (default: false)
+
+################################################################################
+# Git
+################################################################################
+
+[git_branch]
+symbol            = " "                  # Nerd Fonts
+# symbol            = " "                  # (default: " ")
+# truncation_length = "2^63 - 1"            # (default: 2^63 - 1)
+# truncation_symbol = "…"                   # (default: "…")
+# style             = "fg:61"               # (default: "bold purple")
+# disabled          = false                 # (default: false)
+
+[git_commit]
+commit_hash_length = 4                    # (default: 7)
+# prefix        = "("                       # (default: "(")
+# suffix        = ")"                       # (default: ")")
+# style         = "bold green"              # (default: "bold green")
+# only_detached = true                      # (default: true)
+# disabled      = false                     # (default: false)
+
+[git_state]
+# rebase           = "REBASING"             # (default: "REBASING")
+# merge            = "MERGING"              # (default: "MERGING")
+# revert           = "REVERTING"            # (default: "REVERTING")
+# cherry_pick      = "CHERRY-PICKING"       # (default: "CHERRY-PICKING")
+# bisect           = "BISECTING"            # (default: "BISECTING")
+# am               = "AM"                   # (default: "AM")
+# am_or_rebase     = "AM/REBASE"            # (default: "AM/REBASE")
+# progress_divider = "/"                    # (default: "/")
+# style            = "bold yellow"          # (default: "bold yellow")
+# disabled         = false                  # (default: false)
+
+[git_status]
+# conflicted               = "🏳"           # (default: "=")
+# conflicted_count.enabled = "true"         # (default: "false")
+# conflicted_count.style   = ""             # (default: "")
+# ahead                    = "🏎💨"         # (default: "⇡")
+# behind                   = "😰"           # (default: "⇣")
+# diverged                 = "😵"           # (default: "⇕")
+# untracked                = "🤷"           # (default: "?")
+# untracked.enabled        = "true"         # (default: "false")
+# untracked.style          = ""             # (default: "")
+# stashed                  = "📦"           # (default: "$")
+# stashed.enabled          = "true"         # (default: "false")
+# stashed.style            = ""             # (default: "")
+# modified                 = "📝"           # (default: "!")
+# modified.enabled         = "true"         # (default: "false")
+# modified.style           = ""             # (default: "")
+# staged.value             = "++"           # (default: "+")
+# staged.style             = "green"        # (default: "")
+# staged_count.enabled     = true           # (default: "false")
+# staged_count.style       = "green"        # (default: "")
+# renamed                  = "👅"           # (default: "»")
+# renamed.enabled          = "true"         # (default: "false")
+# renamed.style            = ""             # (default: "")
+# deleted                  = "🗑"           # (default: "✘")
+# deleted.enabled          = "true"         # (default: "false")
+# deleted.style            = ""             # (default: "")
+# prefix                   = "["            # (default: "[")
+# suffix                   = "]"            # (default: "]")
+style                      = "bold blue"  # (default: "bold red")
+# disabled                 = true           # (default: false)
+
+################################################################################
+# Mercurial
+################################################################################
+
+[hg_branch]
+symbol            = " "                  # Nerd Fonts
+# symbol            = " "                  # (default: " ")
+# truncation_length = "2^63 - 1"            # (default: 2^63 - 1)
+# truncation_symbol = "…"                   # (default: "…")
+# style             = "bold purple"         # (default: "bold purple")
+# disabled          = true                  # (default: true)
+
+################################################################################
+# Docker Context
+################################################################################
+
+[docker_context]
+symbol          = " "                    # Nerd Fonts
+# symbol          = "🐳 "                   # (default: "🐳 ")
+only_with_files = false                   # (default: false)
+style           = "bold blue"             # (default: "bold blue")
+
+################################################################################
+# Package Version
+################################################################################
+
+[package]
+symbol          = " "                    # Nerd Fonts
+# symbol          = "📦 "                   # (default: "📦 ")
+# style           = "bold red"              # (default: "bold red")
+# display_private = false                   # (default: false)
+# disabled        = false                   # (default: false)
+
+################################################################################
+# Dotnet
+################################################################################
+
+[dotnet]
+symbol    = " "                            # Nerd Fonts
+# symbol    = "•NET "                       # (default: "•NET ")
+# heuristic = true                          # (default: true)
+# style     = "bold blue"                   # (default: "bold blue")
+# disabled  = false                         # (default: false)
+
+################################################################################
+# Elixir
+################################################################################
+
+[elixir]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "💧 "                          # (default: "💧 ")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Elm
+################################################################################
+
+[elm]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "🌳 "                          # (default: "🌳 ")
+# style    = "bold cyan"                    # (default: "bold cyan")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Erlang
+################################################################################
+
+[erlang]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "🖧 "                           # (default: "🖧 ")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Golang
+################################################################################
+
+[golang]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "🐹 "                          # (default: "🐹 ")
+# style    = "bold cyan"                    # (default: "bold cyan")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Haskell
+################################################################################
+
+[haskell]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "λ "                           # (default: "λ ")
+# style    = "bold red"                     # (default: "bold red")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Java
+################################################################################
+
+[java]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "☕ "                          # (default: "☕ ")
+# style    = "dimmed red"                   # (default: "dimmed red")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Julia
+################################################################################
+
+[julia]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "ஃ "                           # (default: "ஃ ")
+# style    = "bold purple"                  # (default: "bold purple")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Node.js
+################################################################################
+
+[nodejs]
+symbol   = " "                           # Nerd Fonts
+# symbol   = " "                           # Nerd Fonts
+# symbol   = "⬢ "                           # (default: "⬢ ")
+# style    = "bold green"                   # (default: "bold green")
+# disabled = false                          # (default: false)
+
+################################################################################
+# PHP
+################################################################################
+
+[php]
+symbol   = " "                           # Nerd Fonts
+# symbol   = "🐘 "                          # (default: "🐘 ")
+# style    = "bold red"                     # (default: "bold red")
+# disabled = false                          # (default: false)
+
+#Example
+################################################################################
+# Python
+################################################################################
+
+[python]
+symbol             = " "                 # Nerd Fonts
+# symbol             = "🐍 "                # (default: "🐍 ")
+pyenv_version_name = true                 # (default: false)
+# pyenv_prefix       = "pyenv "             # (default: "pyenv ")
+# scan_for_pyfiles   = true                 # (default: true)
+# style              = "bold yellow"        # (default: "bold yellow")
+# disabled           = false                # (default: false)
+
+################################################################################
+# Ruby
+################################################################################
+
+[ruby]
+symbol = " "                             # Nerd Fonts
+# symbol = "💎 "                            # (default: "💎 ")
+# style	= "bold red"                        # (default: "bold red")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Rust
+################################################################################
+
+[rust]
+symbol   = " "                           # Nerd Fonts
+# symbol   = " "                           # Nerd Fonts
+# symbol   = "🦀 "                          # (default: "🦀 ")
+# style    = "bold red"                     # (default: "bold red")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Terraform
+################################################################################
+
+[terraform]
+# symbol       = "💠 "                      # (default: "💠 ")
+# show_version = false                      # (default: false)
+# style        = "bold 105"                 # (default: "bold 105")
+# disabled     = false                      # (default: false)
+
+################################################################################
+# Nix-shell
+################################################################################
+
+[nix_shell]
+# use_name   = false                        # (default: false)
+# impure_msg = "impure"                     # (default: "impure")
+# pure_msg   = "pure"                       # (default: "pure")
+symbol     = " "                         # Nerd Fonts
+# symbol     = " "                         # Nerd Fonts
+# symbol     = "☃️  "                        # (default: "❄️ ")
+# disabled   = false                        # (default: false)
+
+################################################################################
+# Conda
+################################################################################
+
+[conda]
+# truncation_length = 1                     # (default: 1)
+symbol            = " "                  # Nerd Fonts
+# symbol            = "C "                  # (default: "C ")
+# style             = "bold green"          # (default: "bold green")
+# disabled          = false                 # (default: false)
+
+################################################################################
+# Memory Usage
+################################################################################
+
+[memory_usage]
+# show_percentage = false                   # (default: false)
+# show_swap       = true                    # (default: true)
+# threshold       = 75                      # (default: 75)
+symbol          = " "                    # Nerd Fonts
+# symbol          = "🐏 "                   # (default: "🐏 ")
+separator       = " | "                   # (default: " | ")
+# style           = "bold dimmed green"     # (default: "bold dimmed white")
+# disabled        = false                   # (default: true)
+
+################################################################################
+# AWS
+################################################################################
+
+[aws]
+symbol          = " "                    # Nerd Fonts
+# symbol          = "☁️ "                    # (default: "☁️ ")
+# displayed_items = "all"                   # (default: "")
+# style           = "bold yellow"           # (default: "")
+# disabled        = false                   # (default: "")
+
+[aws.region_aliases]
+# ap-southeast-2 = "au"                     # (default: )
+# us-east-1      = "va"                     # (default: )
+
+################################################################################
+# Environment Variable
+################################################################################
+
+[env_var]
+# symbol   = ""                             # (default: )
+# variable = "SHELL"                        # (default: )
+# default  = "unknow shell"                 # (default: )
+# prefix   = ""                             # (default: "")
+# suffix   = ""                             # (default: "")
+# style    = "dimmed black"                 # (default: "dimmed black")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Crystal
+################################################################################
+
+[crystal]
+# symbol   = "🔮 "                          # (default: "🔮 ")
+# style    = "bold red"                     # (default: "bold red")
+# disabled = false                          # (default: false)
+
+################################################################################
+# Command Duration
+################################################################################
+
+[cmd_duration]
+# min_time          = 2_000                 # (default: 2_000)
+# show_milliseconds = false                 # (default: false)
+# prefix            = "took"                # (default: "took")
+# style             = "bold yellow"         # (default: "bold yellow")
+# disabled          = false	                # (default: false)
+
+################################################################################
+# Custom commands
+################################################################################
+
+[custom.gcp]
+command       = "cat $HOME/.config/gcloud/active_config"
+when          = ""
+# shell         = "bash"
+description   = "The current GCP configuration"
+# directories   = []
+# files         = []
+# extensions    = []
+symbol        = "   "                   # Nerd Fonts
+style         = "bold blue"
+prefix        = "("
+suffix        = ")"
+disabled      = false
+
+################################################################################
+# Line Break
+################################################################################
+
+[line_break]
+# disabled = true                           # (default: false)
+
+################################################################################
+# Jobs
+################################################################################
+
+[jobs]
+# symbol    = "✦"                           # (default: "✦")
+# threshold = 1                             # (default: 1)
+# style     = "bold blue"                   # (default: "bold blue")
+# disabled  = false                         # (default: false)
+
+################################################################################
+# Battery
+################################################################################
+
+[battery]
+full_symbol        = ""                  # Nerd Fonts
+charging_symbol    = ""                  # Nerd Fonts
+discharging_symbol = ""                  # Nerd Fonts
+# full_symbol        = "🔋"                 # (default: "•")
+# charging_symbol    = "⚡️"                 # (default: "⇡")
+# discharging_symbol = "💀"                 # (default: "⇣")
+# disabled           = false                # (default: false)
+
+[[battery.display]]  # "bold red" style when capacity is between 0% and 10%
+threshold = 10                            # (default: 10)
+style     = "bold red"                    # (default: "bold red")
+
+[[battery.display]]  # "bold yellow" style when capacity is between 10% and 30%
+threshold = 30                            # (default: 10)
+style     = "bold yellow"                 # (default: "bold red")
+
+# when capacity is over 30%, the battery indicator will not be displayed
+################################################################################
+# Time
+################################################################################
+
+[time]
+# use_12hr        = false                   # (default: false)
+# format          = "%T"                    # (default: "%T")
+# style           = "bold yellow"           # (default: "bold yellow")
+# utc_time_offset = "local"                 # (default: "local")
+# disabled        = false                   # (default: true)
+
+################################################################################
+# Character
+################################################################################
+
+[character]
+symbol                = "❯❯"              # (default: "❯")
+# error_symbol          = "✖"               # (default: "✖")
+# use_symbol_for_status = false             # (default: false)
+vicmd_symbol          = "❮❮"              # (default: "❮")
+style_success         = "bold white"      # (default: "bold green")
+# style_failure         = "bold red"        # (default: "bold red")
+# disabled              = false             # (default: false)
