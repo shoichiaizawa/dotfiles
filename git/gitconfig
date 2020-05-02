@@ -242,6 +242,14 @@
 
 	stashes = stash list
 
+	# Stash only untracked files
+	# See: https://stackoverflow.com/a/39026300/1334728
+	stash-untracked = "!f() {   \
+		git stash;                \
+		git stash save -u "$@";   \
+		git stash pop stash@{1};  \
+	}; f"
+
 	# ------
 	# status
 	# ------
