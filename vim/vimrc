@@ -569,6 +569,15 @@ if isdirectory(expand("~/.vim/plugged/vim-vue/"))
 endif
 
 " }}}1
+" {{{1 Autocmd: Auto Open QuickFix Window
+
+augroup autoquickfix
+  autocmd!
+  autocmd QuickFixCmdPost [^l]* cwindow
+  autocmd QuickFixCmdPost    l* lwindow
+augroup END
+
+" }}}1
 
 " Plugin Settings: Solarized Dark Theme {{{1
 
