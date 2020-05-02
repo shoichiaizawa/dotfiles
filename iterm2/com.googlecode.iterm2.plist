@@ -120,7 +120,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>410 363 620 392 0 0 1440 877 </string>
+	<string>410 381 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -2101,6 +2101,10 @@
 		<string>3.3.8beta1</string>
 		<string>3.3.8beta4</string>
 		<string>3.3.8beta5</string>
+		<string>3.3.9beta1</string>
+		<string>3.3.10beta1</string>
+		<string>3.3.10beta2</string>
+		<string>3.3.10beta3</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
@@ -2127,7 +2131,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>588562306.83447695</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>143</integer>
+	<integer>183</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>575435555.19461</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -2477,6 +2481,14 @@
 				<true/>
 				<key>name</key>
 				<string>style</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.jobPid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2979,7 +2991,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-01-26T10:28:13Z</date>
+	<date>2020-04-12T06:38:15Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>Secure Input</key>
@@ -3846,7 +3858,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.8beta5</string>
+	<string>3.3.10beta3</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
