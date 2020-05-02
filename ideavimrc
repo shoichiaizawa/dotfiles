@@ -1,0 +1,205 @@
+" --------------------
+" Emulated Vim Plugins
+" --------------------
+
+set commentary
+
+" Install IdeaVim-EasyMotion and AceJump plugins
+set easymotion
+" TODO: Add `if` statement to check the EasyMotion's availability
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap m <Plug>(easymotion-s2)
+xmap m <Plug>(easymotion-s2)
+omap m <Plug>(easymotion-s2)
+
+set multiple-cursors
+set surround
+
+" ---------------
+" Common settings
+" ---------------
+
+" source ~/.vimrc
+
+let mapleader = ","
+
+map <Leader>rn :set relativenumber!<CR>
+
+set showmode
+set gdefault
+
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+set notimeout
+
+" Keep 10000 lines of command line history
+set history=10000
+
+" Cursor line will always be in the middle of the window
+set scrolloff=999
+
+" Set match pairs beyond default {...}, (...) and [...]
+set matchpairs+=<:>
+
+" Increase or decrease items (default octal,hex)
+set nrformats=alpha,hex
+
+" TODO: No support for whichwrap option :(
+" set whichwrap=b,s,h,l,<,>,~,[,]
+
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
+
+if has('clipboard')
+  if has('unnamedplus')     " When possible use + register for copy-paste
+    set clipboard^=unnamed,unnamedplus
+  else              " On macOS and Windows, use * register for copy-paste
+    set clipboard=unnamed
+  endif
+endif
+
+inoremap jk <Esc><Esc>
+
+" Easy window navigation
+nnoremap <C-H> <C-W>h
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+
+" Quickly set comma or semicolon at the end of the string
+inoremap ,, <End>,
+inoremap ;; <End>;
+
+nnoremap <silent> <Leader><Space> :nohlsearch<CR>
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+nnoremap <silent> <C-[><C-[> :nohlsearch<CR>
+
+" TODO: IdeaVim does not support toggle folds :(
+" nnoremap <Space> za
+nnoremap zj zc
+nnoremap zk zo
+
+" Disable the normal register; hence, p and P no longer yank the deleted text
+nnoremap x "_x
+nnoremap X "_X
+vnoremap x "_x
+vnoremap X "_X
+
+" Do not overwrite register when pasting in Visual mode (p/P, gv, y)
+" TODO: p/P to pgvy/Pgvy keybindings are not working :(
+" vnoremap p pgvy
+" vnoremap P Pgvy
+" Tip by @Delta0
+" xnoremap p "_dP
+" A workaround to achieve this using the built-in paste functionality
+vnoremap p :action EditorPaste<CR>
+vnoremap P :action EditorPaste<CR>
+" but preserve IdeaVim default paste
+vnoremap gp p
+vnoremap gP P
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy
+map Y y$
+
+" Indent line(s) in Visual Mode becomes easier with the trailing 'gv' command
+vnoremap < <gv
+vnoremap > >gv
+
+" Select (charwise) the contents of the current line, excluding indentation.
+" Great for pasting Python lines into REPLs.
+nnoremap vv ^vg_
+
+" Smart line movement in Insert mode
+inoremap <C-J> <Esc>:m .+1<CR>==gi
+inoremap <C-K> <Esc>:m .-2<CR>==gi
+
+" Smart line movement in Visual mode
+vnoremap <C-J> :m '>+1<CR>gv=gv
+vnoremap <C-K> :m '<-2<CR>gv=gv
+
+" -------------------------
+" IdeaVim specific settings
+" -------------------------
+
+" https://github.com/JetBrains/ideavim/wiki/%60ideajoin%60-examples
+set ideajoin
+
+" Select entire buffer
+nnoremap va :action $SelectAll<CR>
+
+nmap <Leader>S :source ~/.ideavimrc<CR>
+
+nnoremap <Leader>cc :action CommentByLineComment<CR>
+vnoremap <Leader>cc :action CommentByLineComment<CR>
+
+nnoremap <Leader>W :action EditorToggleUseSoftWraps<CR>
+nnoremap <Leader>ic :action EditorToggleShowWhitespaces<CR>
+
+" Enter Distraction Free Mode - mnemonic: `z` stands for zen
+nnoremap <Leader>z :action ToggleDistractionFreeMode<CR>
+
+nnoremap <Leader>e :action RecentFiles<CR>
+
+nnoremap <Leader>d :action QuickTypeDefinition<CR>
+
+" multiple-cursors keybindings for macOS
+" See: https://youtrack.jetbrains.com/issue/VIM-1531#focus=streamItem-27-3131071.0-0
+map <C-N> <A-N>
+map <C-P> <A-P>
+" FIXME: This spoils <C-X> to decrement a character under the cursor
+map <C-X> <A-X>
+" TODO: This below doesn't seem functional :(
+map g<C-N> g<A-N>
+
+" unimpaired.vim inspired keybindings
+nnoremap [<Space> O<Esc>j
+nnoremap ]<Space> o<Esc>k
+nnoremap [q :action PreviousOccurence<CR>
+nnoremap ]q :action NextOccurence<CR>
+nnoremap [l :action GotoPreviousError<CR>
+nnoremap ]l :action GotoNextError<CR>
+nnoremap [x :action GotoPreviousError<CR>
+nnoremap ]x :action GotoNextError<CR>
+nnoremap [m :action MethodUp<CR>
+nnoremap ]m :action MethodDown<CR>
+nnoremap [e :action MoveLineUp<CR>
+nnoremap ]e :action MoveLineDown<CR>
+nnoremap [b :action PreviousTab<CR>
+nnoremap ]b :action NextTab<CR>
+nnoremap <Tab>j :action PreviousTab<CR>
+nnoremap <Tab>k :action NextTab<CR>
+
+" vim-gitgutter inspired keybindings
+nnoremap [h :action VcsShowPrevChangeMarker<CR>
+nnoremap ]h :action VcsShowNextChangeMarker<CR>
+nmap <Leader>hu :action Vcs.RollbackChangedLines<CR>
+nmap <Leader>hp :action VcsShowCurrentChangeMarker<CR>
+
+" vim-fugitive inspired keybindings
+nnoremap <silent> <Leader>gb :action Annotate<CR>
+
+" NERDTree inspired keybindings
+map <silent> <Leader>nf :action SelectIn<CR>
+
+" VSCodeVim inspired keybindings
+nnoremap gh :action ShowErrorDescription<CR>
+nnoremap gt :action GotoTypeDeclaration<CR>
+nnoremap gT :action GotoTypeDeclaration<CR>
+
+" Built-in navigation to navigated items works better
+nnoremap <C-O> :action Back<CR>
+nnoremap <C-I> :action Forward<CR>
+" but preserve IdeaVim defaults
+nnoremap g<C-O> <C-O>
+nnoremap g<C-I> <C-I>
+
+" Built-in search looks better
+" nnoremap / :action Find<CR>
+" but preserve IdeaVim default search
+" nnoremap g/ /
