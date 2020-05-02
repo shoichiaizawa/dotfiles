@@ -1236,6 +1236,7 @@ nnoremap <Leader>4 I#### <Esc>
 nnoremap <Leader>5 I##### <Esc>
 nnoremap <Leader>6 I###### <Esc>
 nnoremap <Leader>7 I### <Esc> A ###<Esc>
+nnoremap <Leader>cz I#<Space><Esc>yypVr-:redraw<CR>2xI#<Space><Esc>yykP2j
 
 " }}}1
 " Mappings: Markdown to HTML {{{1
