@@ -51,6 +51,7 @@ Plug 'alpertuna/vim-header'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'cespare/vim-toml'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
