@@ -134,7 +134,6 @@
 	# commit
 	# ------
 
-	commit = commit --verbose
 	ci     = commit --verbose
 
 	cm     = commit -m
