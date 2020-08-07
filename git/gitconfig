@@ -255,6 +255,9 @@
 
 	stashes = stash list
 
+	stash-save = stash save
+	stash-all  = stash save -u
+
 	# Stash only untracked files
 	# See: https://stackoverflow.com/a/39026300/1334728
 	stash-untracked = "!f() {   \
