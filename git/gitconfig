@@ -24,6 +24,8 @@
 [difftool "sourcetree"]
 	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
+[fetch]
+	prune = true
 [merge]
 	conflictstyle = diff3
 [mergetool "sourcetree"]
