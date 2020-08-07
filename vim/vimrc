@@ -1289,6 +1289,7 @@ map <silent> <Leader>pre :!open -a "MacDown" % > /dev/null &<CR>:redraw!<CR>
 inoremap <silent> <Leader>todo <C-R>=strftime('%Y-%m-%d %a')<CR>
 inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
 inoremap <silent> <Leader>time <C-R>=strftime('%H:%M:%S')<CR>
+inoremap <silent> <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
 
 " }}}1
 " Mappings: Regular char enhancement {{{1
