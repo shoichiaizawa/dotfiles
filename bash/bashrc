@@ -16,6 +16,7 @@
 
 export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
+[ -x $(brew --prefix)/bin/src-hilite-lesspipe.sh ] && \
 export LESSOPEN='| $(brew --prefix)/bin/src-hilite-lesspipe.sh %s'
 
 export VISUAL=vim
