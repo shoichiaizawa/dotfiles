@@ -186,10 +186,11 @@
 	log10 = log -10
 	log20 = log -20
 
-	l     = log --graph --decorate --oneline --all
-	l5    = log --graph --decorate --oneline --all -5
-	l10   = log --graph --decorate --oneline --all -10
-	l20   = log --graph --decorate --oneline --all -20
+	# `git log` in oneline but without stashes
+	l     = log --graph --decorate --oneline --branches --remotes --tags --notes HEAD
+	l5    = log --graph --decorate --oneline --branches --remotes --tags --notes -5  HEAD
+	l10   = log --graph --decorate --oneline --branches --remotes --tags --notes -10 HEAD
+	l20   = log --graph --decorate --oneline --branches --remotes --tags --notes -20 HEAD
 
 	la    = log --patch
 
