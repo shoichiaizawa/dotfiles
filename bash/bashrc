@@ -27,6 +27,7 @@ export EDITOR="$VISUAL"
 
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 [ -d ~/.composer/vendor/bin ] && export PATH=$PATH:~/.composer/vendor/bin
+[ -d $(brew --prefix)/opt/android-sdk ] && \
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$(brew --prefix)/share/git-core/contrib/diff-highlight
 
