@@ -63,7 +63,7 @@
 [alias]
 	git  = !git
 	init = init -g  ; `alias git=hub` in your profile
-	this = !git init && git add . && git commit -m \"Initial commit\"
+	this = !git init && git add . && git commit -m \"chore: initial commit\"
 
 	# See alternative solution 'karan/joe', 'simonwhitaker/gibo'
 	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
