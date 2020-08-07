@@ -51,12 +51,11 @@ export HISTIGNORE=$HISTIGNORE':clear:histg:hgrep'
 
 # TODO: See what other people do for their command prompt configuration: dotfiles-mathiasbynens/, dotfiles-questbeat/, dotfiles-tpope/, dotfiles-yonchu/ etc
 
-# TODO: Not working...
 # Load the shell dotfiles:
-for file in ~/.bash/{bash_prompt}; do
-  [ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-unset file;
+# for file in ~/.bash/{bash_prompt}; do
+#   [ -r "$file" ] && [ -f "$file" ] && source "$file";
+# done;
+# unset file;
 
 source ~/.bash/bash_prompt  # temp one-liner to source the prompt file as script above is not working.
 
