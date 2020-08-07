@@ -321,6 +321,7 @@ fi
 export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
 # export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
 
+[ -d $(brew --prefix)/opt/android-sdk ] && \
 export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
 # export ANDROID_HOME=~/Library/Android/sdk/      # Android Studio default
 
