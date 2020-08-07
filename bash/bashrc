@@ -765,6 +765,16 @@ fi
 
 daliases() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 
+# -------------
+# Google Chrome
+# -------------
+
+[ -d "/Applications/Google Chrome.app" ] && \
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+
+[ -d "/Applications/Google Chrome Canary.app" ] && \
+alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+
 # ------------
 # To be sorted
 # ------------
