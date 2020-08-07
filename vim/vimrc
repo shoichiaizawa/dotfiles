@@ -49,6 +49,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'aklt/plantuml-syntax'
 Plug 'alpertuna/vim-header'
 Plug 'altercation/vim-colors-solarized'
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'cespare/vim-toml'
@@ -1187,6 +1188,15 @@ endif
 if isdirectory(expand("~/.vim/plugged/vim-multiple-cursors/"))
   let g:multi_cursor_select_all_word_key = 'g<C-N>'  " (default <A-n>)
   " let g:multi_cursor_select_all_key      = 'g<C-N>'  " (default g<A-n>)
+endif
+
+" }}}1
+" Plugin Settings: tagalong.vim {{{1
+
+if isdirectory(expand("~/.vim/plugged/tagalong.vim/"))
+  let g:tagalong_verbose = 1  " (default 0)
+
+  let g:tagalong_additional_filetypes = ['vue']
 endif
 
 " }}}1
