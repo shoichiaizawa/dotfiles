@@ -22,7 +22,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 ################################################################################
-# PATH Setting                                                                 #
+# PATH Settings                                                                #
 ################################################################################
 
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
