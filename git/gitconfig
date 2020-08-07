@@ -192,6 +192,11 @@
 	l10   = log --graph --decorate --oneline --branches --remotes --tags --notes -10 HEAD
 	l20   = log --graph --decorate --oneline --branches --remotes --tags --notes -20 HEAD
 
+	ll     = log --graph --decorate --oneline --all
+	ll5    = log --graph --decorate --oneline --all -5
+	ll10   = log --graph --decorate --oneline --all -10
+	ll20   = log --graph --decorate --oneline --all -20
+
 	la    = log --patch
 
 	# Adopted from @tpope
@@ -214,6 +219,12 @@
 			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
 		fi \
 	}; f"
+
+	# ----
+	# push
+	# ----
+
+	pushf = push --force-with-lease
 
 	# ------
 	# rebase
