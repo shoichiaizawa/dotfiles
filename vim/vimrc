@@ -1155,12 +1155,21 @@ endif
 " Plugin Settings: vim-header {{{1
 
 if isdirectory(expand("~/.vim/plugged/vim-header/"))
+  " let g:header_alignment = 0                        " (default 1)
+  " let g:header_max_size = 20                        " (default 7)
+
   let g:header_field_filename = 1                   " (default 1)
+  " let g:header_field_filename_path = 1              " (default 0)
   let g:header_field_author = 'Shoichi Aizawa'
   let g:header_field_author_email = 'shoichiaizawa@gmail.com'
+  " let g:header_field_copyright = ''                 " (default '')
   let g:header_field_timestamp = 1                  " (default 1)
+  " let g:header_field_modified_by = 0                " (default 1)
   let g:header_field_modified_timestamp = 1         " (default 1)
   let g:header_field_timestamp_format = '%Y-%m-%d %H:%M:%S %z'  " (default %d.%m.%Y)
+  let g:header_field_license_id = 'MIT'             " (default '')
+  " let g:header_cfg_comment_char = ';'               " (default '#')
+
   let g:header_auto_add_header = 0                  " (default 1)
 endif
 
