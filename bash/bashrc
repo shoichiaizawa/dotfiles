@@ -736,7 +736,8 @@ alias empty-trash=" \
 # --------------------------
 
 if type _brew_cask > /dev/null 2>&1; then
-  alias cask='brew cask'
+  cask() { brew "$@" --cask; }
+  alias cask=cask
 fi
 
 # ------
