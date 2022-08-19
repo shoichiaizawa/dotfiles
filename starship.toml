@@ -2,507 +2,659 @@
 # Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/starship.toml
 
-################################################################################
-# Prompt
-################################################################################
-
-# add_newline	 = true                       # (default: true)
-
-# prompt_order = [
-#   "username",
-#   "hostname",
-#   "kubernetes",
-#   "directory",
-#   "git_branch",
-#   "git_commit",
-#   "git_state",
-#   "git_status",
-#   "hg_branch",
-#   "docker_context",
-#   "package",
-#   "dotnet",
-#   "elixir",
-#   "elm",
-#   "erlang",
-#   "golang",
-#   "haskell",
-#   "java",
-#   "julia",
-#   "nodejs",
-#   "php",
-#   "python",
-#   "ruby",
-#   "rust",
-#   "terraform",
-#   "nix_shell",
-#   "conda",
-#   "memory_usage",
-#   "aws",
-#   "env_var",
-#   "crystal",
-#   "cmd_duration",
-#   "custom",
-#   "line_break",
-#   "jobs",
-#   "battery",
-#   "time",
-#   "character",
-# ]
-
-# scan_timeout = 30                         # (default: 30)
-
-# TODO: No support?
-# style = "bold white"
+# NOTE: Use `starship print-config --default` to see the default configuration
 
 ################################################################################
-# Username
+# Prompt (https://starship.rs/config/#prompt)
 ################################################################################
 
-[username]
-# style_root  = "bold red"                  # (default: "bold red")
-style_user  = "bold fg:166"               # (default: "bold yellow")
-show_always = true                        # (default: false)
-disabled    = false                       # (default: false)
+# TODO: Add prompt configuration if necessary
 
 ################################################################################
-# Hostname
-################################################################################
-
-[hostname]
-ssh_only = false                          # (default: true)
-prefix   = " "                           # (default: "")
-# suffix   = ""                             # (default: "")
-# trim_at  = ".companyname.com"             # (default: ".")
-style    = "bold yellow"                  # (default: "bold dimmed green")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Kubernetes
-################################################################################
-
-[kubernetes]
-# symbol          = "☸ "                    # (default: "☸ ")
-# style           = "bold blue"             # (default: "bold blue")
-disabled        = true                    # (default: false)
-
-[kubernetes.context_aliases]
-# "dev.local.cluster.k8s" = "dev"           # (default: )
-
-################################################################################
-# Directory
-################################################################################
-
-[directory]
-truncation_length = 5                     # (default: 3)
-# truncate_to_repo  = true                  # (default: false)
-# prefix            = "in "                 # (default: "in ")
-style             = "bold blue"           # (default: "bold cyan")
-# disabled          = false                 # (default: false)
-
-################################################################################
-# Git
-################################################################################
-
-[git_branch]
-symbol            = " "                  # Nerd Fonts
-# symbol            = " "                  # (default: " ")
-# truncation_length = "2^63 - 1"            # (default: 2^63 - 1)
-# truncation_symbol = "…"                   # (default: "…")
-# style             = "fg:61"               # (default: "bold purple")
-# disabled          = false                 # (default: false)
-
-[git_commit]
-commit_hash_length = 4                    # (default: 7)
-# prefix        = "("                       # (default: "(")
-# suffix        = ")"                       # (default: ")")
-# style         = "bold green"              # (default: "bold green")
-# only_detached = true                      # (default: true)
-# disabled      = false                     # (default: false)
-
-[git_state]
-# rebase           = "REBASING"             # (default: "REBASING")
-# merge            = "MERGING"              # (default: "MERGING")
-# revert           = "REVERTING"            # (default: "REVERTING")
-# cherry_pick      = "CHERRY-PICKING"       # (default: "CHERRY-PICKING")
-# bisect           = "BISECTING"            # (default: "BISECTING")
-# am               = "AM"                   # (default: "AM")
-# am_or_rebase     = "AM/REBASE"            # (default: "AM/REBASE")
-# progress_divider = "/"                    # (default: "/")
-# style            = "bold yellow"          # (default: "bold yellow")
-# disabled         = false                  # (default: false)
-
-[git_status]
-# conflicted               = "🏳"           # (default: "=")
-# conflicted_count.enabled = "true"         # (default: "false")
-# conflicted_count.style   = ""             # (default: "")
-# ahead                    = "🏎💨"         # (default: "⇡")
-# behind                   = "😰"           # (default: "⇣")
-# diverged                 = "😵"           # (default: "⇕")
-# untracked                = "🤷"           # (default: "?")
-# untracked.enabled        = "true"         # (default: "false")
-# untracked.style          = ""             # (default: "")
-# stashed                  = "📦"           # (default: "$")
-# stashed.enabled          = "true"         # (default: "false")
-# stashed.style            = ""             # (default: "")
-# modified                 = "📝"           # (default: "!")
-# modified.enabled         = "true"         # (default: "false")
-# modified.style           = ""             # (default: "")
-# staged.value             = "++"           # (default: "+")
-# staged.style             = "green"        # (default: "")
-# staged_count.enabled     = true           # (default: "false")
-# staged_count.style       = "green"        # (default: "")
-# renamed                  = "👅"           # (default: "»")
-# renamed.enabled          = "true"         # (default: "false")
-# renamed.style            = ""             # (default: "")
-# deleted                  = "🗑"           # (default: "✘")
-# deleted.enabled          = "true"         # (default: "false")
-# deleted.style            = ""             # (default: "")
-# prefix                   = "["            # (default: "[")
-# suffix                   = "]"            # (default: "]")
-style                      = "bold blue"  # (default: "bold red")
-# disabled                 = true           # (default: false)
-
-################################################################################
-# Mercurial
-################################################################################
-
-[hg_branch]
-symbol            = " "                  # Nerd Fonts
-# symbol            = " "                  # (default: " ")
-# truncation_length = "2^63 - 1"            # (default: 2^63 - 1)
-# truncation_symbol = "…"                   # (default: "…")
-# style             = "bold purple"         # (default: "bold purple")
-# disabled          = true                  # (default: true)
-
-################################################################################
-# Docker Context
-################################################################################
-
-[docker_context]
-symbol          = " "                    # Nerd Fonts
-# symbol          = "🐳 "                   # (default: "🐳 ")
-only_with_files = false                   # (default: false)
-style           = "bold blue"             # (default: "bold blue")
-
-################################################################################
-# Package Version
-################################################################################
-
-[package]
-symbol          = " "                    # Nerd Fonts
-# symbol          = "📦 "                   # (default: "📦 ")
-# style           = "bold red"              # (default: "bold red")
-# display_private = false                   # (default: false)
-# disabled        = false                   # (default: false)
-
-################################################################################
-# Dotnet
-################################################################################
-
-[dotnet]
-symbol    = " "                            # Nerd Fonts
-# symbol    = "•NET "                       # (default: "•NET ")
-# heuristic = true                          # (default: true)
-# style     = "bold blue"                   # (default: "bold blue")
-# disabled  = false                         # (default: false)
-
-################################################################################
-# Elixir
-################################################################################
-
-[elixir]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "💧 "                          # (default: "💧 ")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Elm
-################################################################################
-
-[elm]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "🌳 "                          # (default: "🌳 ")
-# style    = "bold cyan"                    # (default: "bold cyan")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Erlang
-################################################################################
-
-[erlang]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "🖧 "                           # (default: "🖧 ")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Golang
-################################################################################
-
-[golang]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "🐹 "                          # (default: "🐹 ")
-# style    = "bold cyan"                    # (default: "bold cyan")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Haskell
-################################################################################
-
-[haskell]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "λ "                           # (default: "λ ")
-# style    = "bold red"                     # (default: "bold red")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Java
-################################################################################
-
-[java]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "☕ "                          # (default: "☕ ")
-# style    = "dimmed red"                   # (default: "dimmed red")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Julia
-################################################################################
-
-[julia]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "ஃ "                           # (default: "ஃ ")
-# style    = "bold purple"                  # (default: "bold purple")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Node.js
-################################################################################
-
-[nodejs]
-symbol   = " "                           # Nerd Fonts
-# symbol   = " "                           # Nerd Fonts
-# symbol   = "⬢ "                           # (default: "⬢ ")
-# style    = "bold green"                   # (default: "bold green")
-# disabled = false                          # (default: false)
-
-################################################################################
-# PHP
-################################################################################
-
-[php]
-symbol   = " "                           # Nerd Fonts
-# symbol   = "🐘 "                          # (default: "🐘 ")
-# style    = "bold red"                     # (default: "bold red")
-# disabled = false                          # (default: false)
-
-#Example
-################################################################################
-# Python
-################################################################################
-
-[python]
-symbol             = " "                 # Nerd Fonts
-# symbol             = "🐍 "                # (default: "🐍 ")
-pyenv_version_name = true                 # (default: false)
-# pyenv_prefix       = "pyenv "             # (default: "pyenv ")
-# scan_for_pyfiles   = true                 # (default: true)
-# style              = "bold yellow"        # (default: "bold yellow")
-# disabled           = false                # (default: false)
-
-################################################################################
-# Ruby
-################################################################################
-
-[ruby]
-symbol = " "                             # Nerd Fonts
-# symbol = "💎 "                            # (default: "💎 ")
-# style	= "bold red"                        # (default: "bold red")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Rust
-################################################################################
-
-[rust]
-symbol   = " "                           # Nerd Fonts
-# symbol   = " "                           # Nerd Fonts
-# symbol   = "🦀 "                          # (default: "🦀 ")
-# style    = "bold red"                     # (default: "bold red")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Terraform
-################################################################################
-
-[terraform]
-# symbol       = "💠 "                      # (default: "💠 ")
-# show_version = false                      # (default: false)
-# style        = "bold 105"                 # (default: "bold 105")
-# disabled     = false                      # (default: false)
-
-################################################################################
-# Nix-shell
-################################################################################
-
-[nix_shell]
-# use_name   = false                        # (default: false)
-# impure_msg = "impure"                     # (default: "impure")
-# pure_msg   = "pure"                       # (default: "pure")
-symbol     = " "                         # Nerd Fonts
-# symbol     = " "                         # Nerd Fonts
-# symbol     = "☃️  "                        # (default: "❄️ ")
-# disabled   = false                        # (default: false)
-
-################################################################################
-# Conda
-################################################################################
-
-[conda]
-# truncation_length = 1                     # (default: 1)
-symbol            = " "                  # Nerd Fonts
-# symbol            = "C "                  # (default: "C ")
-# style             = "bold green"          # (default: "bold green")
-# disabled          = false                 # (default: false)
-
-################################################################################
-# Memory Usage
-################################################################################
-
-[memory_usage]
-# show_percentage = false                   # (default: false)
-# show_swap       = true                    # (default: true)
-# threshold       = 75                      # (default: 75)
-symbol          = " "                    # Nerd Fonts
-# symbol          = "🐏 "                   # (default: "🐏 ")
-separator       = " | "                   # (default: " | ")
-# style           = "bold dimmed green"     # (default: "bold dimmed white")
-# disabled        = false                   # (default: true)
-
-################################################################################
-# AWS
+# AWS (https://starship.rs/config/#aws)
 ################################################################################
 
 [aws]
-symbol          = " "                    # Nerd Fonts
-# symbol          = "☁️ "                    # (default: "☁️ ")
-# displayed_items = "all"                   # (default: "")
-# style           = "bold yellow"           # (default: "")
-# disabled        = false                   # (default: "")
+format = '[on](bold white) [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
+symbol = '  '  # Nerd Fonts
 
 [aws.region_aliases]
-# ap-southeast-2 = "au"                     # (default: )
-# us-east-1      = "va"                     # (default: )
+ap-southeast-2 = 'au'
+us-east-1      = 'va'
+
+[aws.profile_aliases]
+
 
 ################################################################################
-# Environment Variable
+# Azure (https://starship.rs/config/#azure)
 ################################################################################
 
-[env_var]
-# symbol   = ""                             # (default: )
-# variable = "SHELL"                        # (default: )
-# default  = "unknow shell"                 # (default: )
-# prefix   = ""                             # (default: "")
-# suffix   = ""                             # (default: "")
-# style    = "dimmed black"                 # (default: "dimmed black")
-# disabled = false                          # (default: false)
+[azure]
+format = '[on](bold white) [$symbol($subscription)]($style) '
 
 ################################################################################
-# Crystal
-################################################################################
-
-[crystal]
-# symbol   = "🔮 "                          # (default: "🔮 ")
-# style    = "bold red"                     # (default: "bold red")
-# disabled = false                          # (default: false)
-
-################################################################################
-# Command Duration
-################################################################################
-
-[cmd_duration]
-# min_time          = 2_000                 # (default: 2_000)
-# show_milliseconds = false                 # (default: false)
-# prefix            = "took"                # (default: "took")
-# style             = "bold yellow"         # (default: "bold yellow")
-# disabled          = false	                # (default: false)
-
-################################################################################
-# Custom commands
-################################################################################
-
-[custom.gcp]
-command       = "cat $HOME/.config/gcloud/active_config"
-when          = ""
-# shell         = "bash"
-description   = "The current GCP configuration"
-# directories   = []
-# files         = []
-# extensions    = []
-symbol        = "   "                   # Nerd Fonts
-style         = "bold blue"
-prefix        = "("
-suffix        = ")"
-disabled      = false
-
-################################################################################
-# Line Break
-################################################################################
-
-[line_break]
-# disabled = true                           # (default: false)
-
-################################################################################
-# Jobs
-################################################################################
-
-[jobs]
-# symbol    = "✦"                           # (default: "✦")
-# threshold = 1                             # (default: 1)
-# style     = "bold blue"                   # (default: "bold blue")
-# disabled  = false                         # (default: false)
-
-################################################################################
-# Battery
+# Battery (https://starship.rs/config/#battery)
 ################################################################################
 
 [battery]
-full_symbol        = ""                  # Nerd Fonts
-charging_symbol    = ""                  # Nerd Fonts
-discharging_symbol = ""                  # Nerd Fonts
-# full_symbol        = "🔋"                 # (default: "•")
-# charging_symbol    = "⚡️"                 # (default: "⇡")
-# discharging_symbol = "💀"                 # (default: "⇣")
-# disabled           = false                # (default: false)
 
-[[battery.display]]  # "bold red" style when capacity is between 0% and 10%
-threshold = 10                            # (default: 10)
-style     = "bold red"                    # (default: "bold red")
 
-[[battery.display]]  # "bold yellow" style when capacity is between 10% and 30%
-threshold = 30                            # (default: 10)
-style     = "bold yellow"                 # (default: "bold red")
+[[battery.display]]  # 'bold red' style when capacity is between 0% and 10%
+threshold = 10
+style     = 'bold red'
+
+[[battery.display]]  # 'bold yellow' style when capacity is between 10% and 30%
+threshold = 30
+style     = 'bold yellow'
 
 # when capacity is over 30%, the battery indicator will not be displayed
-################################################################################
-# Time
-################################################################################
-
-[time]
-# use_12hr        = false                   # (default: false)
-# format          = "%T"                    # (default: "%T")
-# style           = "bold yellow"           # (default: "bold yellow")
-# utc_time_offset = "local"                 # (default: "local")
-# disabled        = false                   # (default: true)
 
 ################################################################################
-# Character
+# Buf (https://starship.rs/config/#buf)
+################################################################################
+
+[buf]
+format = '[with](bold white) [$symbol ($version)]($style)'
+
+################################################################################
+# Bun (https://starship.rs/config/#bun)
+################################################################################
+
+[bun]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# C (https://starship.rs/config/#c)
+################################################################################
+
+[c]
+format = '[via](bold white) [$symbol($version(-$name) )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Character (https://starship.rs/config/#character)
 ################################################################################
 
 [character]
-symbol                = "❯❯"              # (default: "❯")
-# error_symbol          = "✖"               # (default: "✖")
-# use_symbol_for_status = false             # (default: false)
-vicmd_symbol          = "❮❮"              # (default: "❮")
-style_success         = "bold white"      # (default: "bold green")
-# style_failure         = "bold red"        # (default: "bold red")
-# disabled              = false             # (default: false)
+success_symbol            = '[❯❯](bold green)'
+error_symbol              = '[❯❯](bold red)'
+vimcmd_symbol             = '[❮❮](bold green)'
+vimcmd_visual_symbol      = '[❮❮](bold yellow)'
+vimcmd_replace_symbol     = '[❮❮](bold purple)'
+vimcmd_replace_one_symbol = '[❮❮](bold purple)'
+
+################################################################################
+# CMake (https://starship.rs/config/#cmake)
+################################################################################
+
+[cmake]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Command Duration (https://starship.rs/config/#command-duration)
+################################################################################
+
+[cmd_duration]
+format = '[took](bold white) [$duration]($style) '
+
+################################################################################
+# COBOL / GNUCOBOL (https://starship.rs/config/#cobol-gnucobol)
+################################################################################
+
+[cobol]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Conda (https://starship.rs/config/#conda)
+################################################################################
+
+[conda]
+format = '[via](bold white) [$symbol$environment]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Container (https://starship.rs/config/#container)
+################################################################################
+
+[container]
+
+
+################################################################################
+# Crystal (https://starship.rs/config/#crystal)
+################################################################################
+
+[crystal]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Daml (https://starship.rs/config/#daml)
+################################################################################
+
+[daml]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Dart (https://starship.rs/config/#dart)
+################################################################################
+
+[dart]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Deno (https://starship.rs/config/#deno)
+################################################################################
+
+[deno]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Directory (https://starship.rs/config/#directory)
+################################################################################
+
+[directory]
+style             = 'bold blue'
+truncation_symbol = '…/'
+
+[directory.substitutions]
+# '/Volumes/network/path'  = '/net'
+# 'src/com/long/java/path' = 'mypath'
+
+################################################################################
+# Docker Context (https://starship.rs/config/#docker-context)
+################################################################################
+
+[docker_context]
+format = '[via](bold white) [$symbol$context]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Dotnet (https://starship.rs/config/#dotnet)
+################################################################################
+
+[dotnet]
+format = '[via](bold white) [$symbol($version )(🎯 $tfm )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Elixir (https://starship.rs/config/#elixir)
+################################################################################
+
+[elixir]
+format = '[via](bold white) [$symbol($version \(OTP $otp_version\) )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Elm (https://starship.rs/config/#elm)
+################################################################################
+
+[elm]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Environment Variable (https://starship.rs/config/#environment-variable)
+################################################################################
+
+[env_var]
+
+
+################################################################################
+# Erlang (https://starship.rs/config/#erlang)
+################################################################################
+
+[erlang]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Fill (https://starship.rs/config/#fill)
+################################################################################
+
+[fill]
+
+
+################################################################################
+# Google Cloud (gcloud) (https://starship.rs/config/#google-cloud-gcloud)
+################################################################################
+
+[gcloud]
+format = '[on](bold white) [$symbol$active(\($region\))]($style) '
+symbol = '   '  # Nerd Fonts
+
+[gcloud.region_aliases]
+asia-east1              = 'asia-east1: Taiwan'
+asia-east2              = 'asia-east2: Hong Kong'
+asia-northeast1         = 'asia-northeast1: Tokyo'
+asia-northeast2         = 'asia-northeast2: Osaka'
+asia-northeast3         = 'asia-northeast3: Seoul'
+asia-south1             = 'asia-south1: Mumbai'
+asia-south2             = 'asia-south2: Delhi'
+asia-southeast1         = 'asia-southeast1: Singapore'
+asia-southeast2         = 'asia-southeast2: Jakarta'
+australia-southeast1    = 'australia-southeast1: Sydney'
+australia-southeast2    = 'australia-southeast2: Melbourne'
+europe-central2         = 'europe-central2: Warsaw'
+europe-north1           = 'europe-north1: Finland'
+europe-west1            = 'europe-west1: Belgium'
+europe-west2            = 'europe-west2: London'
+europe-west3            = 'europe-west3: Frankfurt'
+europe-west4            = 'europe-west4: Netherlands'
+europe-west6            = 'europe-west6: Zurich'
+europe-west8            = 'europe-west8: Milan'
+europe-west9            = 'europe-west9: Paris'
+europe-southwest1       = 'europe-southwest1: Madrid'
+northamerica-northeast1 = 'northamerica-northeast1: Montréal'
+northamerica-northeast2 = 'northamerica-northeast2: Toronto'
+southamerica-east1      = 'southamerica-east1: São Paulo'
+southamerica-west1      = 'southamerica-west1: Santiago'
+us-central1             = 'us-central1: Iowa'
+us-east1                = 'us-east1: South Carolina'
+us-east4                = 'us-east4: Northern Virginia'
+us-east5                = 'us-east5: Columbus'
+us-south1               = 'us-south1: Dallas'
+us-west1                = 'us-west1: Oregon'
+us-west2                = 'us-west2: Los Angeles'
+us-west3                = 'us-west3: Salt Lake City'
+us-west4                = 'us-west4: Las Vegas'
+
+[gcloud.project_aliases]
+
+
+################################################################################
+# Git Branch (https://starship.rs/config/#git-branch)
+################################################################################
+
+[git_branch]
+format = '[on](bold white) [$symbol$branch(:$remote_branch)]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Git Commit (https://starship.rs/config/#git-commit)
+################################################################################
+
+[git_commit]
+style        = 'bold yellow'
+tag_disabled = false
+tag_symbol   = ' '  # Nerd Fonts
+
+################################################################################
+# Git Metrics (https://starship.rs/config/#git-metrics)
+################################################################################
+
+[git_metrics]
+disabled = false
+
+################################################################################
+# Git State (https://starship.rs/config/#git-state)
+################################################################################
+
+[git_state]
+
+
+################################################################################
+# Git Status (https://starship.rs/config/#git-status)
+################################################################################
+
+[git_status]
+style = 'bold blue'
+
+################################################################################
+# Go (https://starship.rs/config/#go)
+################################################################################
+
+[golang]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Haskell (https://starship.rs/config/#haskell)
+################################################################################
+
+[haskell]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Helm (https://starship.rs/config/#helm)
+################################################################################
+
+[helm]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Mercurial Branch (https://starship.rs/config/#mercurial-branch)
+################################################################################
+
+[hg_branch]
+format   = '[on](bold white) [$symbol$branch]($style) '
+symbol   = ' '  # Nerd Fonts
+disabled = false
+
+################################################################################
+# Hostname (https://starship.rs/config/#hostname)
+################################################################################
+
+[hostname]
+format   = '[$ssh_symbol$hostname]($style) [in](bold white) '
+style    = 'bold yellow'
+ssh_only = false
+
+################################################################################
+# Java (https://starship.rs/config/#java)
+################################################################################
+
+[java]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Jobs (https://starship.rs/config/#jobs)
+################################################################################
+
+[jobs]
+
+
+################################################################################
+# Julia (https://starship.rs/config/#julia)
+################################################################################
+
+[julia]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Kotlin (https://starship.rs/config/#kotlin)
+################################################################################
+
+[kotlin]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Kubernetes (https://starship.rs/config/#kubernetes)
+################################################################################
+
+[kubernetes]
+format   = '[$symbol$context( \($namespace\))]($style) [in](bold white) '
+disabled = false
+
+[kubernetes.context_aliases]
+'dev.local.cluster.k8s'           = 'dev'
+'.*/openshift-cluster/.*'         = 'openshift'
+'gke_.*_(?P<var_cluster>[\\w-]+)' = 'gke-$var_cluster'
+
+[kubernetes.user_aliases]
+'dev.local.cluster.k8s' = 'dev'
+'root/.*'               = 'root'
+
+################################################################################
+# Line Break (https://starship.rs/config/#line-break)
+################################################################################
+
+[line_break]
+
+
+################################################################################
+# Local IP (https://starship.rs/config/#local-ip)
+################################################################################
+
+[localip]
+disabled = false
+
+################################################################################
+# Lua (https://starship.rs/config/#lua)
+################################################################################
+
+[lua]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Memory Usage (https://starship.rs/config/#memory-usage)
+################################################################################
+
+[memory_usage]
+format   = '[via](bold white) $symbol[$ram( | $swap)]($style) '
+symbol   = ' '  # Nerd Fonts
+# disabled = false
+
+################################################################################
+# Nim (https://starship.rs/config/#nim)
+################################################################################
+
+[nim]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Nix-shell (https://starship.rs/config/#nix-shell)
+################################################################################
+
+[nix_shell]
+format = '[via](bold white) [$symbol$state( \($name\))]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Node.js (https://starship.rs/config/#node-js)
+################################################################################
+
+[nodejs]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# OCaml (https://starship.rs/config/#ocaml)
+################################################################################
+
+[ocaml]
+format = '[via](bold white) [$symbol($version )(\($switch_indicator$switch_name\) )]($style)'
+
+################################################################################
+# OpenStack (https://starship.rs/config/#openstack)
+################################################################################
+
+[openstack]
+format = '[on](bold white) [$symbol$cloud(\($project\))]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Package Version (https://starship.rs/config/#package-version)
+################################################################################
+
+[package]
+format = '[is](bold white) [$symbol$version]($style) '
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Perl (https://starship.rs/config/#perl)
+################################################################################
+
+[perl]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# PHP (https://starship.rs/config/#php)
+################################################################################
+
+[php]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Pulumi (https://starship.rs/config/#pulumi)
+################################################################################
+
+[pulumi]
+format = '[via](bold white) [$symbol($username@)$stack]($style) '
+
+################################################################################
+# PureScript (https://starship.rs/config/#purescript)
+################################################################################
+
+[purescript]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Python (https://starship.rs/config/#python)
+################################################################################
+
+[python]
+format = '[via](bold white) [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = ' '  # Nerd Fonts
+pyenv_version_name = true
+
+################################################################################
+# Raku (https://starship.rs/config/#raku)
+################################################################################
+
+[raku]
+format = '[via](bold white) [$symbol($version-$vm_version )]($style)'
+
+################################################################################
+# Red (https://starship.rs/config/#red)
+################################################################################
+
+[red]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# R (https://starship.rs/config/#r)
+################################################################################
+
+[rlang]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Ruby (https://starship.rs/config/#ruby)
+################################################################################
+
+[ruby]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Rust (https://starship.rs/config/#rust)
+################################################################################
+
+[rust]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = ' '  # Nerd Fonts
+
+################################################################################
+# Scala (https://starship.rs/config/#scala)
+################################################################################
+
+[scala]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Shell (https://starship.rs/config/#shell)
+################################################################################
+
+[shell]
+# disabled = false
+
+################################################################################
+# SHLVL (https://starship.rs/config/#shlvl)
+################################################################################
+
+[shlvl]
+# disabled = false
+
+################################################################################
+# Singularity (https://starship.rs/config/#singularity)
+################################################################################
+
+[singularity]
+
+
+################################################################################
+# Spack (https://starship.rs/config/#spack)
+################################################################################
+
+[spack]
+format = '[via](bold white) [$symbol$environment]($style) '
+
+################################################################################
+# Status (https://starship.rs/config/#status)
+################################################################################
+
+[status]
+disabled = false
+
+################################################################################
+# Sudo (https://starship.rs/config/#sudo)
+################################################################################
+
+[sudo]
+format   = '[as](bold white) [$symbol]($style)'
+symbol   = 'sudo🔓 '
+style    = 'bold red'
+disabled = false
+
+################################################################################
+# Swift (https://starship.rs/config/#swift)
+################################################################################
+
+[swift]
+format = '[via](bold white) [$symbol($version )]($style)'
+symbol = 'ﯣ '  # Nerd Fonts
+
+################################################################################
+# Terraform (https://starship.rs/config/#terraform)
+################################################################################
+
+[terraform]
+format = '[via](bold white) [$symbol$workspace]($style) '
+
+################################################################################
+# Time (https://starship.rs/config/#time)
+################################################################################
+
+[time]
+format = '[at](bold white) [$time]($style) '
+# disabled = false
+
+################################################################################
+# Username (https://starship.rs/config/#username)
+################################################################################
+
+[username]
+format      = '[$user]($style) [at](bold white) '
+style_user  = 'bold fg:166'
+show_always = true
+
+################################################################################
+# Vagrant (https://starship.rs/config/#vagrant)
+################################################################################
+
+[vagrant]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# VCSH (https://starship.rs/config/#vcsh)
+################################################################################
+
+[vcsh]
+format = '[vcsh](bold white) [$symbol$repo]($style) '
+
+################################################################################
+# V (https://starship.rs/config/#v)
+################################################################################
+
+[vlang]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Zig (https://starship.rs/config/#zig)
+################################################################################
+
+[zig]
+format = '[via](bold white) [$symbol($version )]($style)'
+
+################################################################################
+# Custom commands (https://starship.rs/config/#custom-commands)
+################################################################################
+
+[custom]
+# TODO: Add custom commands if necessary
