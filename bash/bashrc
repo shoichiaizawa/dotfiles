@@ -1559,3 +1559,11 @@ fi
     # complete -C /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/kustomize kustomize
     source <(kustomize completion bash)
   fi
+
+################################################################################
+# bit (https://github.com/chriswalz/bit)
+################################################################################
+
+if type bit > /dev/null 2>&1; then
+  complete -C /usr/local/bin/bit bit
+fi
