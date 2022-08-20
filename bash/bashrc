@@ -1097,10 +1097,10 @@ if [[ -d $HOME/.nvm/.git ]]; then
   export NVM_SYMLINK_CURRENT=true
 
   # Automatically source `nvm` upon login
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
   # Activate `bash_completion`
-  [ -r $NVM_DIR/bash_completion ] && . $NVM_DIR/bash_completion
+  [ -r $NVM_DIR/bash_completion ] && \. $NVM_DIR/bash_completion
 
   # Set the `nvm-upgrade` function and unset its initialisation function
   nvm-upgrade-init && unset -f nvm-upgrade-init
