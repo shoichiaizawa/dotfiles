@@ -1543,3 +1543,8 @@ fi
     alias k=kubectl
     complete -F __start_kubectl k
   fi
+
+  # minikube
+  if type minikube > /dev/null 2>&1; then
+    source <(minikube completion bash)
+  fi
