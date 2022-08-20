@@ -1553,3 +1553,9 @@ fi
   if type skaffold > /dev/null 2>&1; then
     source <(skaffold completion bash)
   fi
+
+  # kustomize
+  if type kustomize > /dev/null 2>&1; then
+    # complete -C /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/kustomize kustomize
+    source <(kustomize completion bash)
+  fi
