@@ -777,6 +777,8 @@ if type docker > /dev/null 2>&1; then
   alias drmi='docker image rm -f $(docker image ls -aq)'
 
   db() { docker build -t "$1" .; }
+  alias db=db
+  alias dbuild=db
 
   da() { docker start $1 && docker attach $1; }
   if type _docker_start > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
