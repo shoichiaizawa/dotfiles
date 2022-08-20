@@ -1,7 +1,7 @@
-init.author.name=Shoichi Aizawa
-init.author.email=shoichiaizawa@gmail.com
-init.author.url=https://shoichiaizawa.github.io
-init.author.github=shoichiaizawa
-init.license=MIT
-init.version=0.1.0
+init-author-email=shoichiaizawa@gmail.com
+init-author-github=shoichiaizawa
+init-author-name=Shoichi Aizawa
+init-author-url=https://shoichiaizawa.github.io/
+init-license=MIT
+init-version=0.1.0
 save-exact=true
