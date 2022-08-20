@@ -599,7 +599,9 @@ alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
 alias emacos='vim ~/.macos'             # Edit .macos from anywhere
 
 # XXX: find a better way to achieve the following command
-alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
+if type php > /dev/null 2>&1; then
+  alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
+fi
 
 # --------------
 # mute and unmute
