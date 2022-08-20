@@ -1548,3 +1548,8 @@ fi
   if type minikube > /dev/null 2>&1; then
     source <(minikube completion bash)
   fi
+
+  # skaffold
+  if type skaffold > /dev/null 2>&1; then
+    source <(skaffold completion bash)
+  fi
