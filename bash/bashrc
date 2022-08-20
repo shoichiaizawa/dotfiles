@@ -208,8 +208,8 @@ fi;
 # Enable tab completion for `cask` by marking it as an alias for `brew cask`
 # Inspired by the above script by mathiasbynens :D
 #
-if type _brew_cask &> /dev/null; then
-  complete -o default -o nospace -F _brew_cask cask
+if type _brew &> /dev/null; then
+  complete -o default -o nospace -F _brew cask
 fi
 
 # --------------------------------------------
@@ -744,7 +744,7 @@ if [ -e ~/.homebrew-github-api-token ]; then
   export HOMEBREW_GITHUB_API_TOKEN=$(cat ~/.homebrew-github-api-token)
 fi
 
-if type _brew_cask > /dev/null 2>&1; then
+if type _brew > /dev/null 2>&1; then
   cask() { brew "$@" --cask; }
   alias cask=cask
 fi
