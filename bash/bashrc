@@ -1167,6 +1167,17 @@ if type npm > /dev/null 2>&1; then
 fi
 
 ################################################################################
+# pnpm                                                                         #
+################################################################################
+
+# pnpm completion
+# See: https://pnpm.io/completion
+#
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
+
+################################################################################
 # pyenv & pyenv-virtualenv                                                     #
 ################################################################################
 
