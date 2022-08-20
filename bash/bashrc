@@ -1040,7 +1040,7 @@ fi
 
 # NOTE:
 # Install `nvm` manually;
-# See details at https://github.com/creationix/nvm#manual-install
+# See details at https://github.com/nvm-sh/nvm#manual-install
 
 # Function: `nvm-upgrade-init`
 #
@@ -1072,7 +1072,7 @@ nvm-upgrade-init() {
       #       nvm version and the newer available version
       echo "Your nvm is installed via the install script!"
       echo "Please check if the newer version is available at:"
-      echo "https://github.com/creationix/nvm#install-script"
+      echo "https://github.com/nvm-sh/nvm#install-script"
     fi
   }
 
@@ -1113,7 +1113,7 @@ if [[ -d $HOME/.nvm/.git ]]; then
 # - a warning message regarding Homebrew installation
 #
 # NOTE: Homebrew installation is not supported by the nvm developers.
-# See: https://github.com/creationix/nvm#important-notes
+# See: https://github.com/nvm-sh/nvm#important-notes
 #
 elif [[ -d $(brew --prefix nvm) ]]; then
   if [[ ! -d $NVM_DIR ]]; then
@@ -1125,7 +1125,7 @@ elif [[ -d $(brew --prefix nvm) ]]; then
   echo "The Homebrew version of nvm is not officially supported by the nvm developers."
   echo "While you can continue using the Homebrew version, please consider installing"
   echo "nvm via one of the official installation methods; see the details at:"
-  echo "  https://github.com/creationix/nvm#installation"
+  echo "  https://github.com/nvm-sh/nvm#installation"
 
 # Case 3: `nvm` is not installed
 #
