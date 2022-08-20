@@ -1539,4 +1539,7 @@ fi
   if type kubectl > /dev/null 2>&1; then
     # See: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#bash
     source <(kubectl completion bash)
+
+    alias k=kubectl
+    complete -F __start_kubectl k
   fi
