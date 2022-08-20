@@ -1530,3 +1530,13 @@ if type starship > /dev/null 2>&1; then
     source /dev/stdin <<<"$("/usr/local/bin/starship" init bash --print-full-init)"
   fi
 fi
+
+################################################################################
+# Kubernetes
+################################################################################
+
+  # kubectl
+  if type kubectl > /dev/null 2>&1; then
+    # See: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#bash
+    source <(kubectl completion bash)
+  fi
