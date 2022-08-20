@@ -790,6 +790,13 @@ if type docker > /dev/null 2>&1; then
   if type _docker_exec > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker_exec dexec
   fi
+
+  # NOTE: This might not work as expected; fix it if necessary
+  drun() { docker run -it -d $1; }
+  alias drun=drun
+  if type _docker_run > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker_run drun
+  fi
 fi
 
 daliases() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
