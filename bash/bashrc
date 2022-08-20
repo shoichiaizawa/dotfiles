@@ -165,6 +165,7 @@ if type brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completio
   # Ensure existing Homebrew v1 completions continue to work
   export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
   source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+  source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"  # FIXME: temporary solution
 elif [ -f /etc/bash_completion ]; then
   source /etc/bash_completion
 fi
