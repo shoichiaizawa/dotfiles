@@ -1257,7 +1257,10 @@ if [[ -d $HOME/.pyenv/.git ]] || type pyenv > /dev/null 2>&1; then
   [[ -d $PYENV_ROOT/.git ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
   # Enable shims and autocompletion
-  type pyenv > /dev/null 2>&1 && eval "$(pyenv init -)";
+  type pyenv > /dev/null 2>&1 && eval "$(pyenv init --path)";
+
+  # Source pyenv autocompletion
+  source $(pyenv root)/completions/pyenv.bash
 
   # Set the `pyenv-git-upgrade` function and unset its initialisation function
   pyenv-git-upgrade-init && unset -f pyenv-git-upgrade-init
@@ -1344,7 +1347,10 @@ else
       )
 
       # Enable shims and autocompletion
-      type pyenv > /dev/null 2>&1 && eval "$(pyenv init -)";
+      type pyenv > /dev/null 2>&1 && eval "$(pyenv init --path)";
+
+      # Source pyenv autocompletion
+      source $(pyenv root)/completions/pyenv.bash
 
       # Set the `pyenv-git-upgrade` function and unset its initialisation function
       pyenv-git-upgrade-init && unset -f pyenv-git-upgrade-init
