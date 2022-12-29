@@ -845,9 +845,18 @@ alias please='sudo !!'
 alias jobs='jobs -l'
 
 alias g='git'
-if type hub > /dev/null 2>&1; then
-  alias git=hub
-fi
+# https://github.com/github/hub/issues/1464#issuecomment-311104568
+# Stub out "hub" when its commands conflict with better "git-extras" commands
+__hub-stub-conflicting-commands() {
+    case "$1" in
+        alias|fork|pr)
+            /usr/bin/env git "$@"
+            ;;
+        *)
+            /usr/bin/env hub "$@"
+    esac
+}
+alias git='__hub-stub-conflicting-commands'
 
 # Deploying a subfolder to GitHub Pages
 # See: https://gist.github.com/cobyism/4730490
