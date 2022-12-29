@@ -811,6 +811,31 @@ alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 [ -d "/Applications/Google Chrome Canary.app" ] && \
 alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
 
+# ---
+# fzf
+# ---
+
+if type fzf > /dev/null 2>&1; then
+  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+  export FZF_DEFAULT_OPTS='
+    --height 98% --reverse
+    --prompt="❯ "
+    --pointer="❯"
+    --marker="❯"
+  '
+
+  [ -e $(brew --prefix)/bin/rg ] && \
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*" --no-messages' && \
+  export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+
+  [ -e $(brew --prefix)/bin/bat ] && \
+  export FZF_CTRL_T_OPTS='
+    --preview "bat --color=always --style=full {}"
+    --preview-window=right,70%
+  '
+fi
+
 # ------------
 # To be sorted
 # ------------
