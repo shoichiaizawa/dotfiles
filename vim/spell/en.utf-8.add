@@ -26,8 +26,7 @@ Authy
 autocmd
 autocommands
 autocompleting
-Autocorrect
-Autocorrect
+autocorrect
 Autodesk
 autoindent
 autoindenting
@@ -171,17 +170,15 @@ F2
 Fantasque
 faq
 FCFS
-FFF
 fff
-FFFFFF
 ffffff
 ffmpeg
 figlet
 FileMaker
 Filesystem
 filesystem
-filetype
 FileType
+filetype
 filetypes
 Firestore
 FIXME
@@ -213,9 +210,6 @@ GCS
 Gemfile
 GFM
 gif
-git
-git
-git
 git
 gitconfig
 gitgutter
@@ -268,8 +262,6 @@ HSL
 HTML5
 htop
 http
-http
-https
 https
 hyperlink
 Hypertable
@@ -366,8 +358,8 @@ MacBook
 MacBooks
 MacDown
 macOS
-macvim
 MacVim
+macvim
 MAMP
 mapleader
 master
@@ -417,8 +409,8 @@ navbar
 ncal
 Neo4j
 NERDCommenter
-NerdTree
 NERDTree
+NerdTree
 NERDTree's
 NERDTreeFromBookmark
 NetBeans
@@ -443,7 +435,6 @@ nowrap
 npm
 npx
 NTT
-nvm
 nvm
 Obama
 octave
@@ -502,8 +493,8 @@ PSD
 pwd
 px
 pyenv
-pygments
 Pygments
+pygments
 python3
 Qiita
 QuickLook
@@ -656,7 +647,6 @@ unsets
 unsetting
 Unsplash
 Unstaging
-unsupervised
 unsupervised
 url
 URLs
