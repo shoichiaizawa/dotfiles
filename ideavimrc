@@ -191,7 +191,8 @@ map <silent> <Leader>nf :NERDTreeFind<CR>
 " map <silent> <Leader>nf :action SelectIn<CR>
 
 " VSCodeVim inspired keybindings
-nnoremap gh :action ShowErrorDescription<CR>
+nnoremap ge :action ShowErrorDescription<CR>
+nnoremap gh :action QuickJavaDoc<CR>
 nnoremap gt :action GotoTypeDeclaration<CR>
 nnoremap gT :action GotoTypeDeclaration<CR>
 
