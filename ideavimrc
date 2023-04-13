@@ -14,6 +14,7 @@ omap m <Plug>(easymotion-s2)
 
 set multiple-cursors
 set surround
+set NERDTree
 
 " ---------------
 " Common settings
@@ -185,7 +186,9 @@ nmap <Leader>hp :action VcsShowCurrentChangeMarker<CR>
 nnoremap <silent> <Leader>gb :action Annotate<CR>
 
 " NERDTree inspired keybindings
-map <silent> <Leader>nf :action SelectIn<CR>
+map <silent> <Leader>nn :NERDTreeToggle<CR>
+map <silent> <Leader>nf :NERDTreeFind<CR>
+" map <silent> <Leader>nf :action SelectIn<CR>
 
 " VSCodeVim inspired keybindings
 nnoremap gh :action ShowErrorDescription<CR>
