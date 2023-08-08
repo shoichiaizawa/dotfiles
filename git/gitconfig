@@ -326,3 +326,5 @@
 	helper = gcloud.sh
 [init]
 	defaultBranch = main
+[hub]
+	protocol = https
