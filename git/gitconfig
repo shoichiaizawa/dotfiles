@@ -16,8 +16,18 @@
 	excludesfile = ~/.gitignore_global
 	editor       = vim
 	; editor       = vim -wl1  ; suggested -wl1 options, which did not work
-	pager        = less -FRXK  ; --quit-if-one-screen, --RAW-CONTROL-CHARS, --no-init, --quit-on-intr
+	pager = delta 2> /dev/null || \
+					(diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
 	quotepath = false
+[delta]
+	side-by-side = true
+	syntax-theme = "Monokai Extended"
+	features     = decorations
+[delta "decorations"]
+	commit-decoration-style      = bold yellow box ul
+	file-style                   = bold yellow ul
+	file-decoration-style        = none
+	hunk-header-decoration-style = yellow box
 [commit]
 	; template = ~/.stCommitMsg
 	verbose = true
@@ -299,7 +309,12 @@
 [diff]
 	compactionHeuristic = true
 [interactive]
-	diffFilter = (diff-highlight 2> /dev/null || cat) | less -FRXK
+	# FIXME: This fallback condition does not work
+	; diffFilter = (delta --color-only 2> /dev/null || cat) | less -FRXK
+	diffFilter = (delta --color-only    2> /dev/null || \
+								echo && diff-so-fancy 2> /dev/null || \
+								diff-highlight 2> /dev/null || \
+								cat) | less -FRXK
 [help]
 	autocorrect = 1
 [log]
