@@ -302,10 +302,10 @@
 	smudge   = git-lfs smudge -- %f
 	required = true
 	process  = git-lfs filter-process
-[pager]
-	log  = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
-	show = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
-	diff = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
+; [pager]
+;   log  = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
+;   show = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
+;   diff = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
 [diff]
 	compactionHeuristic = true
 [interactive]
