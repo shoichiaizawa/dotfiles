@@ -1601,3 +1601,15 @@ fi
 if type bit > /dev/null 2>&1; then
   complete -C /usr/local/bin/bit bit
 fi
+
+################################################################################
+# tealdeer (https://github.com/dbrgn/tealdeer)
+################################################################################
+
+if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr" ]; then
+  source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
+fi
+
+if type tldr > /dev/null 2>&1 && [ -d "$(brew --prefix)/Cellar/tealdeer" ]; then
+  export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
+fi
