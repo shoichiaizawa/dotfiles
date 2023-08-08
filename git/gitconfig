@@ -51,6 +51,8 @@
 	clean    = git hawser clean %f
 	smudge   = git hawser smudge %f
 	required = true
+[pull]
+	rebase = false
 [push]
 	default = simple
 [color]
