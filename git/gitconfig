@@ -284,6 +284,8 @@
 
 	st      = status
 
+	# View the current working tree status using the short format
+	# with the current working branch name
 	s       = status --short --branch
 
 	stv     = status -v
