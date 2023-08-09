@@ -173,6 +173,8 @@ highlight SpellLocal cterm=underline
 set notimeout
 set ttimeout
 set ttimeoutlen=10          "ttm:   The time for key code delay (default -1)
+set updatetime=300          "ut:    If this many milliseconds nothing is typed
+                            "       the swap file will be written to disk
 
 set mouse=a                 "       Enable mouse scrolling
 set mousehide               "mh:    Hide mouse cursor when typing (default on)
