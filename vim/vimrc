@@ -58,6 +58,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
+Plug 'ferrine/md-img-paste.vim', { 'for': 'markdown' }
 Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
@@ -1211,6 +1212,15 @@ if isdirectory(expand("~/.vim/plugged/tagalong.vim/"))
   let g:tagalong_verbose = 1  " (default 0)
 
   let g:tagalong_additional_filetypes = ['vue']
+endif
+
+" }}}1
+" Plugin Settings: md-img-paste.vim {{{1
+
+if isdirectory(expand("~/.vim/plugged/md-img-paste.vim/"))
+  autocmd FileType markdown nmap <buffer><silent> <Leader>p :call mdip#MarkdownClipboardImage()<CR>
+  let g:mdip_imgdir = 'images'|  " default: img
+  " let g:mdip_imgname = 'image'|  " default: image
 endif
 
 " }}}1
