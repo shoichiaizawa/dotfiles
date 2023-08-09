@@ -933,6 +933,8 @@ if isdirectory(expand("~/.vim/plugged/vim-gitgutter/"))
   nmap [h <Plug>(GitGutterPrevHunk)|            " default [c
   nmap ]h <Plug>(GitGutterNextHunk)|            " default ]c
 
+  highlight! link SignColumn LineNr
+
   " nmap <Leader>hs <Plug>(GitGutterStageHunk)|   " default map
   " nmap <Leader>hr <Plug>(GitGutterRevertHunk)|  " default map
   " nmap <Leader>hu <Plug>(GitGutterUndoHunk)|    " default map
