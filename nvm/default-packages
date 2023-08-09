@@ -1,0 +1,42 @@
+@angular-devkit/core
+@angular-devkit/schematics
+@angular-eslint/schematics
+@angular/cli
+@google/clasp
+@slidev/cli
+# @slidev/theme-apple-basic
+# @slidev/theme-default
+# @slidev/theme-seriph
+@types/node
+@vue/cli-init
+@vue/cli-service-global
+@vue/cli
+# big-presentation
+commitizen
+conventional-changelog-cli
+devspace
+firebase-tools
+git-split-diffs
+# github-label-sync
+# json-server
+markmap-cli
+mrm
+njt
+nodemon
+npm-check
+npm-check-updates
+npm
+ntl
+# pnpm  # NOTE: use corepack to manage pnpm
+renovate
+# serve
+sort-package-json
+standard-version
+swagger-ui-watcher
+# tldr
+ts-node-dev
+ts-node
+typescript
+typesync
+vuepress
+# yarn  # NOTE: use corepack to manage yarn
