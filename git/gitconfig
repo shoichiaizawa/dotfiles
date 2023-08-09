@@ -172,6 +172,10 @@
 	# config
 	# ------
 
+	# Adapted from @mathiasbynens
+	# List aliases
+	aliases  = config --get-regexp alias
+
 	conf-ls  = config --global --list
 	confl-ls = config --local  --list
 
