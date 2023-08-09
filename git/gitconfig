@@ -120,15 +120,24 @@
 	repo            = browse
 	gh              = browse
 
+	gh-actions      = browse -- actions
 	gh-branches     = browse -- branches
 	gh-commits      = browse -- commits
+	gh-community    = browse -- graphs/community
 	gh-contributors = browse -- contributors
-	gh-graphs       = browse -- graphs
+	gh-dependencies = browse -- network/dependencies
+	gh-discussions  = browse -- discussions
+	gh-forks        = browse -- network/members
 	gh-issues       = browse -- issues
 	gh-network      = browse -- network
+	gh-projects     = browse -- projects
 	gh-pulls        = browse -- pulls
+	gh-pulse        = browse -- pulse
+	gh-security     = browse -- security
+	gh-settings     = browse -- settings
 	gh-stargazers   = browse -- stargazers
-	gh-tree         = browse -- tree
+	gh-standards    = browse -- community
+	gh-traffic      = browse -- graphs/traffic
 	gh-wiki         = browse -- wiki
 
 	# --------
