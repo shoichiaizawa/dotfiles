@@ -56,6 +56,7 @@ Plug 'cespare/vim-toml'
 Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
+Plug 'editorconfig/editorconfig-vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
