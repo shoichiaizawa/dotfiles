@@ -53,6 +53,7 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'cespare/vim-toml'
+Plug 'chr4/nginx.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
@@ -431,6 +432,9 @@ set backupskip=/tmp/*,/private/tmp/*
 autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 
 autocmd BufWinEnter,BufRead,BufNewFile */.\=gitconfig setlocal filetype=gitconfig
+
+" TODO: brush up
+autocmd BufWinEnter,BufRead,BufNewFile */.\=nginx/conf.d/*.conf setlocal filetype=nginx
 
 " }}}1
 " Autocmd: CSON {{{1
