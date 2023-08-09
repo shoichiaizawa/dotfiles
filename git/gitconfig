@@ -80,7 +80,7 @@
 	this = !git init && git add . && git commit -m \"chore: initial commit\"
 
 	# See alternative solution 'karan/joe', 'simonwhitaker/gibo'
-	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+	ignore-add = "!gi() { curl -L -s https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
 
 	# Adopted from @mathiasbynens
 	# List contributors with number of commits
