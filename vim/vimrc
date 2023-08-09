@@ -157,6 +157,15 @@ set spelllang=en            "spl:   Set spell check language (default "en")
 map <silent> <Leader>s :set spell!<CR>
 set complete+=kspell        "       CTRL-N/CTRL-P to match dictionary words
 
+highlight clear SpellBad
+highlight SpellBad cterm=underline
+highlight clear SpellRare
+highlight SpellRare cterm=underline
+highlight clear SpellCap
+highlight SpellCap cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal cterm=underline
+
 " set timeout                 "to:    Time out on :mappings and key codes
 "                             "       (default on)
 " set timeoutlen=1000         "tm:    The time in milliseconds to wait
