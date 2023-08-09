@@ -1,0 +1,27 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "typescript.tsx",
+    "json"
+  ],
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "typescript.tsx",
+    "vue"
+  ],
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "tsserver.npm": "/usr/local/bin/npm",
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "yaml.format.enable": true,
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"
+  },
+  "python.jediEnabled": false
+}
