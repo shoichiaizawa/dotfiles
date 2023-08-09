@@ -63,6 +63,7 @@ Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 Plug 'henrik/vim-indexed-search'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' } " Requires Node.js and Yarn
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim', { 'for': 'markdown' } " Best served with Goyo.vim
