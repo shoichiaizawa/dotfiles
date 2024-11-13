@@ -1633,3 +1633,8 @@ if [ -d "${HOME}/.bun/bin" ]; then
   source <(bun completions)
 fi
 
+################################################################################
+# console-ninja (https://console-ninja.com/)
+################################################################################
+
+PATH=~/.console-ninja/.bin:$PATH
