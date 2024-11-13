@@ -197,9 +197,10 @@ fi
 # -----------------------------
 #
 # Enable tab completion for `g` by marking it as an alias for `git`
+# The original idea came from this below:
 # https://github.com/mathiasbynens/dotfiles/blob/main/.bash_profile#L37-L40
-if type _git &> /dev/null; then
-  complete -o default -o nospace -F _git g;
+if type __git_main &> /dev/null; then
+  __git_complete g __git_main
 fi;
 
 # --------------------------------------
