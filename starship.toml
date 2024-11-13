@@ -16,7 +16,7 @@
 
 [aws]
 format = '[on](bold white) [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
-symbol = '  '  # Nerd Fonts
+symbol = '󰸏  '  # Nerd Fonts
 
 [aws.region_aliases]
 ap-southeast-2 = 'au'
@@ -219,7 +219,7 @@ format = '[via](bold white) [$symbol($version )]($style)'
 
 [gcloud]
 format = '[on](bold white) [$symbol$active(\($region\))]($style) '
-symbol = '   '  # Nerd Fonts
+symbol = '󱇶 '  # Nerd Fonts
 
 [gcloud.region_aliases]
 asia-east1              = 'asia-east1: Taiwan'
@@ -430,7 +430,7 @@ format = '[via](bold white) [$symbol$project]($style) '
 
 [nim]
 format = '[via](bold white) [$symbol($version )]($style)'
-symbol = ' '  # Nerd Fonts
+symbol = ' '  # Nerd Fonts
 
 ################################################################################
 # Nix-shell (https://starship.rs/config/#nix-shell)
@@ -469,7 +469,7 @@ symbol = ' '  # Nerd Fonts
 
 [package]
 format = '[is](bold white) [$symbol$version]($style) '
-symbol = ' '  # Nerd Fonts
+symbol = '󰏗 '  # Nerd Fonts
 
 ################################################################################
 # Perl (https://starship.rs/config/#perl)
