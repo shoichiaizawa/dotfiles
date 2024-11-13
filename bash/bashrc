@@ -1620,3 +1620,16 @@ fi
 if type tldr > /dev/null 2>&1 && [ -d "$(brew --prefix)/Cellar/tealdeer" ]; then
   export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
 fi
+
+################################################################################
+# Bun (https://github.com/oven-sh/bun)
+################################################################################
+
+# Evaluate whether Bun is installed via the installation script,
+# and if it is, load the following settings
+if [ -d "${HOME}/.bun/bin" ]; then
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH=$BUN_INSTALL/bin:$PATH
+  source <(bun completions)
+fi
+
