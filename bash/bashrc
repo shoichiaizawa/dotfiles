@@ -26,7 +26,8 @@ export EDITOR="$VISUAL"
 # PATH Settings                                                                #
 ################################################################################
 
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 [ -d ~/.composer/vendor/bin ] && export PATH=$PATH:~/.composer/vendor/bin
 [ -d $(brew --prefix)/opt/android-sdk ] && \
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
