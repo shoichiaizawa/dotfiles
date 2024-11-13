@@ -541,16 +541,21 @@ alias hgrep=histg
 # This helps the user to maintain his/her command history clean without invalid
 # commands
 #
+# Usage: Enter a single space charater before the command
+#        i.e. Run `$  rmh` instead of `$ rmh`
+#
 rmh() {
+  tmp=$HISTTIMEFORMAT
   export HISTTIMEFORMAT=''
   local lastcmdhist=$(history 1)
   local lastcmdnum=$(echo "${lastcmdhist}" | awk '{print $1}')
-  local lastcmd=$(echo "${lastcmdhist}" | cut -d ' ' -f 3-)
+  local lastcmd=$(echo "${lastcmdhist}" | awk '{print $2}')
   if [ -n "${lastcmdnum}" ]; then
     history -d "$lastcmdnum"
     echo "Removed the last command: ${lastcmd}"
   fi
-  export HISTTIMEFORMAT='%F %T -- '
+  export HISTTIMEFORMAT=$tmp
+  unset tmp
 }
 alias rmh=rmh
 
