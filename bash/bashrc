@@ -322,7 +322,7 @@ if [ -d $SDKMAN_DIR ]; then
   [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 else
   unset SDKMAN_DIR
-  export JAVA_HOME=$(/usr/libexec/java_home)
+  /usr/libexec/java_home > /dev/null 2>&1 && export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
 # -------
