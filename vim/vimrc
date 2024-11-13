@@ -1526,6 +1526,7 @@ vnoremap > >gv
 " Select (charwise) the contents of the current line, excluding indentation.
 " Great for pasting Python lines into REPLs.
 nnoremap vv ^vg_
+nnoremap v_ ^vg_
 
 " Select entire buffer
 nnoremap va ggVG
