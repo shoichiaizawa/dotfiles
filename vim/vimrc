@@ -1481,7 +1481,7 @@ nnoremap <silent> gj j|                 " Go down [count] actual line(s)
 inoremap <silent> <Up> <Esc>gka|        " Go up [count] screen line(s)
 inoremap <silent> <Down> <Esc>gja|      " Go down [count] screen line(s)
 
-noremap ; :|     " Semi-colon is now colon; hence, no futher typing mistakes
+noremap ; :|     " Semi-colon is now colon; hence, no further typing mistakes
 
 " Better mappings for going to the first/last characters of the screen line
 noremap 0 g^|    " Go to the first non-blank character of the screen line
