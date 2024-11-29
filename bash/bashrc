@@ -549,10 +549,10 @@ rmh() {
   export HISTTIMEFORMAT=''
   local lastcmdhist=$(history 1)
   local lastcmdnum=$(echo "${lastcmdhist}" | awk '{print $1}')
-  local lastcmd=$(echo "${lastcmdhist}" | awk '{print $2}')
+  local lastcmd=$(echo "${lastcmdhist}" | cut -d ' ' -f3-)
   if [ -n "${lastcmdnum}" ]; then
     history -d "$lastcmdnum"
-    echo "Removed the last command: ${lastcmd}"
+    echo "Removed the last command:${lastcmd}"
   fi
   export HISTTIMEFORMAT=$tmp
   unset tmp
