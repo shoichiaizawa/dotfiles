@@ -2,7 +2,11 @@
 @angular-devkit/schematics
 @angular-eslint/schematics
 @angular/cli
+# @anthropic-ai/claude-code  # NOTE: install via a standalone installation script or Homebrew
 @google/clasp
+@google/gemini-cli
+@mermaid-js/mermaid-cli
+@openai/codex
 @slidev/cli
 # @slidev/theme-apple-basic
 # @slidev/theme-default
@@ -12,6 +16,7 @@
 @vue/cli-service-global
 @vue/cli
 # big-presentation
+ccusage
 commitizen
 conventional-changelog-cli
 devspace
@@ -27,7 +32,7 @@ npm-check
 npm-check-updates
 npm
 ntl
-# pnpm  # NOTE: use corepack to manage pnpm
+# pnpm  # NOTE: install via a standalone installation script or use corepack to manage pnpm
 renovate
 # serve
 sort-package-json
