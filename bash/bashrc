@@ -1626,3 +1626,17 @@ fi
 
 . "$HOME/.local/bin/env"
 
+################################################################################
+# deck (https://github.com/k1LoW/deck)
+################################################################################
+
+if type deck > /dev/null 2>&1; then
+  deckls() {
+    local deckid=$(deck ls | fzf --height 40% --reverse --exit-0 | awk '{print $1}')
+    echo $deckid
+    echo -n $deckid | pbcopy
+    unset deckid
+  }
+  alias deckls=deckls
+fi
+
