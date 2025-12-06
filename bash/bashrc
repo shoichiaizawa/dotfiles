@@ -1549,6 +1549,53 @@ if [ -d "${HOME}/.bun/bin" ]; then
 fi
 
 ################################################################################
+# Visual Studio Code Stable and Insiders (https://github.com/microsoft/vscode)
+################################################################################
+
+# Function to download and source VS Code completion scripts
+setup_vscode_completion() {
+  appname="$1"
+  url="https://raw.githubusercontent.com/microsoft/vscode/main/resources/completions/bash/code"
+  completion_dir="$HOME/.local/share/bash-completion/completions"
+  completion_path="$completion_dir/$appname"
+
+  # Create the completion directory if it doesn't exist
+  mkdir -p "$completion_dir"
+
+  # Download or update the completion script
+  curl -s -o "$completion_path" "$url"
+
+  # Apply the appropriate sed syntax
+  if [ "$(uname)" = "Darwin" ]; then
+    # macOS (BSD sed)
+    sed -i '' "s/@@APPNAME@@/$appname/g" "$completion_path"
+  else
+    # Linux and other Unix-like systems (GNU sed)
+    sed -i "s/@@APPNAME@@/$appname/g" "$completion_path"
+  fi
+
+  # Source the completion script
+  . "$completion_path"
+}
+
+# Setup completion for VS Code Stable
+if command -v code >/dev/null 2>&1; then
+  setup_vscode_completion "code"
+fi
+
+# Setup completion for VS Code Insiders
+if command -v code-insiders >/dev/null 2>&1; then
+  setup_vscode_completion "code-insiders"
+  alias insiders="code-insiders"
+  # Define completion for the 'insiders' alias
+  if [ -n "$BASH_VERSION" ]; then
+    complete -o default -o nospace -F _code-insiders insiders
+  elif [ -n "$ZSH_VERSION" ]; then
+    compdef _code-insiders insiders
+  fi
+fi
+
+################################################################################
 # console-ninja (https://console-ninja.com/)
 ################################################################################
 
