@@ -1640,3 +1640,11 @@ if type deck > /dev/null 2>&1; then
   alias deckls=deckls
 fi
 
+################################################################################
+# Codex (https://github.com/openai/codex)
+################################################################################
+
+if type codex > /dev/null 2>&1; then
+  source <(codex completion bash)
+fi
+
