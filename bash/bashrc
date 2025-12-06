@@ -885,6 +885,56 @@ alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 [ -d "/Applications/Google Chrome Canary.app" ] && \
 alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
 
+if [ -d "/Applications/Google Chrome.app" ]; then
+  # Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>
+  # Or provide URLs via standard input, each on a new line. # Open URLs listed in a file 
+  open-chrome-tabs() {
+    # Initialize an array to hold URLs
+    urls=()
+    incognito=true
+
+    # Parse options
+    while getopts ":n" opt; do
+      case ${opt} in
+        n )
+          incognito=false
+          ;;
+        \? )
+          echo "Invalid option: -$OPTARG" >&2
+          return 1
+          ;;
+      esac
+    done
+    shift $((OPTIND -1))
+
+    # Check if input is coming from a pipe or here-document
+    if [ ! -t 0 ]; then
+      # Read URLs from standard input
+      while IFS= read -r url; do
+        # Skip empty lines
+        [ -n "$url" ] && urls+=("$url")
+      done
+    fi
+
+    # Append any URLs provided as arguments
+    urls+=("$@")
+
+    # Check if any URLs were provided
+    if [ "${#urls[@]}" -eq 0 ]; then
+      echo "Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>"
+      echo "Or provide URLs via standard input, each on a new line."
+      return 1
+    fi
+
+    # Determine Chrome launch options
+    if $incognito; then
+      open -na "Google Chrome" --args --incognito "${urls[@]}"
+    else
+      open -na "Google Chrome" --args "${urls[@]}"
+    fi
+  }
+fi
+
 # ---
 # fzf
 # ---
