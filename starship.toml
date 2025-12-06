@@ -509,6 +509,7 @@ format = '[via](bold white) [$symbol($version )]($style)'
 format = '[via](bold white) [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 symbol = ' '  # Nerd Fonts
 pyenv_version_name = true
+pyenv_prefix = "uv "
 
 ################################################################################
 # Raku (https://starship.rs/config/#raku)
