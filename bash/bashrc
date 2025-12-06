@@ -1328,12 +1328,17 @@ fi
 # pnpm                                                                         #
 ################################################################################
 
-# pnpm completion
-# See: https://pnpm.io/completion
-#
-# tabtab source for packages
-# uninstall by removing these lines
-[ -f ~/.config/tabtab/bash/__tabtab.bash ] && . ~/.config/tabtab/bash/__tabtab.bash || true
+# pnpm
+if type pnpm > /dev/null 2>&1; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+
+  source <(pnpm completion bash)
+fi
+# pnpm end
 
 ################################################################################
 # pyenv & pyenv-virtualenv                                                     #
