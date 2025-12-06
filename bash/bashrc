@@ -1648,3 +1648,10 @@ if type codex > /dev/null 2>&1; then
   source <(codex completion bash)
 fi
 
+################################################################################
+# Google Antigravity (https://antigravity.google)
+################################################################################
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
