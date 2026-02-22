@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(du)",
+      "Bash(find:*)",
+      "Bash(git status)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(which:*)",
+      "Bash(ps*)",
+      "Bash(env)",
+      "Bash(uname*)",
+      "Bash(brew info*)",
+      "Bash(brew list*)"
+    ]
+  }
+}
