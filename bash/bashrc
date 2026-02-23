@@ -2,17 +2,9 @@
 # Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/bash/bashrc
 
-# TODO: Organise the bashrc settings for code visibility.
-#
-#       It is just so cluttering at the moment. Modularise this file into
-#       multiple separate files if necessary;
-#       for instance:
-#
-#         - aliases
-#         - bash_prompt
-#         - path
-#         - functions
-#         - etc
+################################################################################
+# 1. PREAMBLE
+################################################################################
 
 export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
@@ -22,20 +14,62 @@ export LESSOPEN='| $(brew --prefix)/bin/src-hilite-lesspipe.sh %s'
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+# Python REPL tab completion
+# https://stackoverflow.com/questions/246725/how-do-i-add-tab-completion-to-the-python-shell
+# https://nicolas.perriault.net/code/2010/python-tab-completion/
+# File: ~/.pythonrc.py@ -> ~/Dropbox/code/dotfiles/pythonrc.py
+export PYTHONSTARTUP=$HOME/.pythonrc.py
+
 ################################################################################
-# PATH Settings                                                                #
+# 2. PATH SETTINGS
 ################################################################################
 
+# Homebrew must come first so brewed tools shadow system tools
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Composer (PHP package manager) global binaries
 [ -d ~/.composer/vendor/bin ] && export PATH=$PATH:~/.composer/vendor/bin
+
+# [SUGGESTION: The `android-sdk` Homebrew formula was removed. This PATH entry
+#  is likely a no-op. If using Android Studio, set ANDROID_HOME to
+#  ~/Library/Android/sdk instead and update PATH manually.]
 [ -d $(brew --prefix)/opt/android-sdk ] && \
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+# diff-highlight (part of git-core contrib)
 [ -d $(brew --prefix)/share/git-core/contrib/diff-highlight ] && \
 export PATH=$PATH:$(brew --prefix)/share/git-core/contrib/diff-highlight
 
+# -------
+# Java
+# -------
+
+export SDKMAN_DIR="$HOME/.sdkman"
+
+if [ -d $SDKMAN_DIR ]; then
+  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+else
+  unset SDKMAN_DIR
+  /usr/libexec/java_home > /dev/null 2>&1 && export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+# [SUGGESTION: STUDIO_JDK is no longer used by modern Android Studio (it reads
+#  JAVA_HOME or its own bundled JDK). This line can likely be removed.]
+export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
+# export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
+
+# -------
+# Android
+# -------
+
+# [SUGGESTION: The `android-sdk` Homebrew formula was removed. If using Android
+#  Studio, set ANDROID_HOME=~/Library/Android/sdk instead.]
+[ -d $(brew --prefix)/opt/android-sdk ] && \
+export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
+# export ANDROID_HOME=~/Library/Android/sdk/          # Android Studio default
+
 ################################################################################
-# History Settings                                                             #
+# 3. HISTORY SETTINGS
 ################################################################################
 
 # Append history to `~/.bash_history` when you exit a shell
@@ -50,82 +84,30 @@ export HISTIGNORE=$HISTIGNORE':la1:l1a:lal:lla:l.l:ll.:lll:ls -la'
 export HISTIGNORE=$HISTIGNORE':clear:histg:hgrep'
 
 ################################################################################
-# Command Prompt Configuration                                                 #
+# 4. SHELL OPTIONS
 ################################################################################
 
-# TODO: See what other people do for their command prompt configuration: dotfiles-mathiasbynens/, dotfiles-questbeat/, dotfiles-tpope/, dotfiles-yonchu/ etc
-
-# Load the shell dotfiles:
-# for file in ~/.bash/{bash_prompt}; do
-#   [ -r "$file" ] && [ -f "$file" ] && source "$file";
-# done;
-# unset file;
-
-source ~/.bash/bash_prompt  # temp one-liner to source the prompt file as script above is not working.
-
-#export PS1='\u\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
-# Command Prompt Configuration Help {{{1
-#
-# | Code       | Command Prompt Output                              |
-# |------------|----------------------------------------------------|
-# | \u         | username                                           |
-# | \s         | current shell                                      |
-# | \w         | current working directory                          |
-# | \W         | basename of current working directory              |
-# | \d         | date in "weekday month date" format ("Mon Jan 16") |
-# | \D(format) | date in strfime format ("%Y-%m-%d")                |
-# | \A         | time in 24-hour HH:MM format                       |
-# | \t         | time in 24-hour HH:MM:SS format                    |
-# | \@         | time in 12-hour HH:MM am/pm format                 |
-# | \T         | time in 12-hour HH:MM:SS format                    |
-# | \H         | hostname                                           |
-# | \h         | hostname up to first "."                           |
-# | \!         | history number if this command                     |
-# | \$         | when UID is 0 (root), a "#", otherwise a "$"       |
-# | \\         | a literal backslash                                |
-#
-# }}}1
+set -o noclobber          # Prevent unintentional overwriting
+# set -o vi                 # Set Vi Mode in Bash
+shopt -s nocaseglob       # Case-insensitive globbing (used in pathname expansion)
+shopt -s cdspell          # Autocorrect minor typos in path names when using `cd`
+shopt -s dirspell
+shopt -s no_empty_cmd_completion
+shopt -s autocd
+shopt -s cdable_vars
 
 ################################################################################
-# Grep                                                                         #
-################################################################################
-
-# GREP_COLOR Codes Help {{{1
-#
-# ANSI escape code:
-#
-# | SGR parameters      | Text colour | Background |
-# |---------------------|-------------|------------|
-# | 0 reset all         | 30 black    | 40 black   |
-# | 1 bright            | 31 red      | 41 red     |
-# | 2 dim               | 32 green    | 42 green   |
-# | 3 italic            | 33 yellow   | 43 yellow  |
-# | 4 underline: single | 34 blue     | 44 blue    |
-# | 5 blink: slow       | 35 magenta  | 45 magenta |
-# | 6 blink: fast       | 36 cyan     | 46 cyan    |
-# | 7 reverse           | 37 white    | 47 white   |
-# | 8 hidden            |     ---     |     ---    |
-# | many more up to 107 |     ---     |     ---    |
-#
-# Separate with ";"
-#
-# Many of SGR parameters are not widely supported.
-# See Wikipedia and elsewhere for details:
-# https://en.wikipedia.org/wiki/ANSI_escape_code
-#
-# }}}1
-
-export GREP_OPTIONS='--color=auto'  # Specify options grep should use by default
-export GREP_COLOR='1;38;5;0;48;5;136'
-
-################################################################################
-# Terminal Color Formatting                                                    #
+# 5. COLOR SETTINGS
 ################################################################################
 
 # TODO: Work on better colour formatting than the current settings
 #GIT_PS1_SHOWDIRTYSTATE=true
 export CLICOLOR=1
+
+# [SUGGESTION: LS_OPTIONS='--color=auto' is a GNU ls wrapper variable; it is
+#  silently ignored on macOS where ls is BSD-based. Has no effect here.]
 export LS_OPTIONS='--color=auto'
+
                #1122334455667788990011 -- column numbers for attributes
 export LSCOLORS=GxFxCxDxBxegedabagaced
 # export LSCOLORS=GxBxHxDxFxhxhxhxhxexex   # previous color formatting
@@ -153,8 +135,71 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 #
 # }}}1
 
+# [SUGGESTION: GREP_OPTIONS was deprecated in GNU grep 2.22 (2015) and removed
+#  in 2.23. It is silently ignored on modern systems. Use --color=auto in
+#  individual aliases instead (see grep aliases in section 8).]
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;38;5;0;48;5;136'
+
+# GREP_COLOR Codes Help {{{1
+#
+# ANSI escape code:
+#
+# | SGR parameters      | Text colour | Background |
+# |---------------------|-------------|------------|
+# | 0 reset all         | 30 black    | 40 black   |
+# | 1 bright            | 31 red      | 41 red     |
+# | 2 dim               | 32 green    | 42 green   |
+# | 3 italic            | 33 yellow   | 43 yellow  |
+# | 4 underline: single | 34 blue     | 44 blue    |
+# | 5 blink: slow       | 35 magenta  | 45 magenta |
+# | 6 blink: fast       | 36 cyan     | 46 cyan    |
+# | 7 reverse           | 37 white    | 47 white   |
+# | 8 hidden            |     ---     |     ---    |
+# | many more up to 107 |     ---     |     ---    |
+#
+# Separate with ";"
+#
+# Many of SGR parameters are not widely supported.
+# See Wikipedia and elsewhere for details:
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+#
+# }}}1
+
 ################################################################################
-# Completions                                                                  #
+# 6. PROMPT
+################################################################################
+
+source ~/.bash/bash_prompt
+
+# [SUGGESTION: If starship is installed (see section 18), it replaces this PS1
+#  at startup. bash_prompt's PS1 is only active when starship is absent.]
+
+#export PS1='\u\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
+# Command Prompt Configuration Help {{{1
+#
+# | Code       | Command Prompt Output                              |
+# |------------|----------------------------------------------------|
+# | \u         | username                                           |
+# | \s         | current shell                                      |
+# | \w         | current working directory                          |
+# | \W         | basename of current working directory              |
+# | \d         | date in "weekday month date" format ("Mon Jan 16") |
+# | \D(format) | date in strfime format ("%Y-%m-%d")                |
+# | \A         | time in 24-hour HH:MM format                       |
+# | \t         | time in 24-hour HH:MM:SS format                    |
+# | \@         | time in 12-hour HH:MM am/pm format                 |
+# | \T         | time in 12-hour HH:MM:SS format                    |
+# | \H         | hostname                                           |
+# | \h         | hostname up to first "."                           |
+# | \!         | history number if this command                     |
+# | \$         | when UID is 0 (root), a "#", otherwise a "$"       |
+# | \\         | a literal backslash                                |
+#
+# }}}1
+
+################################################################################
+# 7. GENERAL COMPLETIONS
 ################################################################################
 
 # ---------------
@@ -178,19 +223,15 @@ fi
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
-# --------------
-# wting/autojump
-# --------------
-#
-# Add the path for wting/autojump to Bash
-# [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
 # ------
 # rupa/z
 # ------
 #
 # Add the path for rupa/z
 [[ -s $(brew --prefix)/etc/profile.d/z.sh ]] && . $(brew --prefix)/etc/profile.d/z.sh
+
+# Note: wting/autojump disabled (kept for reference)
+# [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # -----------------------------
 # Git completion with `g` alias
@@ -210,6 +251,9 @@ fi;
 # Enable tab completion for `cask` by marking it as an alias for `brew cask`
 # Inspired by the above script by mathiasbynens :D
 #
+# [SUGGESTION: `brew cask` syntax was removed in Homebrew 3.x (2021). The
+#  `cask` function now calls `brew ... --cask`. This _brew completion may not
+#  be accurate for the cask subcommand.]
 if type _brew &> /dev/null; then
   complete -o default -o nospace -F _brew cask
 fi
@@ -223,6 +267,8 @@ fi
 #   - vagrant-completion -> Run `brew install vagrant-completion`
 #   - Homestead          -> Run `cd ~ && git clone https://github.com/laravel/homestead.git Homestead`
 
+# [SUGGESTION: Vagrant and Homestead are likely absent. This block is a no-op
+#  unless ~/Homestead exists.]
 if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
   # Accessing Homestead Globally
   # See: https://laravel.com/docs/master/homestead#accessing-homestead-globally
@@ -242,6 +288,9 @@ fi
 #
 # Add `killall` tab completion for common apps
 # https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L47
+#
+# [SUGGESTION: iTunes was replaced by Music.app in macOS Catalina (2019).
+#  Remove `iTunes` from this list.]
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter ScriptMonitor NotificationCenter" killall;
 
 # ------------------------------------------------------------------
@@ -295,62 +344,7 @@ if type brew > /dev/null 2>&1 && type terraform > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# Python                                                                       #
-################################################################################
-
-# -----------------------------
-# Python Interpreter completion
-# -----------------------------
-#
-# Enable tab completion for the Python Interactive Interpreter:
-# https://stackoverflow.com/questions/246725/how-do-i-add-tab-completion-to-the-python-shell
-# https://nicolas.perriault.net/code/2010/python-tab-completion/
-# File: ~/.pythonrc.py@ -> ~/Dropbox/code/dotfiles/pythonrc.py
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-
-if type jupyter > /dev/null 2>&1; then
-  alias note='jupyter notebook'
-fi
-
-if type pip > /dev/null 2>&1; then
-  alias pip-all-upgrade="pip --disable-pip-version-check list --outdated --format=json | python -c \"import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))\" | xargs -n1 pip install -U"
-  alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
-fi
-
-if type pip3 > /dev/null 2>&1; then
-  alias pip3-all-upgrade="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
-fi
-
-################################################################################
-# Java                                                                         #
-################################################################################
-
-# ----
-# Java
-# ----
-
-export SDKMAN_DIR="$HOME/.sdkman"
-
-if [ -d $SDKMAN_DIR ]; then
-  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-else
-  unset SDKMAN_DIR
-  /usr/libexec/java_home > /dev/null 2>&1 && export JAVA_HOME=$(/usr/libexec/java_home)
-fi
-
-# -------
-# Android
-# -------
-
-export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
-# export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
-
-[ -d $(brew --prefix)/opt/android-sdk ] && \
-export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
-# export ANDROID_HOME=~/Library/Android/sdk/      # Android Studio default
-
-################################################################################
-# Alias Settings                                                               #
+# 8. ALIASES
 ################################################################################
 
 # Enable simple aliases to be sudo'ed. ("sudone"?)
@@ -361,17 +355,8 @@ export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
 # http://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
 alias sudo='sudo '
 
-set -o noclobber          # Prevent unintentional overwriting
-# set -o vi                 # Set Vi Mode in Bash
-shopt -s nocaseglob       # Case-insensitive globbing (used in pathname expansion)
-shopt -s cdspell          # Autocorrect minor typos in path names when using `cd`
-shopt -s dirspell
-shopt -s no_empty_cmd_completion
-shopt -s autocd
-shopt -s cdable_vars
-
 # ------
-# SAFETY
+# Safety
 # ------
 
 alias rm='rm -iv'         # interactive, verbose
@@ -407,7 +392,7 @@ else
   alias ls='ls -hF ${colorflag}'          # Default human-readable & symbol after pathname
   alias l.='ls -d .*'                     # List all dotfiles
   alias l.l='ls -ld .*'                   # List all dotfiles in long format
-  alias ll.=l.l
+  alias ll.=l.l                           # [NOTE: same as l.l; kept for muscle memory]
   alias sym="ls -al | grep '\->'"         # List all symlinks
 fi
 
@@ -415,11 +400,11 @@ alias l1='ls -1'                        # List all files per line
 alias l='ls -l'                         # List all files in long format
 alias la='ls -a'                        # List all files, including dotfiles
 alias la1='ls -a1'                      # List all files per line, including dotfiles
-alias l1a=la1                           # List all files per line, including dotfiles
+alias l1a=la1                           # [NOTE: same as la1; kept for muscle memory]
 alias lal='ls -al'                      # List all files in long format, including dotfiles
-alias lla=lal
+alias lla=lal                           # [NOTE: same as lal; kept for muscle memory]
 alias ll='ls -alrthF'                  # List all files in detail
-alias lll=ll
+alias lll=ll                            # [NOTE: same as ll; kept for muscle memory]
 
 # -----------------------------------
 # tree (requires `brew install tree`)
@@ -441,12 +426,12 @@ if type tree > /dev/null 2>&1; then
   alias treea5='tree -a -L 5'
   alias treea6='tree -a -L 6'
   alias tree.=treea
-  alias tree.1=treea1
-  alias tree.2=treea2
-  alias tree.3=treea3
-  alias tree.4=treea4
-  alias tree.5=treea5
-  alias tree.6=treea6
+  alias tree.1=treea1                   # [SUGGESTION: identical to treea1 above]
+  alias tree.2=treea2                   # [SUGGESTION: identical to treea2 above]
+  alias tree.3=treea3                   # [SUGGESTION: identical to treea3 above]
+  alias tree.4=treea4                   # [SUGGESTION: identical to treea4 above]
+  alias tree.5=treea5                   # [SUGGESTION: identical to treea5 above]
+  alias tree.6=treea6                   # [SUGGESTION: identical to treea6 above]
   alias trls='tree -CF | less -R'  # -C outputs colour, -R makes less understand color
 fi
 
@@ -459,26 +444,26 @@ alias du='du -ch'                       # Human-readable including grand total
 alias du1='du -d 1'                     # Human-readable, grand total, min-level
 alias dus='du -sckx * | sort -nr'
 
-# ----
-# less
-# ----
+# ------
+# Pagers
+# ------
 
 alias lessn='less -N'                   # lessn:    Show the linenumber
 alias m='less'                          # m:        Show less output
 alias mn='less -N'                      # mn:       Show the position & linenumbers
 
-# --
-# cd
-# --
+# -------
+# Editors
+# -------
 
-# Enable `cd filename` to move to its parent directory
-cd() {
-  if [ -e "$1" -a ! -d "$1" ]; then
-    builtin cd -- "$(dirname -- "$1")"
-  else
-    builtin cd "$@"
-  fi
-}
+alias vi=vim
+alias edit=vim
+alias e=vim
+alias emacs="emacs -nw"
+
+# --
+# cd  (see also cd() function in section 9)
+# --
 
 alias cd..='cd ../'                     # Go back 1 directory level
 alias c..='cd ..'                       # Go back 1 directory level
@@ -501,16 +486,18 @@ alias root='cd /'                       # root:   Go to root of disk
 
 alias ~='cd ~'                          # ~:      Go Home
 
-alias -- -='cd -'                       # -:      Go back to the previous cd
+alias -- -='cd -'                       # -:      Go back to the previous cd  # [SUGGESTION: consider removing — cd- and bk cover this]
 alias cd-='cd -'                        # cd-:    Go back to the previous cd
 alias bk='cd -'                         # bk:     Go back to the previous cd
-alias undo='cd -'                       # undo:   Go back to the previous cd
+alias undo='cd -'                       # undo:   Go back to the previous cd  # [SUGGESTION: consider removing — cd- and bk cover this]
 
 alias dt='cd ~/Desktop/'                # dt:     Go to Desktop
 alias dc='cd ~/Documents/'              # dc:     Go to Documents
 alias dl='cd ~/Downloads/'              # dl:     Go to Downloads
 alias dr='cd ~/Dropbox/'                # dr:     Go to Dropbox
 
+# [SUGGESTION: These aliases depend on specific Dropbox paths that may not
+#  exist on all machines. Verify paths before relying on them.]
 alias blogging='cd ~/Dropbox/code/github/sho-repos/shoichiaizawa.github.io'
 alias sandbox='cd ~/Dropbox/code/examples-code/sandbox' # sandbox: Go to sandbox
 alias drafts='cd ~/Dropbox/code/examples-code/sandbox/drafts'
@@ -521,7 +508,6 @@ alias drafts='cd ~/Dropbox/code/examples-code/sandbox/drafts'
 
 alias mkdir='mkdir -p'                  # Enable to create intermediate directories
 alias md='mkdir -p'                     # md:     Make a directory
-mcd () { mkdir -p "$1" && cd "$1"; }    # mcd:    Makes new Dir and jumps inside
 
 # -------------
 # Time and Date
@@ -547,30 +533,16 @@ alias pbs=pbsort
 
 alias h='history'
 alias histg='history | grep'
-alias hgrep=histg
+alias hgrep=histg                       # [SUGGESTION: identical to histg above]
 
-# Function: rmh -- remove the most recent previous command from command history
-#
-# This helps the user to maintain his/her command history clean without invalid
-# commands
-#
-# Usage: Enter a single space charater before the command
-#        i.e. Run `$  rmh` instead of `$ rmh`
-#
-rmh() {
-  tmp=$HISTTIMEFORMAT
-  export HISTTIMEFORMAT=''
-  local lastcmdhist=$(history 1)
-  local lastcmdnum=$(echo "${lastcmdhist}" | awk '{print $1}')
-  local lastcmd=$(echo "${lastcmdhist}" | cut -d ' ' -f3-)
-  if [ -n "${lastcmdnum}" ]; then
-    history -d "$lastcmdnum"
-    echo "Removed the last command:${lastcmd}"
-  fi
-  export HISTTIMEFORMAT=$tmp
-  unset tmp
-}
-alias rmh=rmh
+# ----------
+# ssh-keygen
+# ----------
+
+alias ssh-rsa3072='ssh-keygen -t rsa -b 3072 -C'
+alias ssh-rsa4096='ssh-keygen -t rsa -b 4096 -C'
+alias ssh-check-key='ssh-keygen -l -f' #Show fingerprint of specified public key file
+alias ssh-change-pass='ssh-keygen -p -f' # Change the passphrase of a private key
 
 # ----
 # grep
@@ -591,53 +563,17 @@ alias white-grep="GREP_COLOR='1;37' grep --color=always"
 # Search a string in an entire directory
 # Usage: dgrep 'pattern' '/directory/to/be/searched'
 # See: https://stackoverflow.com/q/16956810/1334728
+# [SUGGESTION: $1/$2 are not expanded inside alias definitions — both
+#  parameters will always be empty. Use a shell function instead:
+#    dgrep() { grep -nrw "$1" "$2"; }]
 alias dgrep='grep -nrw $1 $2'
 
-# ----------
-# ssh-keygen
-# ----------
-
-alias ssh-rsa3072='ssh-keygen -t rsa -b 3072 -C'
-alias ssh-rsa4096='ssh-keygen -t rsa -b 4096 -C'
-alias ssh-check-key='ssh-keygen -l -f' #Show fingerprint of specified public key file
-alias ssh-change-pass='ssh-keygen -p -f' # Change the passphrase of a private key
-
-# ------------------------
-# Edit configuration files
-# ------------------------
-
-alias ebashrc='vim ~/.bashrc'           # Edit .bashrc from anywhere
-alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
-alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
-alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
-alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
-alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
-alias eapache="vim $(brew --prefix)/etc/httpd/httpd.conf"
-                                        # Edit httpd.conf from anywhere
-alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
-                                        # Edit nginx.conf from anywhere
-alias emacos='vim ~/.macos'             # Edit .macos from anywhere
-
-# XXX: find a better way to achieve the following command
-if type php > /dev/null 2>&1; then
-  alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
-fi
-
-# --------------
+# -----
 # mute and unmute
-# --------------
+# -----
 
 alias mute="osascript -e 'set volume output muted true'"
 alias unmute="osascript -e 'set volume output muted false'"
-
-# -------
-# Editors
-# -------
-
-alias vi=vim
-alias edit=vim
-alias e=vim
-alias emacs="emacs -nw"
 
 # -----
 # macOS
@@ -647,70 +583,13 @@ alias purge='sudo purge'
 alias f='open -a Finder ./'       # Open the current working directory in Finder
 
 # Airport CLI alias
+# [SUGGESTION: The `airport` CLI was removed in macOS Sonoma (2023). This alias
+#  will silently do nothing if the binary is absent.]
 airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 if [[ -x "${airport}" ]]; then
   alias airport="${airport}"
 fi
 unset airport
-
-# Function: cdf -- cd to the path of the front Finder window
-# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
-
-cdf() {
-  target=$(osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)')
-  if [ "$target" != "" ]; then
-    cd "$target"; pwd
-  else
-    echo 'No Finder window found' >&2
-  fi
-}
-
-# trash:  Moves a file to the macOS trash
-trash () { command mv "$@" ~/.Trash ; }
-
-# ql:    Opens any file in macOS Quick Look Preview
-ql () { qlmanage -p "$*" >& /dev/null; }
-
-# ----------------
-# Typo corrections
-# ----------------
-
-alias ehco=echo                   # ehco is now echo
-alias eixt=exit                   # eixt is now exit
-alias oepn=open                   # oepn is now open
-alias pdw=pwd                     # pdw is now pwd
-alias quit=exit                   # quit is now exit
-
-# ----------
-# Networking
-# ----------
-
-alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # myip:         Public facing IP Address
-alias localip0='ipconfig getifaddr en0'                         # localip0:     Internal IP Address for en0
-alias localip1='ipconfig getifaddr en1'                         # localip1:     Internal IP Address for en1
-alias netcons='lsof -i'                                         # netcons:      Show all open TCP/IP sockets
-alias flushdns='dscacheutil -flushcache'                        # flushdns:     Flush out the DNS Cache
-alias lsock='sudo /usr/sbin/lsof -i -P'                         # lsock:        Display open sockets
-alias lsockudp='sudo /usr/sbin/lsof -nP | grep UDP'             # lsockudp:     Display only open UDP sockets
-alias lsocktcp='sudo /usr/sbin/lsof -nP | grep TCP'             # lsocktcp:     Display only open TCP sockets
-alias ipinfo0='ipconfig getpacket en0'                          # ipinfo0:      Get info on connections for en0
-alias ipinfo1='ipconfig getpacket en1'                          # ipinfo1:      Get info on connections for en1
-alias openports='sudo lsof -i | grep LISTEN'                    # openports:    All listening connections
-alias showblocked='sudo ipfw list'                              # showblocked:  All ipfw rules inc/ blocked IPs
-
-# Function: ii - display useful host related information
-
-ii() {
-  echo -e "\nYou are logged on ${RED}$HOST"
-  echo -e "\nAdditional information:$NC " ; uname -a
-  echo -e "\n${RED}Users logged on:$NC " ; w -h
-  echo -e "\n${RED}Current date :$NC " ; date
-  echo -e "\n${RED}Machine stats :$NC " ; uptime
-  echo -e "\n${RED}Current network location :$NC " ; scselect
-  echo -e "\n${RED}Public facing IP Address :$NC " ; myip
-  #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
-  echo
-}
 
 # -------------------------------------------------------------------
 # showHidden:   Show hidden files in Finder
@@ -744,7 +623,7 @@ alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Re
 
 # --------------------------------------------------------------------
 # Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
+# Also, clear Apple's System Logs to improve shell startup speed.
 # Finally, clear download history from quarantine. https://mths.be/bum
 # --------------------------------------------------------------------
 
@@ -756,6 +635,52 @@ alias empty-trash=" \
   mkdir ~/.Trash
 "
 
+# ----------
+# Networking
+# ----------
+
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com' # myip:         Public facing IP Address
+alias localip0='ipconfig getifaddr en0'                         # localip0:     Internal IP Address for en0
+alias localip1='ipconfig getifaddr en1'                         # localip1:     Internal IP Address for en1
+alias netcons='lsof -i'                                         # netcons:      Show all open TCP/IP sockets
+alias flushdns='dscacheutil -flushcache'                        # flushdns:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'                         # lsock:        Display open sockets
+alias lsockudp='sudo /usr/sbin/lsof -nP | grep UDP'             # lsockudp:     Display only open UDP sockets
+alias lsocktcp='sudo /usr/sbin/lsof -nP | grep TCP'             # lsocktcp:     Display only open TCP sockets
+alias ipinfo0='ipconfig getpacket en0'                          # ipinfo0:      Get info on connections for en0
+alias ipinfo1='ipconfig getpacket en1'                          # ipinfo1:      Get info on connections for en1
+alias openports='sudo lsof -i | grep LISTEN'                    # openports:    All listening connections
+# [SUGGESTION: `ipfw` was removed in macOS Yosemite (2014). This alias will
+#  always fail.]
+alias showblocked='sudo ipfw list'                              # showblocked:  All ipfw rules inc/ blocked IPs
+
+# ---
+# Git
+# ---
+
+alias g='git'
+
+# Deploying a subfolder to GitHub Pages
+# See: https://gist.github.com/cobyism/4730490
+# Courtesy of Coby Chapple (@cobyism)
+alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
+
+# [SUGGESTION: `hub` is not guarded — if `hub` is not installed, calling `git`
+#  via this stub will error on every git command. Add a `type hub` guard or
+#  remove this if `hub` is not in use.]
+# https://github.com/github/hub/issues/1464#issuecomment-311104568
+# Stub out "hub" when its commands conflict with better "git-extras" commands
+__hub-stub-conflicting-commands() {
+    case "$1" in
+        alias|fork|pr)
+            /usr/bin/env git "$@"
+            ;;
+        *)
+            /usr/bin/env hub "$@"
+    esac
+}
+alias git='__hub-stub-conflicting-commands'
+
 # --------------------------
 # Homebrew and Homebrew Cask
 # --------------------------
@@ -766,8 +691,455 @@ fi
 
 if type _brew > /dev/null 2>&1; then
   cask() { brew "$@" --cask; }
-  alias cask=cask
 fi
+
+# ---------
+# Python / pip
+# ---------
+
+if type jupyter > /dev/null 2>&1; then
+  alias note='jupyter notebook'
+fi
+
+if type pip > /dev/null 2>&1; then
+  alias pip-all-upgrade="pip --disable-pip-version-check list --outdated --format=json | python -c \"import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))\" | xargs -n1 pip install -U"
+  alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
+fi
+
+if type pip3 > /dev/null 2>&1; then
+  alias pip3-all-upgrade="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
+fi
+
+# ------
+# Docker
+# ------
+
+# Docker Machine
+# [SUGGESTION: `docker-machine` was archived in 2021 and is no longer
+#  maintained. This block is likely a no-op.]
+if type docker-machine > /dev/null 2>&1; then
+  alias dm='docker-machine'
+  alias dmenv='eval "$(docker-machine env)"'
+fi
+
+if type _docker_machine &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/docker-machine.bash ]; then
+  complete -o default -o nospace -F _docker_machine dm
+fi
+
+# Docker
+
+if type docker > /dev/null 2>&1; then
+  alias d='docker'
+  if [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker d
+  fi
+
+  alias dpa='docker container ls -a'
+  alias dclean='docker rm -v $(docker ps -aq -f status=exited)'
+  alias drmi='docker image rm -f $(docker image ls -aq)'
+
+  db() { docker build -t "$1" .; }
+  alias dbuild=db
+
+  da() { docker start $1 && docker attach $1; }
+  if type _docker_start > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker_start da
+  fi
+
+  dexec() { docker exec -it $1 /bin/sh; }
+  if type _docker_exec > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker_exec dexec
+  fi
+
+  # NOTE: This might not work as expected; fix it if necessary
+  drun() { docker run -it -d $1; }
+  if type _docker_run > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+    complete -o default -o nospace -F _docker_run drun
+  fi
+fi
+
+daliases() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
+# -------------
+# Google Chrome
+# -------------
+
+[ -d "/Applications/Google Chrome.app" ] && \
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+
+[ -d "/Applications/Google Chrome Canary.app" ] && \
+alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+
+# ------------------------
+# Edit configuration files
+# ------------------------
+
+alias ebashrc='vim ~/.bashrc'           # Edit .bashrc from anywhere
+alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
+alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
+alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
+alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
+alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
+alias eapache="vim $(brew --prefix)/etc/httpd/httpd.conf"
+                                        # Edit httpd.conf from anywhere
+alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
+                                        # Edit nginx.conf from anywhere
+alias emacos='vim ~/.macos'             # Edit .macos from anywhere
+
+# XXX: find a better way to achieve the following command
+if type php > /dev/null 2>&1; then
+  alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
+fi
+
+# ------------
+# App aliases
+# ------------
+
+# This creates a backup file for Atom packages installed by the user
+# To install, run: `apm install --packages-file packages.list`
+# NOTE: For an alternative method, use `atom star|stars|starred`
+# [SUGGESTION: Atom editor was sunset December 2022. `apm` is no longer
+#  available in new installations.]
+if type apm > /dev/null 2>&1; then
+  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 | grep -v '^$' >| ~/.atom/packages.list"
+fi
+
+if type composer > /dev/null 2>&1; then
+  alias composer-pkg-versions='composer global show --installed'  # short for -i
+fi
+
+# [SUGGESTION: Meteor is a framework that may no longer be in use. Verify
+#  whether this is still needed.]
+alias meteor-upgrade='curl https://install.meteor.com/ | sh'
+
+# ----------------
+# Typo corrections
+# ----------------
+
+alias ehco=echo                   # ehco is now echo
+alias eixt=exit                   # eixt is now exit
+alias oepn=open                   # oepn is now open
+alias pdw=pwd                     # pdw is now pwd
+alias quit=exit                   # quit is now exit
+
+# ---------
+# Utilities
+# ---------
+
+alias cl='clear'                        # cl:     Clear terminal display
+alias which='type --all'                 # which:  Find executables
+alias where=which
+
+# [SUGGESTION: `!!` is not expanded inside alias definitions — this will
+#  literally pass `!!` as a string to sudo, not the last command. Use a
+#  function: please() { sudo $(history -p '!!'); }]
+alias please='sudo !!'
+alias jobs='jobs -l'
+
+alias reload='exec $SHELL -l'     # Invoke the default shell ($SHELL) as a login shell
+alias map='xargs -n1'
+alias rm~='rm *~'
+alias rm.~='rm .*~'
+alias rmpyc='find . -type f -name "*.pyc" -ls -delete'
+
+# Recursively delete `.DS_Store` files
+alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
+
+if type colordiff > /dev/null 2>&1; then
+  alias diff='colordiff'            # Requires `brew install colordiff`
+fi
+
+# Disable Spotlight
+alias spotoff="sudo mdutil -a -i off"
+# Enable Spotlight
+alias spoton="sudo mdutil -a -i on"
+
+# file: /usr/libexec/java_home@ -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home
+# Running the `java_home` results in printing out the current Java JDK version
+if type java > /dev/null 2>&1; then
+  alias java-versions='/usr/libexec/java_home -V'
+fi
+
+# [SUGGESTION: This path is Dropbox-dependent. Verify the path exists before
+#  using, or update to the correct path on this machine.]
+alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
+
+################################################################################
+# 9. FUNCTIONS
+################################################################################
+
+# Function: cd -- smart cd: if argument is a file, cd to its parent directory
+cd() {
+  if [ -e "$1" -a ! -d "$1" ]; then
+    builtin cd -- "$(dirname -- "$1")"
+  else
+    builtin cd "$@"
+  fi
+}
+
+# mcd:    Makes new Dir and jumps inside
+mcd () { mkdir -p "$1" && cd "$1"; }
+
+# Function: man -- Coloured man pages {{{1
+#
+# http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
+#
+# ANSI escape code:
+#
+# | SGR parameters      | Text colour | Background |
+# |---------------------|-------------|------------|
+# | 0 reset all         | 30 black    | 40 black   |
+# | 1 bright            | 31 red      | 41 red     |
+# | 2 dim               | 32 green    | 42 green   |
+# | 3 italic            | 33 yellow   | 43 yellow  |
+# | 4 underline: single | 34 blue     | 44 blue    |
+# | 5 blink: slow       | 35 magenta  | 45 magenta |
+# | 6 blink: fast       | 36 cyan     | 46 cyan    |
+# | 7 reverse           | 37 white    | 47 white   |
+# | 8 hidden            |     ---     |     ---    |
+# | many more up to 107 |     ---     |     ---    |
+#
+# Separate with ";"
+#
+# Many of SGR (Select Graphic Rendition) parameters are not widely supported.
+# See Wikipedia and elsewhere for details:
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+
+man() {
+  env \
+  LESS_TERMCAP_mb=$(printf "\e[1;38;5;166m") \
+  LESS_TERMCAP_md=$(printf "\e[1;38;5;166m") \
+  LESS_TERMCAP_me=$(printf "\e[0m") \
+  LESS_TERMCAP_se=$(printf "\e[0m") \
+  LESS_TERMCAP_so=$(printf "\e[1;38;5;0;48;5;136m") \
+  LESS_TERMCAP_ue=$(printf "\e[0m") \
+  LESS_TERMCAP_us=$(printf "\e[1;38;5;64m") \
+  man "$@"
+}
+
+# }}}1
+# Function: extract -- Extract for common file formats {{{
+#
+# See: https://github.com/xvoland/Extract/blob/master/extract.sh
+#
+# [SUGGESTION: The SAVEIFS/IFS reassignment wrapping this function definition
+#  is unnecessary — IFS only needs to be changed inside the function body if
+#  at all. The two lines before and after the function can be removed safely.]
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+
+function extract {
+  if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+  else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+        case "${n%,}" in
+          *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+                       tar xvf "$n"       ;;
+          *.lzma)      unlzma ./"$n"      ;;
+          *.bz2)       bunzip2 ./"$n"     ;;
+          *.rar)       unrar x -ad ./"$n" ;;
+          *.gz)        gunzip ./"$n"      ;;
+          *.zip)       unzip ./"$n"       ;;
+          *.z)         uncompress ./"$n"  ;;
+          *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
+                       7z x ./"$n"        ;;
+          *.xz)        unxz ./"$n"        ;;
+          *.exe)       cabextract ./"$n"  ;;
+          *.cpio)      cpio -id < ./"$n"  ;;
+          *)
+                       echo "extract: '$n' - unknown archive method"
+                       return 1
+                       ;;
+        esac
+      else
+        echo "'$n' - file does not exist"
+        return 1
+      fi
+    done
+  fi
+}
+
+IFS=$SAVEIFS
+
+# }}}
+
+# Function: path -- display a neatly formatted executable paths
+path() {
+local red="\033[0;31m"
+local green="\033[0;32m"
+local yellow="\033[0;33m"
+local blue="\033[1;34m"
+local magenta="\033[0;35m"
+local cyan="\033[0;36m"
+local reset_color="\033[0m"
+  echo $PATH | tr ":" "\n" | \
+    awk "{ sub(\"/usr\",   \"$green/usr$reset_color\"); \
+           sub(\"/bin\",   \"$blue/bin$reset_color\"); \
+           sub(\"/sbin\",  \"$magenta/sbin$reset_color\"); \
+           sub(\"/opt\",   \"$cyan/opt$reset_color\"); \
+           sub(\"/local\", \"$yellow/local$reset_color\"); \
+           sub(\"/Users\", \"$red/Users$reset_color\"); \
+           sub(\"/home\", \"$red/home$reset_color\"); \
+           print }"
+}
+
+# Function: cdf -- cd to the path of the front Finder window
+# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
+cdf() {
+  target=$(osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)')
+  if [ "$target" != "" ]; then
+    cd "$target"; pwd
+  else
+    echo 'No Finder window found' >&2
+  fi
+}
+
+# trash:  Moves a file to the macOS trash
+trash () { command mv "$@" ~/.Trash ; }
+
+# ql:    Opens any file in macOS Quick Look Preview
+ql () { qlmanage -p "$*" >& /dev/null; }
+
+# Function: ii - display useful host related information
+# [SUGGESTION: $RED and $NC are never defined in this file; all coloured
+#  output will appear as raw escape sequences. Define them before calling
+#  this function or remove the colour codes.]
+ii() {
+  echo -e "\nYou are logged on ${RED}$HOST"
+  echo -e "\nAdditional information:$NC " ; uname -a
+  echo -e "\n${RED}Users logged on:$NC " ; w -h
+  echo -e "\n${RED}Current date :$NC " ; date
+  echo -e "\n${RED}Machine stats :$NC " ; uptime
+  echo -e "\n${RED}Current network location :$NC " ; scselect
+  echo -e "\n${RED}Public facing IP Address :$NC " ; myip
+  #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
+  echo
+}
+
+# Function: rmh -- remove the most recent previous command from command history
+#
+# This helps the user to maintain his/her command history clean without invalid
+# commands
+#
+# Usage: Enter a single space charater before the command
+#        i.e. Run `$  rmh` instead of `$ rmh`
+#
+rmh() {
+  tmp=$HISTTIMEFORMAT
+  export HISTTIMEFORMAT=''
+  local lastcmdhist=$(history 1)
+  local lastcmdnum=$(echo "${lastcmdhist}" | awk '{print $1}')
+  local lastcmd=$(echo "${lastcmdhist}" | cut -d ' ' -f3-)
+  if [ -n "${lastcmdnum}" ]; then
+    history -d "$lastcmdnum"
+    echo "Removed the last command:${lastcmd}"
+  fi
+  export HISTTIMEFORMAT=$tmp
+  unset tmp
+}
+
+# Function: open-chrome-tabs
+# Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>
+# Or provide URLs via standard input, each on a new line. # Open URLs listed in a file
+if [ -d "/Applications/Google Chrome.app" ]; then
+  open-chrome-tabs() {
+    # Initialize an array to hold URLs
+    urls=()
+    incognito=true
+
+    # Parse options
+    while getopts ":n" opt; do
+      case ${opt} in
+        n )
+          incognito=false
+          ;;
+        \? )
+          echo "Invalid option: -$OPTARG" >&2
+          return 1
+          ;;
+      esac
+    done
+    shift $((OPTIND -1))
+
+    # Check if input is coming from a pipe or here-document
+    if [ ! -t 0 ]; then
+      # Read URLs from standard input
+      while IFS= read -r url; do
+        # Skip empty lines
+        [ -n "$url" ] && urls+=("$url")
+      done
+    fi
+
+    # Append any URLs provided as arguments
+    urls+=("$@")
+
+    # Check if any URLs were provided
+    if [ "${#urls[@]}" -eq 0 ]; then
+      echo "Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>"
+      echo "Or provide URLs via standard input, each on a new line."
+      return 1
+    fi
+
+    # Determine Chrome launch options
+    if $incognito; then
+      open -na "Google Chrome" --args --incognito "${urls[@]}"
+    else
+      open -na "Google Chrome" --args "${urls[@]}"
+    fi
+  }
+fi
+
+# Function: toggleiTerm -- Toggle iTerm Dock icon {{{1
+
+# https://gist.github.com/CrazyApi/5377685
+# Add this to your terminal profile
+
+function toggleiTerm() {
+  pb='/usr/libexec/PlistBuddy'
+  iTerm='/Applications/iTerm.app/Contents/Info.plist'
+  echo "Do you wish to hide iTerm in Dock?"
+  select ync in "Hide" "Show" "Cancel"; do
+    case $ync in
+      'Hide' )
+        $pb -c "Add :LSUIElement bool true" $iTerm
+        echo "relaunch iTerm to take effectives"
+        break
+        ;;
+      'Show' )
+        $pb -c "Delete :LSUIElement" $iTerm
+        echo "run killall 'iTerm' to exit, and then relaunch it"
+        break
+        ;;
+      'Cancel' )
+        break
+        ;;
+    esac
+  done
+}
+
+# }}}1
+
+# Function: heroku-static-test
+# How to deploy a static website to Heroku:
+# https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489
+# TODO: Add conditionals for composer.json and index.php if necessary
+# [SUGGESTION: This is an old PHP hack for Heroku static sites. The recommended
+#  Heroku approach has changed significantly since this was written.]
+heroku-static-test() {
+  touch composer.json index.php
+  echo '{}' >| composer.json
+  echo '<?php include_once("home.html"); ?>' >| index.php
+  if [ -f index.html ]; then
+    mv index.html home.html
+  else
+    touch home.html
+  fi
+}
 
 # Installing Old Homebrew Cask Versions
 #
@@ -776,6 +1148,9 @@ fi
 # Install a specific version of a Homebrew formula
 # @param {string} $1 Formula name
 # @param {string} $2 Formula version (exact)
+# [SUGGESTION: This function references `homebrew/cask` and `homebrew/core`
+#  taps which were removed from Homebrew in 2023. `brew tap homebrew/cask` and
+#  `brew tap homebrew/core` will now fail. The function likely no longer works.]
 vintage() {
   # Figure out the relevant tap
   local brew_tap
@@ -836,118 +1211,6 @@ vintage() {
   ) fi
 }
 
-# ------
-# Docker
-# ------
-
-# Docker Machine
-
-if type docker-machine > /dev/null 2>&1; then
-  alias dm='docker-machine'
-  alias dmenv='eval "$(docker-machine env)"'
-fi
-
-if type _docker_machine &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/docker-machine.bash ]; then
-  complete -o default -o nospace -F _docker_machine dm
-fi
-
-# Docker
-
-if type docker > /dev/null 2>&1; then
-  alias d='docker'
-  if [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
-    complete -o default -o nospace -F _docker d
-  fi
-
-  alias dpa='docker container ls -a'
-  alias dclean='docker rm -v $(docker ps -aq -f status=exited)'
-  alias drmi='docker image rm -f $(docker image ls -aq)'
-
-  db() { docker build -t "$1" .; }
-  alias db=db
-  alias dbuild=db
-
-  da() { docker start $1 && docker attach $1; }
-  if type _docker_start > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
-    complete -o default -o nospace -F _docker_start da
-  fi
-
-  dexec() { docker exec -it $1 /bin/sh; }
-  alias dexec=dexec
-  if type _docker_exec > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
-    complete -o default -o nospace -F _docker_exec dexec
-  fi
-
-  # NOTE: This might not work as expected; fix it if necessary
-  drun() { docker run -it -d $1; }
-  alias drun=drun
-  if type _docker_run > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
-    complete -o default -o nospace -F _docker_run drun
-  fi
-fi
-
-daliases() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
-
-# -------------
-# Google Chrome
-# -------------
-
-[ -d "/Applications/Google Chrome.app" ] && \
-alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
-
-[ -d "/Applications/Google Chrome Canary.app" ] && \
-alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
-
-if [ -d "/Applications/Google Chrome.app" ]; then
-  # Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>
-  # Or provide URLs via standard input, each on a new line. # Open URLs listed in a file 
-  open-chrome-tabs() {
-    # Initialize an array to hold URLs
-    urls=()
-    incognito=true
-
-    # Parse options
-    while getopts ":n" opt; do
-      case ${opt} in
-        n )
-          incognito=false
-          ;;
-        \? )
-          echo "Invalid option: -$OPTARG" >&2
-          return 1
-          ;;
-      esac
-    done
-    shift $((OPTIND -1))
-
-    # Check if input is coming from a pipe or here-document
-    if [ ! -t 0 ]; then
-      # Read URLs from standard input
-      while IFS= read -r url; do
-        # Skip empty lines
-        [ -n "$url" ] && urls+=("$url")
-      done
-    fi
-
-    # Append any URLs provided as arguments
-    urls+=("$@")
-
-    # Check if any URLs were provided
-    if [ "${#urls[@]}" -eq 0 ]; then
-      echo "Usage: open-chrome-tabs [-n] <url1> <url2> ... <urlN>"
-      echo "Or provide URLs via standard input, each on a new line."
-      return 1
-    fi
-
-    # Determine Chrome launch options
-    if $incognito; then
-      open -na "Google Chrome" --args --incognito "${urls[@]}"
-    else
-      open -na "Google Chrome" --args "${urls[@]}"
-    fi
-  }
-fi
-
 # ---
 # fzf
 # ---
@@ -973,232 +1236,8 @@ if type fzf > /dev/null 2>&1; then
   '
 fi
 
-# ------------
-# To be sorted
-# ------------
-
-alias cl='clear'                        # c:      Clear terminal display
-alias which='type --all'                 # which:  Find executables
-alias where=which
-
-# alias path='echo -e ${PATH//:/\\n}'     # path:   Echo all executable Paths
-# alias path='echo $PATH | tr -s ":" "\n"' # path: Same as above
-# Display a neatly formatted executable paths
-path() {
-local red="\033[0;31m"
-local green="\033[0;32m"
-local yellow="\033[0;33m"
-local blue="\033[1;34m"
-local magenta="\033[0;35m"
-local cyan="\033[0;36m"
-local reset_color="\033[0m"
-  echo $PATH | tr ":" "\n" | \
-    awk "{ sub(\"/usr\",   \"$green/usr$reset_color\"); \
-           sub(\"/bin\",   \"$blue/bin$reset_color\"); \
-           sub(\"/sbin\",  \"$magenta/sbin$reset_color\"); \
-           sub(\"/opt\",   \"$cyan/opt$reset_color\"); \
-           sub(\"/local\", \"$yellow/local$reset_color\"); \
-           sub(\"/Users\", \"$red/Users$reset_color\"); \
-           sub(\"/home\", \"$red/home$reset_color\"); \
-           print }"
-}
-
-alias please='sudo !!'
-alias jobs='jobs -l'
-
-alias g='git'
-# https://github.com/github/hub/issues/1464#issuecomment-311104568
-# Stub out "hub" when its commands conflict with better "git-extras" commands
-__hub-stub-conflicting-commands() {
-    case "$1" in
-        alias|fork|pr)
-            /usr/bin/env git "$@"
-            ;;
-        *)
-            /usr/bin/env hub "$@"
-    esac
-}
-alias git='__hub-stub-conflicting-commands'
-
-# Deploying a subfolder to GitHub Pages
-# See: https://gist.github.com/cobyism/4730490
-# Courtesy of Coby Chapple (@cobyism)
-alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
-
-# This creates a backup file for Atom packages installed by the user
-# To install, run: `apm install --packages-file packages.list`
-# NOTE: For an alternative method, use `atom star|stars|starred`
-if type apm > /dev/null 2>&1; then
-  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 | grep -v '^$' >| ~/.atom/packages.list"
-fi
-
-alias reload='exec $SHELL -l'     # Invoke the default shell ($SHELL) as a login shell
-
-alias rm~='rm *~'
-alias rm.~='rm .*~'
-alias rmpyc='find . -type f -name "*.pyc" -ls -delete'
-
-# Recursively delete `.DS_Store` files
-alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
-
-if type colordiff > /dev/null 2>&1; then
-  alias diff='colordiff'            # Requires `brew install colordiff`
-fi
-
-# Disable Spotlight
-alias spotoff="sudo mdutil -a -i off"
-# Enable Spotlight
-alias spoton="sudo mdutil -a -i on"
-
-# Intuitive map function
-# For example, to list all directories that contain a certain file:
-# find . -name .gitattributes | map dirname
-alias map='xargs -n1'
-
-if type composer > /dev/null 2>&1; then
-  alias composer-pkg-versions='composer global show --installed'  # short for -i
-fi
-
-alias meteor-upgrade='curl https://install.meteor.com/ | sh'
-
-# How to deploy a static website to Heroku:
-# https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489
-# TODO: Add conditionals for composer.json and index.php if necessary
-heroku-static-test() {
-  touch composer.json index.php
-  echo '{}' >| composer.json
-  echo '<?php include_once("home.html"); ?>' >| index.php
-  if [ -f index.html ]; then
-    mv index.html home.html
-  else
-    touch home.html
-  fi
-}
-
-# file: /usr/libexec/java_home@ -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java_home
-# Running the `java_home` results in printing out the current Java JDK version
-if type java > /dev/null 2>&1; then
-  alias java-versions='/usr/libexec/java_home -V'
-fi
-
-alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
-
-# Function: toggleiTerm -- Toggle iTerm Dock icon {{{1
-
-# https://gist.github.com/CrazyApi/5377685
-# Add this to your terminal profile
-
-function toggleiTerm() {
-  pb='/usr/libexec/PlistBuddy'
-  iTerm='/Applications/iTerm.app/Contents/Info.plist'
-  echo "Do you wish to hide iTerm in Dock?"
-  select ync in "Hide" "Show" "Cancel"; do
-    case $ync in
-      'Hide' )
-        $pb -c "Add :LSUIElement bool true" $iTerm
-        echo "relaunch iTerm to take effectives"
-        break
-        ;;
-      'Show' )
-        $pb -c "Delete :LSUIElement" $iTerm
-        echo "run killall 'iTerm' to exit, and then relaunch it"
-        break
-        ;;
-      'Cancel' )
-        break
-        ;;
-    esac
-  done
-}
-
-# }}}1
-# Function: man -- Coloured man {{{1
-#
-# http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
-#
-# ANSI escape code:
-#
-# | SGR parameters      | Text colour | Background |
-# |---------------------|-------------|------------|
-# | 0 reset all         | 30 black    | 40 black   |
-# | 1 bright            | 31 red      | 41 red     |
-# | 2 dim               | 32 green    | 42 green   |
-# | 3 italic            | 33 yellow   | 43 yellow  |
-# | 4 underline: single | 34 blue     | 44 blue    |
-# | 5 blink: slow       | 35 magenta  | 45 magenta |
-# | 6 blink: fast       | 36 cyan     | 46 cyan    |
-# | 7 reverse           | 37 white    | 47 white   |
-# | 8 hidden            |     ---     |     ---    |
-# | many more up to 107 |     ---     |     ---    |
-#
-# Separate with ";"
-#
-# Many of SGR (Select Graphic Rendition) parameters are not widely supported.
-# See Wikipedia and elsewhere for details:
-# https://en.wikipedia.org/wiki/ANSI_escape_code
-
-man() {
-  env \
-  LESS_TERMCAP_mb=$(printf "\e[1;38;5;166m") \
-  LESS_TERMCAP_md=$(printf "\e[1;38;5;166m") \
-  LESS_TERMCAP_me=$(printf "\e[0m") \
-  LESS_TERMCAP_se=$(printf "\e[0m") \
-  LESS_TERMCAP_so=$(printf "\e[1;38;5;0;48;5;136m") \
-  LESS_TERMCAP_ue=$(printf "\e[0m") \
-  LESS_TERMCAP_us=$(printf "\e[1;38;5;64m") \
-  man "$@"
-}
-
-# }}}1
-# Function: extract -- Extract for common file formats {{{
-#
-# See: https://github.com/xvoland/Extract/blob/master/extract.sh
-#
-SAVEIFS=$IFS
-IFS=$(echo -en "\n\b")
-
-function extract {
-  if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-  else
-    for n in "$@"
-    do
-      if [ -f "$n" ] ; then
-        case "${n%,}" in
-          *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                       tar xvf "$n"       ;;
-          *.lzma)      unlzma ./"$n"      ;;
-          *.bz2)       bunzip2 ./"$n"     ;;
-          *.rar)       unrar x -ad ./"$n" ;;
-          *.gz)        gunzip ./"$n"      ;;
-          *.zip)       unzip ./"$n"       ;;
-          *.z)         uncompress ./"$n"  ;;
-          *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
-                       7z x ./"$n"        ;;
-          *.xz)        unxz ./"$n"        ;;
-          *.exe)       cabextract ./"$n"  ;;
-          *.cpio)      cpio -id < ./"$n"  ;;
-          *)
-                       echo "extract: '$n' - unknown archive method"
-                       return 1
-                       ;;
-        esac
-      else
-        echo "'$n' - file does not exist"
-        return 1
-      fi
-    done
-  fi
-}
-
-IFS=$SAVEIFS
-
-# }}}
-
 ################################################################################
-# rbenv                                                                        #
+# 10. rbenv
 ################################################################################
 
 if type rbenv > /dev/null 2>&1; then
@@ -1206,7 +1245,7 @@ if type rbenv > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# nvm                                                                          #
+# 11. nvm / npm
 ################################################################################
 
 # NOTE:
@@ -1286,6 +1325,9 @@ if [[ -d $HOME/.nvm/.git ]]; then
 # NOTE: Homebrew installation is not supported by the nvm developers.
 # See: https://github.com/nvm-sh/nvm#important-notes
 #
+# [SUGGESTION: The `nvm` Homebrew formula was removed from Homebrew core.
+#  `brew --prefix nvm` will fail. This branch is effectively dead unless the
+#  nvm tap is separately installed.]
 elif [[ -d $(brew --prefix nvm) ]]; then
   if [[ ! -d $NVM_DIR ]]; then
     echo -e "The \`.nvm\` directory has been created at $HOME\n"
@@ -1338,7 +1380,7 @@ if type npm > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# pnpm                                                                         #
+# 12. pnpm
 ################################################################################
 
 # pnpm
@@ -1354,14 +1396,16 @@ fi
 # pnpm end
 
 ################################################################################
-# Alfred                                                                       #
+# 13. Alfred
 ################################################################################
 
+# These options control Homebrew Cask install dirs; both are commented out.
+# Uncomment and adjust if you need to override the default install location.
 # export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 # export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
 
 ################################################################################
-# thefuck
+# 14. thefuck
 ################################################################################
 
 if type thefuck > /dev/null 2>&1; then
@@ -1369,12 +1413,14 @@ if type thefuck > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# Google Cloud SDK                                                             #
+# 15. Google Cloud SDK
 ################################################################################
 
 # Google Cloud SDK installed via Homebrew Cask
 if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
   source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
+  # [SUGGESTION: The completion script is commented out. Uncomment to enable
+  #  gcloud tab completion:]
   # source "$(brew --prefix)/share/google-cloud-sdk/completion.bash.inc"
 
   if type fzf > /dev/null 2>&1; then
@@ -1385,7 +1431,6 @@ if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
         gcloud config configurations activate "${confname}"
       fi
     }
-    alias gactivate=gactivate
 
     # Function: gssh -- SSH into a GCE instance effortlessly
     gssh() {
@@ -1396,7 +1441,6 @@ if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
         gcloud compute ssh "${instance_name}" --zone "${zone_name}"
       fi
     }
-    alias gssh=gssh
   fi
 
   if type bq > /dev/null 2>&1; then
@@ -1410,9 +1454,10 @@ if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
       bqschema() {
         bq show --schema --format=prettyjson $1 | jq
       }
-      alias bqschema=bqschema
     else
       # Show a BigQuery table schema without colours if `jq` is not installed
+      # [SUGGESTION: $1 is not expanded inside an alias definition — it will
+      #  always be empty. Use a function: bqschema() { bq show --schema --format=prettyjson "$1"; }]
       alias bqschema="bq show --schema --format=prettyjson $1"
     fi
 
@@ -1428,12 +1473,11 @@ if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
         echo
       done
     }
-    alias bqtables=bqtables
   fi
 fi
 
 ################################################################################
-# direnv
+# 16. direnv
 ################################################################################
 
 if type direnv > /dev/null 2>&1; then
@@ -1441,7 +1485,7 @@ if type direnv > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# goenv
+# 17. goenv
 ################################################################################
 
 if [[ -d $HOME/.goenv/.git ]]; then
@@ -1459,6 +1503,9 @@ if [[ -d $HOME/.goenv/.git ]]; then
   # Upgrade `goenv` while preserving the both current and old working directory
   # paths information.
   #
+  # [SUGGESTION: Bug — `old_currentpwd` is assigned but `$tmp_oldpwd` is used
+  #  on the OLDPWD restore line. Replace `OLDPWD=$tmp_oldpwd` with
+  #  `OLDPWD=$old_currentpwd`, or rename the variable consistently.]
   goenv-git-upgrade() {
     if [[ -d $GOENV_ROOT/.git ]]; then
       local tmp_currentpwd=$(pwd)
@@ -1476,9 +1523,11 @@ if [[ -d $HOME/.goenv/.git ]]; then
 fi
 
 ################################################################################
-# starship
+# 18. starship
 ################################################################################
 
+# [SUGGESTION: starship replaces the PS1 set by bash_prompt (section 6). If
+#  starship is installed, the bash_prompt PS1 is overwritten here at startup.]
 if type starship > /dev/null 2>&1; then
   if [ "${BASH_VERSINFO[0]}" -gt 4 ] || ([ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -ge 1 ]); then
     source <("$(brew --prefix)/bin/starship" init bash --print-full-init)
@@ -1488,7 +1537,7 @@ if type starship > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# Kubernetes
+# 19. Kubernetes
 ################################################################################
 
   # kubectl
@@ -1512,22 +1561,28 @@ fi
 
   # kustomize
   if type kustomize > /dev/null 2>&1; then
-    # complete -C /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/kustomize kustomize
     source <(kustomize completion bash)
   fi
 
 ################################################################################
-# bit (https://github.com/chriswalz/bit)
+# 20. bit (https://github.com/chriswalz/bit)
 ################################################################################
 
+# [SUGGESTION: This hardcodes /usr/local/bin/bit which is wrong on Apple
+#  Silicon Macs (Homebrew installs to /opt/homebrew/bin). Use:
+#    complete -C "$(command -v bit)" bit]
 if type bit > /dev/null 2>&1; then
   complete -C /usr/local/bin/bit bit
 fi
 
 ################################################################################
-# tealdeer (https://github.com/dbrgn/tealdeer)
+# 21. tealdeer (https://github.com/dbrgn/tealdeer)
 ################################################################################
 
+# [SUGGESTION: This sources a completion file from a hardcoded NVM path. If
+#  the Node.js version changes or NVM is absent, this silently fails. The
+#  tealdeer Rust binary (brew install tealdeer) supports:
+#    source <(tldr --print-completions bash)]
 if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr" ]; then
   source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
 fi
@@ -1537,7 +1592,7 @@ if type tldr > /dev/null 2>&1 && [ -d "$(brew --prefix)/Cellar/tealdeer" ]; then
 fi
 
 ################################################################################
-# Bun (https://github.com/oven-sh/bun)
+# 22. Bun (https://github.com/oven-sh/bun)
 ################################################################################
 
 # Evaluate whether Bun is installed via the installation script,
@@ -1549,10 +1604,14 @@ if [ -d "${HOME}/.bun/bin" ]; then
 fi
 
 ################################################################################
-# Visual Studio Code Stable and Insiders (https://github.com/microsoft/vscode)
+# 23. Visual Studio Code (https://github.com/microsoft/vscode)
 ################################################################################
 
 # Function to download and source VS Code completion scripts
+# [SUGGESTION: This function runs `curl` to download a completion script on
+#  every shell startup (when code or code-insiders is installed). This adds
+#  latency and requires network access. Consider caching the script and only
+#  re-downloading periodically, or installing it once manually.]
 setup_vscode_completion() {
   appname="$1"
   url="https://raw.githubusercontent.com/microsoft/vscode/main/resources/completions/bash/code"
@@ -1596,13 +1655,16 @@ if command -v code-insiders >/dev/null 2>&1; then
 fi
 
 ################################################################################
-# console-ninja (https://console-ninja.com/)
+# 24. console-ninja (https://console-ninja.com)
 ################################################################################
 
+# [SUGGESTION: No existence guard — if ~/.console-ninja/.bin does not exist,
+#  this adds a non-existent directory to PATH silently. Consider:
+#    [ -d ~/.console-ninja/.bin ] && PATH=~/.console-ninja/.bin:$PATH]
 PATH=~/.console-ninja/.bin:$PATH
 
 ################################################################################
-# Ollama (https://ollama.com)
+# 25. Ollama (https://ollama.com)
 ################################################################################
 
 if type ollama > /dev/null 2>&1; then
@@ -1624,10 +1686,17 @@ if type ollama > /dev/null 2>&1; then
   complete -F _complete_ollama ollama
 fi
 
+################################################################################
+# 26. .local/bin/env
+################################################################################
+
+# [SUGGESTION: No existence guard — if ~/.local/bin/env does not exist, this
+#  will print an error on every shell startup. Consider:
+#    [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"]
 . "$HOME/.local/bin/env"
 
 ################################################################################
-# deck (https://github.com/k1LoW/deck)
+# 27. deck (https://github.com/k1LoW/deck)
 ################################################################################
 
 if type deck > /dev/null 2>&1; then
@@ -1637,11 +1706,10 @@ if type deck > /dev/null 2>&1; then
     echo -n $deckid | pbcopy
     unset deckid
   }
-  alias deckls=deckls
 fi
 
 ################################################################################
-# Codex (https://github.com/openai/codex)
+# 28. Codex (https://github.com/openai/codex)
 ################################################################################
 
 if type codex > /dev/null 2>&1; then
@@ -1649,9 +1717,11 @@ if type codex > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# Google Antigravity (https://antigravity.google)
+# 29. Google Antigravity (https://antigravity.google)
 ################################################################################
 
 # Added by Antigravity
+# [SUGGESTION: No existence guard — adds a potentially non-existent directory
+#  to PATH silently. Consider:
+#    [ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"]
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-
