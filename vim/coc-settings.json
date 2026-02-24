@@ -17,7 +17,6 @@
     "vue"
   ],
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-  "tsserver.npm": "/usr/local/bin/npm",
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "yaml.format.enable": true,
   "yaml.schemas": {
