@@ -473,10 +473,7 @@ alias root='cd /'                       # root:   Go to root of disk
 
 alias ~='cd ~'                          # ~:      Go Home
 
-alias -- -='cd -'                       # -:      Go back to the previous cd  # [SUGGESTION: consider removing — cd- and bk cover this]
-alias cd-='cd -'                        # cd-:    Go back to the previous cd
-alias bk='cd -'                         # bk:     Go back to the previous cd
-alias undo='cd -'                       # undo:   Go back to the previous cd  # [SUGGESTION: consider removing — cd- and bk cover this]
+alias -- -='cd -'                       # -:      Go back to the previous cd
 
 alias dt='cd ~/Desktop/'                # dt:     Go to Desktop
 alias dc='cd ~/Documents/'              # dc:     Go to Documents
@@ -1222,6 +1219,10 @@ if type fzf > /dev/null 2>&1; then
   '
 fi
 
+# ==============================================================================
+# LANGUAGE RUNTIMES & PACKAGE MANAGERS
+# ==============================================================================
+
 ################################################################################
 # 10. rbenv
 ################################################################################
@@ -1382,16 +1383,37 @@ fi
 # pnpm end
 
 ################################################################################
-# 13. Alfred
+# 13. Bun (https://github.com/oven-sh/bun)
 ################################################################################
 
-# These options control Homebrew Cask install dirs; both are commented out.
-# Uncomment and adjust if you need to override the default install location.
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
+# Evaluate whether Bun is installed via the installation script,
+# and if it is, load the following settings
+if [ -d "${HOME}/.bun/bin" ]; then
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH=$BUN_INSTALL/bin:$PATH
+  source <(bun completions)
+fi
+
+# ==============================================================================
+# SHELL ENHANCEMENTS
+# ==============================================================================
 
 ################################################################################
-# 14. thefuck
+# 14. starship
+################################################################################
+
+# [SUGGESTION: starship replaces the PS1 set by bash_prompt (section 6). If
+#  starship is installed, the bash_prompt PS1 is overwritten here at startup.]
+if type starship > /dev/null 2>&1; then
+  if [ "${BASH_VERSINFO[0]}" -gt 4 ] || ([ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -ge 1 ]); then
+    source <("$BREW_PREFIX/bin/starship" init bash --print-full-init)
+  else
+    source /dev/stdin <<<"$("$BREW_PREFIX/bin/starship" init bash --print-full-init)"
+  fi
+fi
+
+################################################################################
+# 15. thefuck
 ################################################################################
 
 if type thefuck > /dev/null 2>&1; then
@@ -1399,7 +1421,35 @@ if type thefuck > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# 15. Google Cloud SDK
+# 16. direnv
+################################################################################
+
+if type direnv > /dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi
+
+################################################################################
+# 17. tealdeer (https://github.com/dbrgn/tealdeer)
+################################################################################
+
+# [SUGGESTION: This sources a completion file from a hardcoded NVM path. If
+#  the Node.js version changes or NVM is absent, this silently fails. The
+#  tealdeer Rust binary (brew install tealdeer) supports:
+#    source <(tldr --print-completions bash)]
+if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr" ]; then
+  source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
+fi
+
+if type tldr > /dev/null 2>&1 && [ -d "$BREW_PREFIX/Cellar/tealdeer" ]; then
+  export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
+fi
+
+# ==============================================================================
+# CLOUD & INFRASTRUCTURE
+# ==============================================================================
+
+################################################################################
+# 18. Google Cloud SDK
 ################################################################################
 
 # Google Cloud SDK installed via Homebrew Cask
@@ -1463,66 +1513,6 @@ if [[ -d $BREW_PREFIX/share/google-cloud-sdk ]]; then
 fi
 
 ################################################################################
-# 16. direnv
-################################################################################
-
-if type direnv > /dev/null 2>&1; then
-  eval "$(direnv hook bash)"
-fi
-
-################################################################################
-# 17. goenv
-################################################################################
-
-if [[ -d $HOME/.goenv/.git ]]; then
-  export GOENV_ROOT="$HOME/.goenv"
-  export PATH="$GOENV_ROOT/bin:$PATH"
-  eval "$(goenv init -)"
-  export GOPATH=$HOME/.go
-  export PATH="$GOROOT/bin:$PATH"
-  export PATH="$GOPATH/bin:$PATH"
-
-  [[ -x $GOPATH/bin/gocomplete ]] && complete -C $GOPATH/bin/gocomplete go
-
-  # Function: `goenv-git-upgrade`
-  #
-  # Upgrade `goenv` while preserving the both current and old working directory
-  # paths information.
-  #
-  # [SUGGESTION: Bug — `old_currentpwd` is assigned but `$tmp_oldpwd` is used
-  #  on the OLDPWD restore line. Replace `OLDPWD=$tmp_oldpwd` with
-  #  `OLDPWD=$old_currentpwd`, or rename the variable consistently.]
-  goenv-git-upgrade() {
-    if [[ -d $GOENV_ROOT/.git ]]; then
-      local tmp_currentpwd=$(pwd)
-      local old_currentpwd=$OLDPWD
-      cd $GOENV_ROOT
-      git pull
-      cd $tmp_currentpwd
-      OLDPWD=$tmp_oldpwd
-      unset tmp_currentpwd
-      unset tmp_oldpwd
-    else
-      brew upgrade goenv
-    fi
-  }
-fi
-
-################################################################################
-# 18. starship
-################################################################################
-
-# [SUGGESTION: starship replaces the PS1 set by bash_prompt (section 6). If
-#  starship is installed, the bash_prompt PS1 is overwritten here at startup.]
-if type starship > /dev/null 2>&1; then
-  if [ "${BASH_VERSINFO[0]}" -gt 4 ] || ([ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -ge 1 ]); then
-    source <("$BREW_PREFIX/bin/starship" init bash --print-full-init)
-  else
-    source /dev/stdin <<<"$("$BREW_PREFIX/bin/starship" init bash --print-full-init)"
-  fi
-fi
-
-################################################################################
 # 19. Kubernetes
 ################################################################################
 
@@ -1550,47 +1540,12 @@ fi
     source <(kustomize completion bash)
   fi
 
-################################################################################
-# 20. bit (https://github.com/chriswalz/bit)
-################################################################################
-
-# [SUGGESTION: This hardcodes /usr/local/bin/bit which is wrong on Apple
-#  Silicon Macs (Homebrew installs to /opt/homebrew/bin). Use:
-#    complete -C "$(command -v bit)" bit]
-if type bit > /dev/null 2>&1; then
-  complete -C /usr/local/bin/bit bit
-fi
+# ==============================================================================
+# DEV TOOLS & EDITORS
+# ==============================================================================
 
 ################################################################################
-# 21. tealdeer (https://github.com/dbrgn/tealdeer)
-################################################################################
-
-# [SUGGESTION: This sources a completion file from a hardcoded NVM path. If
-#  the Node.js version changes or NVM is absent, this silently fails. The
-#  tealdeer Rust binary (brew install tealdeer) supports:
-#    source <(tldr --print-completions bash)]
-if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr" ]; then
-  source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
-fi
-
-if type tldr > /dev/null 2>&1 && [ -d "$BREW_PREFIX/Cellar/tealdeer" ]; then
-  export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
-fi
-
-################################################################################
-# 22. Bun (https://github.com/oven-sh/bun)
-################################################################################
-
-# Evaluate whether Bun is installed via the installation script,
-# and if it is, load the following settings
-if [ -d "${HOME}/.bun/bin" ]; then
-  export BUN_INSTALL="$HOME/.bun"
-  export PATH=$BUN_INSTALL/bin:$PATH
-  source <(bun completions)
-fi
-
-################################################################################
-# 23. Visual Studio Code (https://github.com/microsoft/vscode)
+# 20. Visual Studio Code (https://github.com/microsoft/vscode)
 ################################################################################
 
 # Function to download and source VS Code completion scripts
@@ -1635,16 +1590,24 @@ if command -v code-insiders >/dev/null 2>&1; then
 fi
 
 ################################################################################
-# 24. console-ninja (https://console-ninja.com)
+# 21. bit (https://github.com/chriswalz/bit)
 ################################################################################
 
-# [SUGGESTION: No existence guard — if ~/.console-ninja/.bin does not exist,
-#  this adds a non-existent directory to PATH silently. Consider:
-#    [ -d ~/.console-ninja/.bin ] && PATH=~/.console-ninja/.bin:$PATH]
-PATH=~/.console-ninja/.bin:$PATH
+# [SUGGESTION: This hardcodes /usr/local/bin/bit which is wrong on Apple
+#  Silicon Macs (Homebrew installs to /opt/homebrew/bin). Use:
+#    complete -C "$(command -v bit)" bit]
+if type bit > /dev/null 2>&1; then
+  complete -C /usr/local/bin/bit bit
+fi
 
 ################################################################################
-# 25. Ollama (https://ollama.com)
+# 22. console-ninja (https://console-ninja.com)
+################################################################################
+
+[ -d ~/.console-ninja/.bin ] && PATH=~/.console-ninja/.bin:$PATH
+
+################################################################################
+# 23. Ollama (https://ollama.com)
 ################################################################################
 
 if type ollama > /dev/null 2>&1; then
@@ -1667,16 +1630,15 @@ if type ollama > /dev/null 2>&1; then
 fi
 
 ################################################################################
-# 26. .local/bin/env
+# 24. Codex (https://github.com/openai/codex)
 ################################################################################
 
-# [SUGGESTION: No existence guard — if ~/.local/bin/env does not exist, this
-#  will print an error on every shell startup. Consider:
-#    [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"]
-. "$HOME/.local/bin/env"
+if type codex > /dev/null 2>&1; then
+  source <(codex completion bash)
+fi
 
 ################################################################################
-# 27. deck (https://github.com/k1LoW/deck)
+# 25. deck (https://github.com/k1LoW/deck)
 ################################################################################
 
 if type deck > /dev/null 2>&1; then
@@ -1688,20 +1650,38 @@ if type deck > /dev/null 2>&1; then
   }
 fi
 
-################################################################################
-# 28. Codex (https://github.com/openai/codex)
-################################################################################
-
-if type codex > /dev/null 2>&1; then
-  source <(codex completion bash)
-fi
+# ==============================================================================
+# SYSTEM & MISC
+# ==============================================================================
 
 ################################################################################
-# 29. Google Antigravity (https://antigravity.google)
+# 26. Alfred
+################################################################################
+
+# These options control Homebrew Cask install dirs; both are commented out.
+# Uncomment and adjust if you need to override the default install location.
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/usr/local/Caskroom"
+
+################################################################################
+# 27. .local/bin/env
+################################################################################
+
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+################################################################################
+# 28. Google Antigravity (https://antigravity.google)
 ################################################################################
 
 # Added by Antigravity
-# [SUGGESTION: No existence guard — adds a potentially non-existent directory
-#  to PATH silently. Consider:
-#    [ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"]
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+[ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+################################################################################
+# PATH DEDUP
+################################################################################
+
+# Remove duplicate PATH entries (keeps first occurrence, preserves order).
+# Prevents PATH from growing when bashrc is re-sourced (new tmux panes, etc.).
+if type awk > /dev/null 2>&1; then
+  PATH=$(printf '%s' "$PATH" | awk -v RS=: -v ORS=: '!seen[$0]++{print}' | sed 's/:$//')
+fi
