@@ -68,8 +68,20 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - `gitignore_global` — global ignores for Vim swap files, macOS artifacts
 
 ### vim/
-- `vimrc` — uses `vim-plug` for plugin management (~100+ plugins); `coc.nvim` for LSP
+- `vimrc` — uses `vim-plug` for plugin management (~47 plugins); `coc.nvim` for LSP; organized into fold sections (`{{{1`/`}}}1` with `{{{2` sub-folds)
 - `autoload/plug.vim` — vim-plug bootstrap
+
+#### vimrc section map
+
+| Section | Sub-folds | Contents |
+|---------|-----------|----------|
+| Header & Section Map | — | file header, migration TODO, known issues |
+| Plugin Manager: vim-plug | — | bootstrap, `plug#begin`/`plug#end`, plugin list |
+| General Settings | Core Options, Tabs & Indentation, Folding, Appearance, Search, Line Wrap & Display, Splits & Windows, Backups & Undo | all `set` commands, highlights, `mapleader` |
+| Filetype Autocmds | — | non-plugin ft detection: ejs, CSON, JavaScript, JSON, Markdown, Python, Vim, Line Return, QuickFix |
+| Plugin Settings (×29) | — | one `{{{1` per plugin, alphabetical: Airline … vim-vue |
+| General Mappings | Arrow Keys, Character Enhancements, Search, Brackets & Quotes, Escape, Line Movement, Window Navigation, Statement Separators, Tab & Buffer Navigation, Folding, Unhighlighting, Miscellaneous | non-plugin key bindings |
+| General Functions | Incr(), Decr(), CohamaSmoothScroll(), Preserve(), CycleMetasyntacticVariables() | utility functions + their mappings |
 
 ### tmux/
 - `tmux.conf` — prefix is `Ctrl+Q` (not `Ctrl+B`); pane/window index starts at 1
@@ -92,3 +104,11 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - **Do not scatter tool-specific PATH entries** into §2 (PATH SETTINGS); §2 is for general/bootstrap PATH only. Tool-specific PATH belongs in the tool's own fence section.
 - **Self-aliases** (`alias foo=foo` after `function foo`) are no-ops in bash — do not add new ones.
 - **`$1`/`$2` in aliases** are not expanded; use a function instead if arguments are needed.
+
+### Editing vimrc
+
+- **Adding a new plugin**: add the `Plug` line in Plugin Manager, then create a new `Plugin Settings: <name> {{{1` section in alphabetical order among the existing plugin sections. Keep all settings + mappings + autocmds for that plugin together in its section.
+- **Adding a non-plugin mapping or setting**: place it in the appropriate sub-fold (`{{{2`) of General Settings, General Mappings, or General Functions. Do not append to the end of the file.
+- **`[SUGGESTION]` comments**: same convention as bashrc — annotate-only markers for commented-out alternatives. Do not remove without fixing or deleting the code they describe.
+- **Plugin-specific `set` commands** (e.g., `set nobackup` in coc.nvim): keep them in the plugin's section, not in General Settings.
+- **Each plugin section should be self-contained**: settings, mappings, autocmds, and functions for one plugin all belong in its `{{{1` section, so it maps cleanly to a future `lua/plugins/<name>.lua` file.
