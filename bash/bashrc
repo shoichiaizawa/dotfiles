@@ -8,8 +8,6 @@
 
 export MYNAME='Shoichi Aizawa'
 export LESS='-iMR'
-[ -x $(brew --prefix)/bin/src-hilite-lesspipe.sh ] && \
-export LESSOPEN='| $(brew --prefix)/bin/src-hilite-lesspipe.sh %s'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -26,19 +24,17 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 # Homebrew must come first so brewed tools shadow system tools
 eval "$(/opt/homebrew/bin/brew shellenv)"
+BREW_PREFIX="$(brew --prefix)"
+
+[ -x "$BREW_PREFIX/bin/src-hilite-lesspipe.sh" ] && \
+export LESSOPEN="| $BREW_PREFIX/bin/src-hilite-lesspipe.sh %s"
 
 # Composer (PHP package manager) global binaries
 [ -d ~/.composer/vendor/bin ] && export PATH=$PATH:~/.composer/vendor/bin
 
-# [SUGGESTION: The `android-sdk` Homebrew formula was removed. This PATH entry
-#  is likely a no-op. If using Android Studio, set ANDROID_HOME to
-#  ~/Library/Android/sdk instead and update PATH manually.]
-[ -d $(brew --prefix)/opt/android-sdk ] && \
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
 # diff-highlight (part of git-core contrib)
-[ -d $(brew --prefix)/share/git-core/contrib/diff-highlight ] && \
-export PATH=$PATH:$(brew --prefix)/share/git-core/contrib/diff-highlight
+[ -d $BREW_PREFIX/share/git-core/contrib/diff-highlight ] && \
+export PATH=$PATH:$BREW_PREFIX/share/git-core/contrib/diff-highlight
 
 # -------
 # Java
@@ -53,20 +49,11 @@ else
   /usr/libexec/java_home > /dev/null 2>&1 && export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
-# [SUGGESTION: STUDIO_JDK is no longer used by modern Android Studio (it reads
-#  JAVA_HOME or its own bundled JDK). This line can likely be removed.]
-export STUDIO_JDK=${JAVA_HOME%/*/*} # Same as below
-# export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_xxx.jdk
-
 # -------
-# Android
+# Android (uncomment if using Android Studio)
 # -------
-
-# [SUGGESTION: The `android-sdk` Homebrew formula was removed. If using Android
-#  Studio, set ANDROID_HOME=~/Library/Android/sdk instead.]
-[ -d $(brew --prefix)/opt/android-sdk ] && \
-export ANDROID_HOME=$(brew --prefix)/opt/android-sdk  # Homebrew version
-# export ANDROID_HOME=~/Library/Android/sdk/          # Android Studio default
+# export ANDROID_HOME="$HOME/Library/Android/sdk"
+# export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 
 ################################################################################
 # 3. HISTORY SETTINGS
@@ -207,11 +194,11 @@ source ~/.bash/bash_prompt
 # ---------------
 
 # Add tab completion for many Bash commands
-if type brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+if type brew &> /dev/null && [ -r "$BREW_PREFIX/etc/profile.d/bash_completion.sh" ]; then
   # Ensure existing Homebrew v1 completions continue to work
-  export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
-  source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
-  source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"  # FIXME: temporary solution
+  export BASH_COMPLETION_COMPAT_DIR="$BREW_PREFIX/etc/bash_completion.d"
+  source "$BREW_PREFIX/etc/profile.d/bash_completion.sh"
+  source "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash"  # FIXME: temporary solution
 elif [ -f /etc/bash_completion ]; then
   source /etc/bash_completion
 fi
@@ -228,10 +215,10 @@ fi
 # ------
 #
 # Add the path for rupa/z
-[[ -s $(brew --prefix)/etc/profile.d/z.sh ]] && . $(brew --prefix)/etc/profile.d/z.sh
+[[ -s $BREW_PREFIX/etc/profile.d/z.sh ]] && . $BREW_PREFIX/etc/profile.d/z.sh
 
 # Note: wting/autojump disabled (kept for reference)
-# [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+# [[ -s $BREW_PREFIX/etc/profile.d/autojump.sh ]] && . $BREW_PREFIX/etc/profile.d/autojump.sh
 
 # -----------------------------
 # Git completion with `g` alias
@@ -277,7 +264,7 @@ if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
   }
 
   # Enable tab completion for the `homestead` function defined above
-  if [ -f $(brew --prefix)/etc/bash_completion.d/vagrant ]; then
+  if [ -f $BREW_PREFIX/etc/bash_completion.d/vagrant ]; then
     complete -o default -o nospace -F _vagrant homestead
   fi
 fi
@@ -340,7 +327,7 @@ complete -F _composercomplete composer;
 # -----------------------------
 
 if type brew > /dev/null 2>&1 && type terraform > /dev/null 2>&1; then
-  complete -C $(brew --prefix)/opt/terraform/bin/terraform terraform
+  complete -C $BREW_PREFIX/opt/terraform/bin/terraform terraform
 fi
 
 ################################################################################
@@ -665,21 +652,20 @@ alias g='git'
 # Courtesy of Coby Chapple (@cobyism)
 alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
 
-# [SUGGESTION: `hub` is not guarded — if `hub` is not installed, calling `git`
-#  via this stub will error on every git command. Add a `type hub` guard or
-#  remove this if `hub` is not in use.]
 # https://github.com/github/hub/issues/1464#issuecomment-311104568
 # Stub out "hub" when its commands conflict with better "git-extras" commands
-__hub-stub-conflicting-commands() {
-    case "$1" in
-        alias|fork|pr)
-            /usr/bin/env git "$@"
-            ;;
-        *)
-            /usr/bin/env hub "$@"
-    esac
-}
-alias git='__hub-stub-conflicting-commands'
+if type hub > /dev/null 2>&1; then
+  __hub-stub-conflicting-commands() {
+      case "$1" in
+          alias|fork|pr)
+              /usr/bin/env git "$@"
+              ;;
+          *)
+              /usr/bin/env hub "$@"
+      esac
+  }
+  alias git='__hub-stub-conflicting-commands'
+fi
 
 # --------------------------
 # Homebrew and Homebrew Cask
@@ -722,7 +708,7 @@ if type docker-machine > /dev/null 2>&1; then
   alias dmenv='eval "$(docker-machine env)"'
 fi
 
-if type _docker_machine &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion.d/docker-machine.bash ]; then
+if type _docker_machine &> /dev/null && [ -f $BREW_PREFIX/etc/bash_completion.d/docker-machine.bash ]; then
   complete -o default -o nospace -F _docker_machine dm
 fi
 
@@ -730,7 +716,7 @@ fi
 
 if type docker > /dev/null 2>&1; then
   alias d='docker'
-  if [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+  if [ -f $BREW_PREFIX/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker d
   fi
 
@@ -742,18 +728,18 @@ if type docker > /dev/null 2>&1; then
   alias dbuild=db
 
   da() { docker start $1 && docker attach $1; }
-  if type _docker_start > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+  if type _docker_start > /dev/null 2>&1 && [ -f $BREW_PREFIX/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker_start da
   fi
 
   dexec() { docker exec -it $1 /bin/sh; }
-  if type _docker_exec > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+  if type _docker_exec > /dev/null 2>&1 && [ -f $BREW_PREFIX/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker_exec dexec
   fi
 
   # NOTE: This might not work as expected; fix it if necessary
   drun() { docker run -it -d $1; }
-  if type _docker_run > /dev/null 2>&1 && [ -f $(brew --prefix)/etc/bash_completion.d/docker ]; then
+  if type _docker_run > /dev/null 2>&1 && [ -f $BREW_PREFIX/etc/bash_completion.d/docker ]; then
     complete -o default -o nospace -F _docker_run drun
   fi
 fi
@@ -780,15 +766,15 @@ alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
 alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
-alias eapache="vim $(brew --prefix)/etc/httpd/httpd.conf"
+alias eapache="vim $BREW_PREFIX/etc/httpd/httpd.conf"
                                         # Edit httpd.conf from anywhere
-alias enginx="vim $(brew --prefix)/etc/nginx/nginx.conf"
+alias enginx="vim $BREW_PREFIX/etc/nginx/nginx.conf"
                                         # Edit nginx.conf from anywhere
 alias emacos='vim ~/.macos'             # Edit .macos from anywhere
 
 # XXX: find a better way to achieve the following command
 if type php > /dev/null 2>&1; then
-  alias ephp="vim $(brew --prefix)/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
+  alias ephp="vim $BREW_PREFIX/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
 fi
 
 # ------------
@@ -1225,11 +1211,11 @@ if type fzf > /dev/null 2>&1; then
     --marker="❯"
   '
 
-  [ -e $(brew --prefix)/bin/rg ] && \
+  [ -e $BREW_PREFIX/bin/rg ] && \
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*" --no-messages' && \
   export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
-  [ -e $(brew --prefix)/bin/bat ] && \
+  [ -e $BREW_PREFIX/bin/bat ] && \
   export FZF_CTRL_T_OPTS='
     --preview "bat --color=always --style=full {}"
     --preview-window=right,70%
@@ -1417,11 +1403,11 @@ fi
 ################################################################################
 
 # Google Cloud SDK installed via Homebrew Cask
-if [[ -d $(brew --prefix)/share/google-cloud-sdk ]]; then
-  source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
+if [[ -d $BREW_PREFIX/share/google-cloud-sdk ]]; then
+  source "$BREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
   # [SUGGESTION: The completion script is commented out. Uncomment to enable
   #  gcloud tab completion:]
-  # source "$(brew --prefix)/share/google-cloud-sdk/completion.bash.inc"
+  # source "$BREW_PREFIX/share/google-cloud-sdk/completion.bash.inc"
 
   if type fzf > /dev/null 2>&1; then
     # Function: gactivate -- switch between GCP configurations effortlessly
@@ -1530,9 +1516,9 @@ fi
 #  starship is installed, the bash_prompt PS1 is overwritten here at startup.]
 if type starship > /dev/null 2>&1; then
   if [ "${BASH_VERSINFO[0]}" -gt 4 ] || ([ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -ge 1 ]); then
-    source <("$(brew --prefix)/bin/starship" init bash --print-full-init)
+    source <("$BREW_PREFIX/bin/starship" init bash --print-full-init)
   else
-    source /dev/stdin <<<"$("$(brew --prefix)/bin/starship" init bash --print-full-init)"
+    source /dev/stdin <<<"$("$BREW_PREFIX/bin/starship" init bash --print-full-init)"
   fi
 fi
 
@@ -1587,7 +1573,7 @@ if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/
   source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
 fi
 
-if type tldr > /dev/null 2>&1 && [ -d "$(brew --prefix)/Cellar/tealdeer" ]; then
+if type tldr > /dev/null 2>&1 && [ -d "$BREW_PREFIX/Cellar/tealdeer" ]; then
   export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
 fi
 
@@ -1608,33 +1594,27 @@ fi
 ################################################################################
 
 # Function to download and source VS Code completion scripts
-# [SUGGESTION: This function runs `curl` to download a completion script on
-#  every shell startup (when code or code-insiders is installed). This adds
-#  latency and requires network access. Consider caching the script and only
-#  re-downloading periodically, or installing it once manually.]
 setup_vscode_completion() {
-  appname="$1"
-  url="https://raw.githubusercontent.com/microsoft/vscode/main/resources/completions/bash/code"
-  completion_dir="$HOME/.local/share/bash-completion/completions"
-  completion_path="$completion_dir/$appname"
+  local appname="$1"
+  local url="https://raw.githubusercontent.com/microsoft/vscode/main/resources/completions/bash/code"
+  local completion_dir="$HOME/.local/share/bash-completion/completions"
+  local completion_path="$completion_dir/$appname"
 
-  # Create the completion directory if it doesn't exist
   mkdir -p "$completion_dir"
 
-  # Download or update the completion script
-  curl -s -o "$completion_path" "$url"
-
-  # Apply the appropriate sed syntax
-  if [ "$(uname)" = "Darwin" ]; then
-    # macOS (BSD sed)
-    sed -i '' "s/@@APPNAME@@/$appname/g" "$completion_path"
-  else
-    # Linux and other Unix-like systems (GNU sed)
-    sed -i "s/@@APPNAME@@/$appname/g" "$completion_path"
+  # Re-download only if file is missing or older than 7 days
+  if [ ! -f "$completion_path" ] || [ "$(find "$completion_path" -mtime +7 2>/dev/null)" ]; then
+    if curl -sf -o "$completion_path.tmp" "$url" 2>/dev/null; then
+      if [ "$(uname)" = "Darwin" ]; then
+        sed -i '' "s/@@APPNAME@@/$appname/g" "$completion_path.tmp"
+      else
+        sed -i "s/@@APPNAME@@/$appname/g" "$completion_path.tmp"
+      fi
+      mv "$completion_path.tmp" "$completion_path"
+    fi
   fi
 
-  # Source the completion script
-  . "$completion_path"
+  [ -f "$completion_path" ] && . "$completion_path"
 }
 
 # Setup completion for VS Code Stable
