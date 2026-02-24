@@ -33,8 +33,8 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 
 | # | Section | Contents |
 |---|---------|----------|
-| 1 | PREAMBLE | `MYNAME`, `LESS`, `VISUAL`, `EDITOR`, `LESSOPEN`, `PYTHONSTARTUP` |
-| 2 | PATH SETTINGS | `brew shellenv`, composer, android-sdk, diff-highlight; Java/SDKMAN/Android subsection |
+| 1 | PREAMBLE | `MYNAME`, `LESS`, `VISUAL`, `EDITOR`, `PYTHONSTARTUP` |
+| 2 | PATH SETTINGS | `brew shellenv`, `BREW_PREFIX` cache, `LESSOPEN`, composer, diff-highlight; Java/SDKMAN subsection |
 | 3 | HISTORY SETTINGS | `histappend`, `HISTSIZE`, `HISTFILESIZE`, `HISTTIMEFORMAT`, `HISTCONTROL`, `HISTIGNORE` |
 | 4 | SHELL OPTIONS | `set -o noclobber`, all `shopt` commands |
 | 5 | COLOR SETTINGS | `CLICOLOR`, `LSCOLORS`, `GREP_COLOR`, `GREP_OPTIONS` |
