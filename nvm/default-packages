@@ -16,7 +16,7 @@
 @vue/cli-service-global
 @vue/cli
 # big-presentation
-ccusage
+# ccusage  # NOTE: use `npx ccusage@latest` or `bunx ccusage`
 commitizen
 conventional-changelog-cli
 devspace
