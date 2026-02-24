@@ -6,7 +6,7 @@
 @google/clasp
 @google/gemini-cli
 @mermaid-js/mermaid-cli
-@openai/codex
+# @openai/codex  # NOTE: install via Homebrew
 @slidev/cli
 # @slidev/theme-apple-basic
 # @slidev/theme-default
