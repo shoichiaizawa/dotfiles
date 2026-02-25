@@ -25,7 +25,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 
 ### bash/
 - `bash_profile` — login shell entry point; sources `bashrc`, shows welcome banner
-- `bashrc` — monolithic interactive shell config organized into 28 numbered sections (see below)
+- `bashrc` — monolithic interactive shell config organized into 14 numbered sections (see below)
 - `bash_prompt` — prompt string definitions sourced by bashrc (overridden by starship if installed)
 - `welcome.sh` — colored ASCII art + system info displayed at login
 
@@ -42,30 +42,11 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 | 7 | GENERAL COMPLETIONS | brew bash_completion, SSH, z.sh, git `g` alias, cask, Vagrant, killall, Composer, Terraform |
 | 8 | ALIASES | Grouped subsections: safety, ls, tree, df/du, pagers, editors, cd/nav, mkdir, time, clipboard, history, ssh-keygen, grep, mute, macOS, networking, git, homebrew, python, docker, chrome, config-edit, apps, typos, utilities |
 | 9 | FUNCTIONS | `cd()`, `mcd()`, `man()`, `extract()`, `path()`, `cdf()`, `trash()`, `ql()`, `ii()`, `rmh()`, `open-chrome-tabs()`, `toggleiTerm()`, `heroku-static-test()`, `vintage()`, fzf config |
-| | **Language runtimes & package managers** | |
-| 10 | rbenv | |
-| 11 | nvm / npm | `nvm-upgrade-init`, `nvm-install`, npm aliases |
-| 12 | pnpm | |
-| 13 | Bun | |
-| | **Shell enhancements** | |
-| 14 | starship | Overrides PS1 from `bash_prompt` |
-| 15 | thefuck | |
-| 16 | direnv | |
-| 17 | tealdeer | |
-| | **Cloud & infrastructure** | |
-| 18 | Google Cloud SDK | `gactivate`, `gssh`, `bqschema`, `bqtables` |
-| 19 | Kubernetes | kubectl, minikube, skaffold, kustomize |
-| | **Dev tools & editors** | |
-| 20 | Visual Studio Code | `setup_vscode_completion` |
-| 21 | bit | |
-| 22 | console-ninja | |
-| 23 | Ollama | `_complete_ollama` |
-| 24 | Codex | |
-| 25 | deck | `deckls` |
-| | **System & misc** | |
-| 26 | Alfred | `HOMEBREW_CASK_OPTS` (commented out) |
-| 27 | .local/bin/env | |
-| 28 | Google Antigravity | |
+| 10 | LANGUAGE RUNTIMES & PACKAGE MANAGERS | Subsections: rbenv, nvm / npm, pnpm, Bun |
+| 11 | SHELL ENHANCEMENTS | Subsections: starship, thefuck, direnv, tealdeer |
+| 12 | CLOUD & INFRASTRUCTURE | Subsections: Google Cloud SDK, Kubernetes |
+| 13 | DEV TOOLS & EDITORS | Subsections: Visual Studio Code, bit, console-ninja, Ollama, Codex, deck, Google Antigravity |
+| 14 | SYSTEM & MISC | Subsections: Alfred, .local/bin/env |
 | — | PATH DEDUP | `awk` dedup to prevent PATH growth on re-source |
 
 ### git/
@@ -104,7 +85,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 ### Editing bashrc
 
 - **Adding a new alias or function**: place it in the appropriate subsection of §8 (ALIASES) or §9 (FUNCTIONS). Do not append to the end of the file.
-- **Adding a new tool** (with its own PATH, aliases, and completions): add a new numbered fence section at the bottom (§29+), keeping PATH + aliases + completions for that tool together.
+- **Adding a new tool** (with its own PATH, aliases, and completions): add a new subsection in the appropriate §10–§14 category, or create a new §15+ category. Keep PATH + aliases + completions for that tool together.
 - **`[SUGGESTION]` comments**: these are annotate-only markers for dead/broken code — do not remove them without also fixing or deleting the code they describe. Do not add new `[SUGGESTION]` comments for things that are working correctly.
 - **Do not scatter tool-specific PATH entries** into §2 (PATH SETTINGS); §2 is for general/bootstrap PATH only. Tool-specific PATH belongs in the tool's own fence section.
 - **Self-aliases** (`alias foo=foo` after `function foo`) are no-ops in bash — do not add new ones.
