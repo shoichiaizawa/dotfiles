@@ -76,6 +76,12 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 ### claude/
 - `settings.json` — global Claude Code permissions (symlinked to `~/.claude/settings.json`); contains `allow` (read-only/safe commands auto-approved) and `deny` (catastrophic operations hard-blocked even if user approves)
 
+### .claude/
+Project-level Claude Code configuration — not symlinked; picked up automatically from the repo root.
+- `settings.json` — project hooks config; uses `PostToolUse` to run `shellcheck-after-edit.sh` after Edit/Write
+- `hooks/shellcheck-after-edit.sh` — runs `shellcheck --severity=warning` on modified shell files (`bash/*`, `macos`, `tmux/bin/*`, `welcome.sh`); informational only, non-blocking
+- `skills/refactor-plan/SKILL.md` — `/refactor-plan` skill: 3-phase audit → propose → implement workflow for structural refactors
+
 ### macOS system preferences
 - `macos` — executable bash script; run manually with `bash macos` to apply macOS `defaults write` settings (many are commented out)
 
@@ -114,9 +120,15 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - **Plugin-specific `set` commands** (e.g., `set nobackup` in coc.nvim): keep them in the plugin's section, not in General Settings.
 - **Each plugin section should be self-contained**: settings, mappings, autocmds, and functions for one plugin all belong in its `{{{1` section, so it maps cleanly to a future `lua/plugins/<name>.lua` file.
 
-### Editing settings.json (Claude Code permissions)
+### Editing claude/settings.json (global Claude Code permissions)
 
 - **Syntax**: use modern `Bash(cmd *)` format, not legacy `Bash(cmd:*)`.
 - **Allow list**: only add read-only, non-destructive commands. Commands that modify state (git write ops, file edits, installs) should require per-use approval.
 - **Deny list**: reserve for catastrophic/irreversible operations (e.g., `sudo`, `rm -rf /`, force push). Deny rules are hard blocks — they cannot be overridden by user approval.
 - **Bare vs wildcard**: use `Bash(cmd)` for no-arg commands, `Bash(cmd *)` for commands with args. Note `Bash(cmd*)` (no space) also matches commands starting with `cmd` (e.g., `Bash(ps*)` matches `ps` and `pstree`).
+
+### Editing .claude/settings.json (project hooks)
+
+- **Hooks format**: use the array form — `"hooks": [{"type": "command", "command": "..."}]` — not the legacy bare `"command": "..."` form.
+- **Hook scope**: project hooks run relative to the repo root; use paths like `bash .claude/hooks/script.sh`.
+- **Adding a new hook**: add a new entry in the appropriate `PostToolUse`/`PreToolUse` array with a `matcher` (pipe-separated tool names) and a `hooks` array.
