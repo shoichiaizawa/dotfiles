@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Hook: shellcheck-after-edit.sh — PostToolUse hook for Claude Code
-# Runs shellcheck on shell files after Edit/Write operations.
+# Runs bash -n (syntax check) and shellcheck on shell files after Edit/Write operations.
 # Receives hook input as JSON on stdin.
 
 set -euo pipefail
@@ -22,6 +22,13 @@ esac
 
 # Exit silently if the file doesn't exist
 [[ -f "$file_path" ]] || exit 0
+
+# Run bash -n syntax check (non-blocking — informational only)
+output=$(bash -n "$file_path" 2>&1) || true
+if [[ -n "$output" ]]; then
+  echo "bash -n syntax errors in $(basename "$file_path"):"
+  echo "$output"
+fi
 
 # Run shellcheck (non-blocking — informational only)
 if command -v shellcheck &>/dev/null; then
