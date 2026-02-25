@@ -73,6 +73,9 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - `tmux.conf` — prefix is `Ctrl+Q` (not `Ctrl+B`); pane/window index starts at 1
 - `bin/battery`, `bin/wifi` — shell scripts for the tmux status line
 
+### claude/
+- `settings.json` — global Claude Code permissions (symlinked to `~/.claude/settings.json`); contains `allow` (read-only/safe commands auto-approved) and `deny` (catastrophic operations hard-blocked even if user approves)
+
 ### macOS system preferences
 - `macos` — executable bash script; run manually with `bash macos` to apply macOS `defaults write` settings (many are commented out)
 
@@ -110,3 +113,10 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - **`[SUGGESTION]` comments**: same convention as bashrc — annotate-only markers for commented-out alternatives. Do not remove without fixing or deleting the code they describe.
 - **Plugin-specific `set` commands** (e.g., `set nobackup` in coc.nvim): keep them in the plugin's section, not in General Settings.
 - **Each plugin section should be self-contained**: settings, mappings, autocmds, and functions for one plugin all belong in its `{{{1` section, so it maps cleanly to a future `lua/plugins/<name>.lua` file.
+
+### Editing settings.json (Claude Code permissions)
+
+- **Syntax**: use modern `Bash(cmd *)` format, not legacy `Bash(cmd:*)`.
+- **Allow list**: only add read-only, non-destructive commands. Commands that modify state (git write ops, file edits, installs) should require per-use approval.
+- **Deny list**: reserve for catastrophic/irreversible operations (e.g., `sudo`, `rm -rf /`, force push). Deny rules are hard blocks — they cannot be overridden by user approval.
+- **Bare vs wildcard**: use `Bash(cmd)` for no-arg commands, `Bash(cmd *)` for commands with args. Note `Bash(cmd*)` (no space) also matches commands starting with `cmd` (e.g., `Bash(ps*)` matches `ps` and `pstree`).
