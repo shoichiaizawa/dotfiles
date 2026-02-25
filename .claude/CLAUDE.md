@@ -82,6 +82,17 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - Scope typically matches the config area being changed (e.g., `bashrc`, `vimrc`, `gitconfig`)
 - The `bashrc` file is intentionally monolithic
 
+### Communication Style
+
+- Terse numbered replies (e.g., `3`, `2`) mean selecting from a numbered list just presented — don't ask for clarification
+- Prefer proposing a concrete solution over asking multiple rounds of clarifying questions — iterate from a proposal
+
+### Dotfiles Principles
+
+- All files in this repo are intentionally tracked — don't suggest `.gitignore` additions without asking
+- Trust existing shell syntax — if unsure whether constructs like `alias -- -='cd -'` are valid, assume they work
+- When asked to refactor a large file, default to deep structural reorganization (numbered sections, per-feature grouping), not cosmetic cleanup — ask upfront if scope is unclear
+
 ### Editing bashrc
 
 - **Adding a new alias or function**: place it in the appropriate subsection of §8 (ALIASES) or §9 (FUNCTIONS). Do not append to the end of the file.

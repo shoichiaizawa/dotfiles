@@ -13,7 +13,9 @@
       "Bash(env)",
       "Bash(uname*)",
       "Bash(brew info*)",
-      "Bash(brew list*)"
+      "Bash(brew list*)",
+      "Bash(cat:*)",
+      "Bash(head:*)"
     ]
   }
 }
