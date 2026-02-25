@@ -20,6 +20,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 | `starship.toml` | `~/.config/starship.toml` |
 | `inputrc` | `~/.inputrc` |
 | `claude/settings.json` | `~/.claude/settings.json` |
+| `claude/skills/` | `~/.claude/skills/` |
 
 ## Architecture
 
@@ -75,11 +76,12 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 
 ### claude/
 - `settings.json` — global Claude Code permissions (symlinked to `~/.claude/settings.json`); contains `allow` (read-only/safe commands auto-approved) and `deny` (catastrophic operations hard-blocked even if user approves)
+- `skills/commit/SKILL.md` — `/commit` skill: staged-change review → atomicity check → Conventional Commit message → commit workflow
 
 ### .claude/
 Project-level Claude Code configuration — not symlinked; picked up automatically from the repo root.
 - `settings.json` — project hooks config; uses `PostToolUse` to run `shellcheck-after-edit.sh` after Edit/Write
-- `hooks/shellcheck-after-edit.sh` — runs `shellcheck --severity=warning` on modified shell files (`bash/*`, `macos`, `tmux/bin/*`, `welcome.sh`); informational only, non-blocking
+- `hooks/shellcheck-after-edit.sh` — runs `bash -n` (syntax check) and `shellcheck --severity=warning` on modified shell files (`bash/*`, `macos`, `tmux/bin/*`, `welcome.sh`); informational only, non-blocking
 - `skills/refactor-plan/SKILL.md` — `/refactor-plan` skill: 3-phase audit → propose → implement workflow for structural refactors
 
 ### macOS system preferences
@@ -90,6 +92,15 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 - Commit messages use Conventional Commits format: `feat(scope): message`, `fix(scope): message`
 - Scope typically matches the config area being changed (e.g., `bashrc`, `vimrc`, `gitconfig`)
 - The `bashrc` file is intentionally monolithic
+- Do not suggest fixing working configurations unless explicitly asked
+
+### Git Workflow
+
+- **Atomic commits**: each commit should contain one logical change. Do not bundle unrelated changes.
+- **Rewriting history**: use `git rebase -i` only for commits that are not yet pushed. For rewording or reordering non-HEAD commits, prefer interactive rebase over repeated amend.
+- **Co-Authored-By trailer**: always include `Co-Authored-By: Claude <noreply@anthropic.com>` when Claude contributed to the change.
+- **Never amend, skip hooks, or force-push** unless the user explicitly asks.
+- **Pre-commit hook failures**: fix the issue, re-stage, and create a NEW commit — do not amend, since the failed commit never happened.
 
 ### Communication Style
 
@@ -132,3 +143,10 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 - **Hooks format**: use the array form — `"hooks": [{"type": "command", "command": "..."}]` — not the legacy bare `"command": "..."` form.
 - **Hook scope**: project hooks run relative to the repo root; use paths like `bash .claude/hooks/script.sh`.
 - **Adding a new hook**: add a new entry in the appropriate `PostToolUse`/`PreToolUse` array with a `matcher` (pipe-separated tool names) and a `hooks` array.
+
+### Editing claude/skills/
+
+- **Directory structure**: each skill lives in `claude/skills/<name>/SKILL.md`. The directory name becomes the slash-command (e.g., `claude/skills/commit/` → `/commit`).
+- **No YAML frontmatter**: skills in this repo use a plain `# /<name>` heading, not YAML metadata blocks.
+- **Global vs project-level**: skills in `claude/skills/` (symlinked to `~/.claude/skills/`) are available in all projects. A project can override a global skill by creating `.claude/skills/<name>/SKILL.md` at the project root.
+- **Keep skills project-agnostic**: global skills should not reference repo-specific paths, tools, or conventions. Repo-specific instructions belong in CLAUDE.md or in a project-level skill override.
