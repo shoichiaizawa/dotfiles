@@ -652,8 +652,6 @@ fi
 # Docker
 # ------
 
-# Docker
-
 if type docker > /dev/null 2>&1; then
   alias d='docker'
   if [ -f $BREW_PREFIX/etc/bash_completion.d/docker ]; then
