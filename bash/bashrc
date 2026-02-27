@@ -813,10 +813,7 @@ alias cl='clear'                        # cl:     Clear terminal display
 alias which='type --all'                 # which:  Find executables
 alias where=which
 
-# [SUGGESTION: `!!` is not expanded inside alias definitions — this will
-#  literally pass `!!` as a string to sudo, not the last command. Use a
-#  function: please() { sudo $(history -p '!!'); }]
-alias please='sudo !!'
+please() { sudo $(history -p '!!'); }
 alias jobs='jobs -l'
 
 alias reload='exec $SHELL -l'     # Invoke the default shell ($SHELL) as a login shell
