@@ -91,8 +91,8 @@ shopt -s cdable_vars
 #GIT_PS1_SHOWDIRTYSTATE=true
 export CLICOLOR=1
 
-# [SUGGESTION: LS_OPTIONS='--color=auto' is a GNU ls wrapper variable; it is
-#  silently ignored on macOS where ls is BSD-based. Has no effect here.]
+# LS_OPTIONS='--color=auto' is a GNU ls wrapper variable; silently ignored on
+# macOS (BSD ls), but used by GNU ls on Linux for portability.
 export LS_OPTIONS='--color=auto'
 
                #1122334455667788990011 -- column numbers for attributes
@@ -234,35 +234,10 @@ fi;
 # Enable tab completion for `cask` by marking it as an alias for `brew cask`
 # Inspired by the above script by mathiasbynens :D
 #
-# [SUGGESTION: `brew cask` syntax was removed in Homebrew 3.x (2021). The
-#  `cask` function now calls `brew ... --cask`. This _brew completion may not
-#  be accurate for the cask subcommand.]
+# The `cask()` function (§8 Homebrew) delegates to `brew ... --cask`.
+# _brew completion works for `cask` via that delegation.
 if type _brew &> /dev/null; then
   complete -o default -o nospace -F _brew cask
-fi
-
-# --------------------------------------------
-# Vagrant completion with `homestead` function
-# --------------------------------------------
-
-# Dependency:
-#   - Vagrant            -> Run `brew cask install vagrant`
-#   - vagrant-completion -> Run `brew install vagrant-completion`
-#   - Homestead          -> Run `cd ~ && git clone https://github.com/laravel/homestead.git Homestead`
-
-# [SUGGESTION: Vagrant and Homestead are likely absent. This block is a no-op
-#  unless ~/Homestead exists.]
-if type vagrant > /dev/null 2>&1 && [ -d ~/Homestead ]; then
-  # Accessing Homestead Globally
-  # See: https://laravel.com/docs/master/homestead#accessing-homestead-globally
-  function homestead() {
-    ( cd ~/Homestead && vagrant $* )
-  }
-
-  # Enable tab completion for the `homestead` function defined above
-  if [ -f $BREW_PREFIX/etc/bash_completion.d/vagrant ]; then
-    complete -o default -o nospace -F _vagrant homestead
-  fi
 fi
 
 # --------------------------------------
@@ -475,12 +450,6 @@ alias dt='cd ~/Desktop/'                # dt:     Go to Desktop
 alias dc='cd ~/Documents/'              # dc:     Go to Documents
 alias dl='cd ~/Downloads/'              # dl:     Go to Downloads
 alias dr='cd ~/Dropbox/'                # dr:     Go to Dropbox
-
-# [SUGGESTION: These aliases depend on specific Dropbox paths that may not
-#  exist on all machines. Verify paths before relying on them.]
-alias blogging='cd ~/Dropbox/code/github/sho-repos/shoichiaizawa.github.io'
-alias sandbox='cd ~/Dropbox/code/examples-code/sandbox' # sandbox: Go to sandbox
-alias drafts='cd ~/Dropbox/code/examples-code/sandbox/drafts'
 
 # -----
 # mkdir
@@ -733,7 +702,6 @@ alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Ch
 
 alias ebashrc='vim ~/.bashrc'           # Edit .bashrc from anywhere
 alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
-alias eemacs='emacs ~/.emacs.d/init.el' # Edit init.el from anywhere
 alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
@@ -1089,9 +1057,9 @@ heroku-static-test() {
 # Install a specific version of a Homebrew formula
 # @param {string} $1 Formula name
 # @param {string} $2 Formula version (exact)
-# [SUGGESTION: This function references `homebrew/cask` and `homebrew/core`
-#  taps which were removed from Homebrew in 2023. `brew tap homebrew/cask` and
-#  `brew tap homebrew/core` will now fail. The function likely no longer works.]
+# NOTE: This function references `homebrew/cask` and `homebrew/core` taps
+# removed from Homebrew in 2023. `brew tap homebrew/cask` will fail. Verify
+# before using — likely broken. Remove once confirmed non-functional.
 vintage() {
   # Figure out the relevant tap
   local brew_tap
