@@ -122,10 +122,6 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 #
 # }}}1
 
-# [SUGGESTION: GREP_OPTIONS was deprecated in GNU grep 2.22 (2015) and removed
-#  in 2.23. It is silently ignored on modern systems. Use --color=auto in
-#  individual aliases instead (see grep aliases in section 8).]
-export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;38;5;0;48;5;136'
 
 # GREP_COLOR Codes Help {{{1
@@ -566,14 +562,7 @@ alias unmute="osascript -e 'set volume output muted false'"
 alias purge='sudo purge'
 alias f='open -a Finder ./'       # Open the current working directory in Finder
 
-# Airport CLI alias
-# [SUGGESTION: The `airport` CLI was removed in macOS Sonoma (2023). This alias
-#  will silently do nothing if the binary is absent.]
-airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
-if [[ -x "${airport}" ]]; then
-  alias airport="${airport}"
-fi
-unset airport
+alias wifi-info='networksetup -getairportnetwork en0'  # wifi-info: Current WiFi network name
 
 # -------------------------------------------------------------------
 # showHidden:   Show hidden files in Finder
@@ -634,9 +623,6 @@ alias lsocktcp='sudo /usr/sbin/lsof -nP | grep TCP'             # lsocktcp:     
 alias ipinfo0='ipconfig getpacket en0'                          # ipinfo0:      Get info on connections for en0
 alias ipinfo1='ipconfig getpacket en1'                          # ipinfo1:      Get info on connections for en1
 alias openports='sudo lsof -i | grep LISTEN'                    # openports:    All listening connections
-# [SUGGESTION: `ipfw` was removed in macOS Yosemite (2014). This alias will
-#  always fail.]
-alias showblocked='sudo ipfw list'                              # showblocked:  All ipfw rules inc/ blocked IPs
 
 # ---
 # Git
@@ -696,18 +682,6 @@ fi
 # ------
 # Docker
 # ------
-
-# Docker Machine
-# [SUGGESTION: `docker-machine` was archived in 2021 and is no longer
-#  maintained. This block is likely a no-op.]
-if type docker-machine > /dev/null 2>&1; then
-  alias dm='docker-machine'
-  alias dmenv='eval "$(docker-machine env)"'
-fi
-
-if type _docker_machine &> /dev/null && [ -f $BREW_PREFIX/etc/bash_completion.d/docker-machine.bash ]; then
-  complete -o default -o nospace -F _docker_machine dm
-fi
 
 # Docker
 
@@ -778,22 +752,9 @@ fi
 # App aliases
 # ------------
 
-# This creates a backup file for Atom packages installed by the user
-# To install, run: `apm install --packages-file packages.list`
-# NOTE: For an alternative method, use `atom star|stars|starred`
-# [SUGGESTION: Atom editor was sunset December 2022. `apm` is no longer
-#  available in new installations.]
-if type apm > /dev/null 2>&1; then
-  alias apm-pkg-backup="apm list --installed --bare | cut -d '@' -f1 | grep -v '^$' >| ~/.atom/packages.list"
-fi
-
 if type composer > /dev/null 2>&1; then
   alias composer-pkg-versions='composer global show --installed'  # short for -i
 fi
-
-# [SUGGESTION: Meteor is a framework that may no longer be in use. Verify
-#  whether this is still needed.]
-alias meteor-upgrade='curl https://install.meteor.com/ | sh'
 
 # ----------------
 # Typo corrections
