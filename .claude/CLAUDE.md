@@ -84,6 +84,9 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 - `hooks/shellcheck-after-edit.sh` — runs `bash -n` (syntax check) and `shellcheck --severity=warning` on modified shell files (`bash/*`, `macos`, `tmux/bin/*`, `welcome.sh`); informational only, non-blocking
 - `skills/refactor-plan/SKILL.md` — `/refactor-plan` skill: 3-phase audit → propose → implement workflow for structural refactors
 
+### iterm2/
+- `com.googlecode.iterm2.plist` — periodic backup of the running iTerm2 config. Updated manually. If switching to a different terminal emulator (WezTerm, Ghostty, etc.), this directory would be replaced or repurposed. As a tmux user, terminal emulator choice primarily affects GPU rendering, font ligatures, and OS integration — tmux handles the rest.
+
 ### macOS system preferences
 - `macos` — executable bash script; run manually with `bash macos` to apply macOS `defaults write` settings (many are commented out)
 
