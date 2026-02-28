@@ -24,14 +24,34 @@ When this skill is invoked, follow this workflow:
    ```
    <type>(<scope>): <summary>
    ```
-   - **type**: `feat`, `fix`, `refactor`, `docs`, `style`, `test`, `chore`, etc.
-   - **scope**: the config area or component being changed (e.g., `bashrc`, `vimrc`, `claude`)
+   - **type**:
+
+     | Type | Use when… |
+     |------|-----------|
+     | `feat` | Adding new functionality |
+     | `fix` | Fixing a bug |
+     | `refactor` | Changing code without changing behavior (includes dead code removal) |
+     | `docs` | Documentation-only changes |
+     | `style` | Formatting, whitespace, comments — no behavioral change |
+     | `test` | Adding or correcting tests |
+     | `build` | Build system or external dependency changes |
+     | `ci` | CI/CD configuration changes |
+     | `perf` | Performance improvements |
+
+     Avoid `chore` — it exists in Conventional Commits but is a catch-all that obscures intent. Most changes that feel like `chore` are better described as `refactor` (dead code removal), `build` (dependency updates), `style` (comment cleanup), or `ci` (pipeline changes). Use `chore` only when nothing else fits.
+
+   - **scope**: the module, component, or area of the codebase being changed (e.g., `auth`, `api`, `cli`, `config`). Optional — omit when the change is cross-cutting.
    - **summary**: imperative mood, lowercase, no period, under 72 characters
 8. Add body text (separated by blank line) only if the "why" isn't obvious from the summary.
 9. Always append the Co-Authored-By trailer:
    ```
-   Co-Authored-By: Claude <noreply@anthropic.com>
+   Co-Authored-By: Claude (<model> <version>, <effort>) <noreply@anthropic.com>
    ```
+   - `<model>`: model family — Opus, Sonnet, or Haiku
+   - `<version>`: model version — e.g., 4.6, 4.5
+   - `<effort>`: reasoning effort — high, medium, or low
+   - Use your actual model identity from your system context.
+   - Example: `Co-Authored-By: Claude (Opus 4.6, high) <noreply@anthropic.com>`
 
 ### Step 4 — Commit
 
