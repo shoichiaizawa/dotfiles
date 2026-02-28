@@ -101,7 +101,7 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 
 - **Atomic commits**: each commit should contain one logical change. Do not bundle unrelated changes.
 - **Rewriting history**: use `git rebase -i` only for commits that are not yet pushed. For rewording or reordering non-HEAD commits, prefer interactive rebase over repeated amend.
-- **Co-Authored-By trailer**: always include `Co-Authored-By: Claude (<model> <version>, <effort>) <noreply@anthropic.com>` when Claude contributed to the change. Use your actual model family, version, and reasoning effort level.
+- **Co-Authored-By trailer**: always include `Co-Authored-By: Claude (<model>, <effort>) <noreply@anthropic.com>` when Claude contributed to the change. Use your actual model family + version (e.g., Opus 4.6) and reasoning effort level (high/medium/low).
 - **Never amend, skip hooks, or force-push** unless the user explicitly asks.
 - **Pre-commit hook failures**: fix the issue, re-stage, and create a NEW commit — do not amend, since the failed commit never happened.
 

@@ -43,15 +43,19 @@ When this skill is invoked, follow this workflow:
    - **scope**: the module, component, or area of the codebase being changed (e.g., `auth`, `api`, `cli`, `config`). Optional — omit when the change is cross-cutting.
    - **summary**: imperative mood, lowercase, no period, under 72 characters
 8. Add body text (separated by blank line) only if the "why" isn't obvious from the summary.
-9. Always append the Co-Authored-By trailer:
+9. Always append a Co-Authored-By trailer identifying the AI agent:
    ```
-   Co-Authored-By: Claude (<model> <version>, <effort>) <noreply@anthropic.com>
+   Co-Authored-By: <agent> (<model>[, <effort>]) <email>
    ```
-   - `<model>`: model family — Opus, Sonnet, or Haiku
-   - `<version>`: model version — e.g., 4.6, 4.5
-   - `<effort>`: reasoning effort — high, medium, or low
-   - Use your actual model identity from your system context.
-   - Example: `Co-Authored-By: Claude (Opus 4.6, high) <noreply@anthropic.com>`
+   - `<agent>`: the coding agent name (e.g., Claude, Codex, Cursor)
+   - `<model>`: model identifier (e.g., Opus 4.6, gpt-5.3-codex, claude-sonnet-4-6)
+   - `<effort>`: reasoning effort level, if the agent supports it — omit if not applicable
+   - `<email>`: the agent's noreply address
+   - Use your actual identity from your system context.
+   - Examples:
+     - `Co-Authored-By: Claude (Opus 4.6, high) <noreply@anthropic.com>`
+     - `Co-Authored-By: Codex (gpt-5.3-codex) <noreply@openai.com>`
+     - `Co-Authored-By: Cursor (claude-sonnet-4-6) <noreply@cursor.com>`
 
 ### Step 4 — Commit
 
