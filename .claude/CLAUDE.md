@@ -19,6 +19,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 | `tmux/tmux.conf` | `~/.tmux.conf` |
 | `starship.toml` | `~/.config/starship.toml` |
 | `inputrc` | `~/.inputrc` |
+| `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `claude/settings.json` | `~/.claude/settings.json` |
 | `claude/skills/` | `~/.claude/skills/` |
 
