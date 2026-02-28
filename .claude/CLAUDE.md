@@ -109,6 +109,7 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 
 - Terse numbered replies (e.g., `3`, `2`) mean selecting from a numbered list just presented — don't ask for clarification
 - Prefer proposing a concrete solution over asking multiple rounds of clarifying questions — iterate from a proposal
+- When asked to "analyze", "audit", or "map" a file, produce analysis only — do not suggest fixes to working code unless explicitly asked
 
 ### Dotfiles Principles
 
