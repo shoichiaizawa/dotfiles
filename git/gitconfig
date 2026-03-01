@@ -318,12 +318,7 @@
 [diff]
 	compactionHeuristic = true
 [interactive]
-	# FIXME: This fallback condition does not work
-	; diffFilter = (delta --color-only 2> /dev/null || cat) | less -FRXK
-	diffFilter = (delta --color-only    2> /dev/null || \
-								echo && diff-so-fancy 2> /dev/null || \
-								diff-highlight 2> /dev/null || \
-								cat) | less -FRXK
+	diffFilter = delta --color-only 2>/dev/null || diff-so-fancy 2>/dev/null || diff-highlight 2>/dev/null || cat
 [help]
 	autocorrect = 1
 [log]
