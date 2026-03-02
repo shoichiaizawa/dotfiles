@@ -67,8 +67,8 @@ set completion-query-items 200
 # (default off)
 set skip-completed-text on
 
-# TODO: Make the colours consistent with the ones of `ls` command
 # Show completions using different colours for their file types (default off)
+# Colours are derived from LS_COLORS (set in bashrc §5).
 set colored-stats on
 
 # Show the partial match of possible completions using a different colour
