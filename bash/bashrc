@@ -443,10 +443,6 @@ alias .6='cd ../../../../../../'        # Go back 6 directory levels
 
 alias cdp='cd -P'                       # cdp:    Follow physical directory
 
-#alias -- /='cd /'                       # TODO: Invalid expression
-alias abs='cd /'                        # abs:    Go to root of disk
-alias root='cd /'                       # root:   Go to root of disk
-
 alias ~='cd ~'                          # ~:      Go Home
 
 alias -- -='cd -'                       # -:      Go back to the previous cd
