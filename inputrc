@@ -92,6 +92,5 @@ set convert-meta off
 "\e[1;5D": backward-word
 "\e[1;5C": forward-word
 
-# TODO: Not working
-# Use Alt/Meta + Delete to delete the preceding word
-# "\e[3;3~": kill-word
+# Use Alt/Meta + Delete to delete the next word
+"\e[3;3~": kill-word
