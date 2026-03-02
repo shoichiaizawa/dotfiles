@@ -87,8 +87,6 @@ shopt -s cdable_vars
 # 5. COLOR SETTINGS
 ################################################################################
 
-# TODO: Work on better colour formatting than the current settings
-#GIT_PS1_SHOWDIRTYSTATE=true
 export CLICOLOR=1
 
 # LS_OPTIONS='--color=auto' is a GNU ls wrapper variable; silently ignored on
