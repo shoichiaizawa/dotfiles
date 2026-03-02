@@ -194,7 +194,6 @@ if type brew &> /dev/null && [ -r "$BREW_PREFIX/etc/profile.d/bash_completion.sh
   # Ensure existing Homebrew v1 completions continue to work
   export BASH_COMPLETION_COMPAT_DIR="$BREW_PREFIX/etc/bash_completion.d"
   source "$BREW_PREFIX/etc/profile.d/bash_completion.sh"
-  source "$BREW_PREFIX/etc/bash_completion.d/git-completion.bash"  # FIXME: temporary solution
 elif [ -f /etc/bash_completion ]; then
   source /etc/bash_completion
 fi
@@ -223,9 +222,15 @@ fi
 # Enable tab completion for `g` by marking it as an alias for `git`
 # The original idea came from this below:
 # https://github.com/mathiasbynens/dotfiles/blob/main/.bash_profile#L37-L40
+#
+# bash-completion v2 lazy-loads completions, so __git_main is not yet
+# defined.  Force-load git completion first via _completion_loader.
+if type _completion_loader &> /dev/null; then
+  _completion_loader git
+fi
 if type __git_main &> /dev/null; then
   __git_complete g __git_main
-fi;
+fi
 
 # --------------------------------------
 # brew cask completion with `cask` alias
