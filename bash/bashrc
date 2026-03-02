@@ -1128,127 +1128,25 @@ fi
 # nvm / npm
 # ------------------------------------------------------------
 
-# NOTE:
-# Install `nvm` manually;
-# See details at https://github.com/nvm-sh/nvm#manual-install
-
-# Function: `nvm-upgrade-init`
-#
-# Call the `nvm-upgrade` function.
-# Please unset this function immediately after applied.
-#
-nvm-upgrade-init() {
-
-  # Function: `nvm-upgrade`
-  #
-  # Upgrade `nvm` while preserving the both current and old working directory
-  # paths information
-  #
-  nvm-upgrade() {
-    if [[ ! -f $NVM_DIR/.git/shallow ]]; then
-      local tmp_currentpwd=$(pwd)
-      local tmp_oldpwd=$OLDPWD
-      (
-        cd "$NVM_DIR"
-        git fetch --tags origin
-        git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-      ) && \. "$NVM_DIR/nvm.sh"
-      cd $tmp_currentpwd
-      OLDPWD=$tmp_oldpwd
-      unset tmp_currentpwd
-      unset tmp_oldpwd
-    else
-      # TODO: find out if there is any way to compare the currently installed
-      #       nvm version and the newer available version
-      echo "Your nvm is installed via the install script!"
-      echo "Please check if the newer version is available at:"
-      echo "https://github.com/nvm-sh/nvm#install-script"
-    fi
-  }
-
+# Install or upgrade nvm using the official install script
+nvm-setup() {
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 }
 
-# Case 1: `nvm` is installed via an official installation method (ideal)
-#
-# This block loads:
-#
-# - `nvm`, installed either via:
-#   1. manual Git full clone; or
-#   2. install script (shallow clone)
-# - Bash completion script for nvm
-# - A `nvm-upgrade` function
-#
-if [[ -d $HOME/.nvm/.git ]]; then
-  # Set an environment variable for nvm root directory
+# Case 1: nvm installed via git clone or install script
+if [[ -d "$HOME/.nvm" ]]; then
   export NVM_DIR="$HOME/.nvm"
-
-  # Create a `current` symlink to the active Node.js version every time
-  # the `nvm use` command is run
   export NVM_SYMLINK_CURRENT=true
+  [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+  [[ -r "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 
-  # Automatically source `nvm` upon login
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-  # Activate `bash_completion`
-  [ -r $NVM_DIR/bash_completion ] && \. $NVM_DIR/bash_completion
-
-  # Set the `nvm-upgrade` function and unset its initialisation function
-  nvm-upgrade-init && unset -f nvm-upgrade-init
-
-# Case 2: `nvm` is installed via Homebrew (non-official)
-#
-# This block loads:
-#
-# - `nvm` (Homebrew version)
-# - a warning message regarding Homebrew installation
-#
-# NOTE: Homebrew installation is not supported by the nvm developers.
-# See: https://github.com/nvm-sh/nvm#important-notes
-#
-# [SUGGESTION: The `nvm` Homebrew formula was removed from Homebrew core.
-#  `brew --prefix nvm` will fail. This branch is effectively dead unless the
-#  nvm tap is separately installed.]
-elif [[ -d $(brew --prefix nvm) ]]; then
-  if [[ ! -d $NVM_DIR ]]; then
-    echo -e "The \`.nvm\` directory has been created at $HOME\n"
-    mkdir $NVM_DIR
-  fi
-  source $(brew --prefix nvm)/nvm.sh
-  echo -e "\033[0;33mWarning: \033[0mYour nvm is installed via Homebrew."
-  echo "The Homebrew version of nvm is not officially supported by the nvm developers."
-  echo "While you can continue using the Homebrew version, please consider installing"
-  echo "nvm via one of the official installation methods; see the details at:"
-  echo "  https://github.com/nvm-sh/nvm#installation"
-
-# Case 3: `nvm` is not installed
-#
-# This block loads:
-#
-# - `nvm-install` function, once nvm is installed it is unset
-#
-else
-  # Function: `nvm-install`
-  #
-  # Install `nvm` and activate its Bash completion script.
-  #
-  nvm-install() {
-    export NVM_DIR="$HOME/.nvm" && export NVM_SYMLINK_CURRENT=true && (
-      git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
-      cd "$NVM_DIR"
-      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    ) && \. "$NVM_DIR/nvm.sh" \
-      && [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
-
-    # Set the `nvm-upgrade` function and unset its initialisation function
-    nvm-upgrade-init && unset -f nvm-upgrade-init
-
-    unset -f nvm-install
-
-    echo -e "\n--------------------------------------------------------------------------------\n"
-    echo "Woohoo! nvm has been installed successfully!"
-    echo "The \`nvm-install\` command has been unset."
-    echo "Use the \`nvm-upgrade\` command to upgrade nvm."
-  }
+# Case 2: nvm installed via Homebrew (unsupported by nvm developers)
+elif [[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  [[ ! -d "$NVM_DIR" ]] && mkdir "$NVM_DIR"
+  \. "$BREW_PREFIX/opt/nvm/nvm.sh"
+  echo -e "\033[0;33mWarning:\033[0m nvm is installed via Homebrew (unsupported)."
+  echo "Consider migrating: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash"
 fi
 
 # Aliases to list installed npm packages, globally and locally
