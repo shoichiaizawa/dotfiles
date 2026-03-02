@@ -1034,23 +1034,6 @@ function toggleiTerm() {
 
 # }}}1
 
-# Function: heroku-static-test
-# How to deploy a static website to Heroku:
-# https://gist.github.com/wh1tney/2ad13aa5fbdd83f6a489
-# TODO: Add conditionals for composer.json and index.php if necessary
-# [SUGGESTION: This is an old PHP hack for Heroku static sites. The recommended
-#  Heroku approach has changed significantly since this was written.]
-heroku-static-test() {
-  touch composer.json index.php
-  echo '{}' >| composer.json
-  echo '<?php include_once("home.html"); ?>' >| index.php
-  if [ -f index.html ]; then
-    mv index.html home.html
-  else
-    touch home.html
-  fi
-}
-
 # Installing Old Homebrew Cask Versions
 #
 # See: https://emmer.dev/blog/installing-old-homebrew-cask-versions/
