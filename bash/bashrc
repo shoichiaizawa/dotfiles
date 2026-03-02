@@ -706,24 +706,7 @@ alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
 alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
-alias eapache="vim $BREW_PREFIX/etc/httpd/httpd.conf"
-                                        # Edit httpd.conf from anywhere
-alias enginx="vim $BREW_PREFIX/etc/nginx/nginx.conf"
-                                        # Edit nginx.conf from anywhere
 alias emacos='vim ~/.macos'             # Edit .macos from anywhere
-
-# XXX: find a better way to achieve the following command
-if type php > /dev/null 2>&1; then
-  alias ephp="vim $BREW_PREFIX/etc/php/$(php -v | sed -n '1p' | sed 's/[^0-9.]*\([0-9.]\{3\}\).*/\1/')/php.ini"
-fi
-
-# ------------
-# App aliases
-# ------------
-
-if type composer > /dev/null 2>&1; then
-  alias composer-pkg-versions='composer global show --installed'  # short for -i
-fi
 
 # ----------------
 # Typo corrections
