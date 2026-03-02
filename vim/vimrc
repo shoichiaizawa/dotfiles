@@ -307,8 +307,6 @@ augroup END
 set scrolloff=999           "so:    Cursor line will always be in the middle of
                             "       the window (thus zz redraw is meaningless)
 "set scrolloff=3             "so:    Keep 3 lines away from margins when scrolling
-"set sidescrolloff=7         "siso:  TODO: Describe what this does
-"set sidescroll=1            "ss:    TODO: Describe what this does
 
 set laststatus=2            "ls:    Display the status line
 set cmdheight=2             "ch:    Set the command window height to 2 lines
@@ -415,7 +413,8 @@ set whichwrap=b,s,h,l,<,>,~,[,] "ww:  Allow specified keys that move the cursor
 
 set nrformats=alpha,hex     "nf:    Increase or decrease items (default octal,hex)
 
-set pastetoggle=<F2>        "pt:    TODO: Comment what this does
+set pastetoggle=<F2>        "pt:    F2 toggles paste mode (disables autoindent
+                            "       and mappings while pasting from terminal)
 set virtualedit=block       "ve:    Allow block selections to operate across lines
                             "       regardless of the underlying text
 set virtualedit& virtualedit+=block
