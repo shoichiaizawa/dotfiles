@@ -68,7 +68,6 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'cespare/vim-toml'
 Plug 'chr4/nginx.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
@@ -107,13 +106,13 @@ Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] } |
   \ Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'mg979/vim-visual-multi'
 
 " TODO: Not installed but want to try one day (or I am curious what it is):
 "Plug 'honza/vim-snippets'
@@ -847,36 +846,6 @@ nnoremap <silent><nowait> <Space>p  :<C-U>CocListResume<CR>
 highlight CocMenuSel ctermbg=125 guibg=#13354A
 
 " }}}1
-" Plugin Settings: CtrlP {{{1
-
-if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
-  augroup ctrlp_config
-    autocmd!
-
-    let g:ctrlp_clear_cache_on_exit = 0 " Do not clear filenames cache, to improve CtrlP startup
-    let g:ctrlp_lazy_update = 350 " Set delay to prevent extra search
-    " let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' } " Use python fuzzy matcher for better performance
-
-    " g:ctrlp_match_window:
-    "   - Position: bottom
-    "   - Order of results: from bottom to top
-    "   - Minimum height: 1
-    "   - Maximum height: 40
-    "   - Maximum number of results: 40
-    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40,results:40'
-    let g:ctrlp_max_files = 0 " Set no file limit
-    let g:ctrlp_switch_buffer = 'Et' " Jump to tab AND buffer if already open
-    let g:ctrlp_open_new_file = 'r' " Open newly created files in the current window
-    let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
-
-    let g:ctrlp_custom_ignore = {
-      \ 'dir': 'node_modules$',
-      \ 'file': '^\.DS_Store$',
-      \ }
-  augroup END
-endif
-
-" }}}1
 " Plugin Settings: EasyMotion {{{1
 
 " TODO: Enhance the settings
@@ -903,6 +872,15 @@ endif
 
 if isdirectory(expand("~/.vim/plugged/emmet-vim/"))
   let g:user_emmet_leader_key='<C-E>'
+endif
+
+" }}}1
+" Plugin Settings: fzf.vim {{{1
+
+if isdirectory(expand("~/.vim/plugged/fzf.vim/"))
+  nnoremap <C-P> :Files<CR>
+  nnoremap <Leader>b :Buffers<CR>
+  nnoremap <Leader>/ :Rg<CR>
 endif
 
 " }}}1
@@ -1350,11 +1328,11 @@ if isdirectory(expand("~/.vim/plugged/vim-markdown/"))
 endif
 
 " }}}1
-" Plugin Settings: vim-multiple-cursors {{{1
+" Plugin Settings: vim-visual-multi {{{1
 
-if isdirectory(expand("~/.vim/plugged/vim-multiple-cursors/"))
-  let g:multi_cursor_select_all_word_key = 'g<C-N>'  " (default <A-n>)
-  " let g:multi_cursor_select_all_key      = 'g<C-N>'  " (default g<A-n>)
+if isdirectory(expand("~/.vim/plugged/vim-visual-multi/"))
+  let g:VM_maps = {}
+  let g:VM_maps['Select All'] = 'g<C-N>'
 endif
 
 " }}}1
