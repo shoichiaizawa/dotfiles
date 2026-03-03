@@ -41,8 +41,6 @@
 " Known issues:
 "   - <Leader>rn conflict: General Settings (relativenumber toggle) vs
 "     coc.nvim (coc-rename) — coc wins since it loads later
-"   - Solarized g:solarized_* variables are set after `colorscheme solarized`
-"     — they need to be before it to take effect on initial load
 "
 " }}}1
 " Plugin Manager: vim-plug {{{1
@@ -65,7 +63,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'aklt/plantuml-syntax'
 Plug 'alpertuna/vim-header'
-Plug 'altercation/vim-colors-solarized'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
@@ -76,6 +73,7 @@ Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-s2)' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 Plug 'ferrine/md-img-paste.vim', { 'for': 'markdown' }
+Plug 'GlennLeo/cobalt2'
 Plug 'godlygeek/tabular'  " Dependency for vim-markdown, must come before it
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
@@ -85,9 +83,12 @@ Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim', { 'for': 'markdown' } " Best served with Goyo.vim
 Plug 'junegunn/vim-emoji'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-slash'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'leafgarland/typescript-vim'
+Plug 'lifepillar/vim-solarized8'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
@@ -125,10 +126,6 @@ Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-eunuch'  " Unix commands in Vim
 "Plug 'tpope/vim-git'     " Support plugin for fugitive
 
-" TODO: Not only Solarized but hopefully I want to rotate colour schemes:
-"Plug 'chriskempson/base16-vim'
-"Plug 'sjl/badwolf'
-"Plug 'tomasr/molokai'
 call plug#end()
 
 filetype plugin indent on   " required
@@ -143,9 +140,60 @@ filetype plugin indent on   " required
 
 let mapleader = ","         "       Use ',' for the mapleader (default '\')
 let maplocalleader = "\\"   "       Use '\' for the mappings local to buffer
-set t_Co=256                " Tell the term has 256 colors set background=dark
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 set background=dark
-silent! colorscheme solarized
+
+" solarized8 options — must be set before colorscheme loads
+let g:solarized_termtrans = 1
+let g:solarized_extra_hi_groups = 1
+
+let s:csfile = expand('~/.vim/.colorscheme')
+if filereadable(s:csfile)
+  execute 'silent! colorscheme' readfile(s:csfile)[0]
+else
+  silent! colorscheme solarized8
+endif
+
+function! s:FixHighlights(scheme) abort
+  silent! highlight! link CursorLineSign CursorLine
+  if a:scheme =~# '^solarized8' && exists('g:terminal_ansi_colors')
+    " termtrans blanks gutter backgrounds to NONE; restore from palette.
+    " g:terminal_ansi_colors is set by solarized8: [0]=base02, [5]=magenta
+    let l:base02  = g:terminal_ansi_colors[0]
+    let l:magenta = g:terminal_ansi_colors[5]
+    execute 'silent! highlight SignColumn    guibg=' . l:base02 . ' ctermbg=0'
+    execute 'silent! highlight FoldColumn   guibg=' . l:base02 . ' ctermbg=0'
+    execute 'silent! highlight LineNr       guibg=' . l:base02 . ' ctermbg=0'
+    execute 'silent! highlight Folded       guibg=' . l:base02 . ' ctermbg=0'
+    execute 'silent! highlight CursorLineNr gui=bold guifg=#ffff00 guibg=' . l:base02 . ' cterm=bold ctermfg=226 ctermbg=0'
+    execute 'silent! highlight Visual gui=NONE guifg=#e4e4e4 guibg=' . l:magenta . ' cterm=NONE ctermfg=254 ctermbg=125'
+  else
+    " Generic: sync FoldColumn to SignColumn — most themes set SignColumn
+    " but forget FoldColumn, leaving it with Vim's default grey bg.
+    silent! highlight! link FoldColumn SignColumn
+  endif
+  if exists('*gitgutter#highlight#define_highlights')
+    call gitgutter#highlight#define_highlights()
+  endif
+endfunction
+
+function! s:DeferFixHighlights(...) abort
+  call s:FixHighlights(get(g:, 'colors_name', ''))
+  redraw!
+endfunction
+
+call s:FixHighlights(get(g:, 'colors_name', ''))
+
+augroup PersistColorscheme
+  autocmd!
+  autocmd VimEnter * call s:FixHighlights(get(g:, 'colors_name', ''))
+  autocmd ColorScheme * call timer_start(0, function('s:DeferFixHighlights'))
+  autocmd ColorScheme * call writefile([expand('<amatch>')], expand('~/.vim/.colorscheme'))
+augroup END
 " syntax enable               "      TODO: Use syntax highlighting
 if has('syntax') && !exists('g:syntax_on')
   syntax on                 "       TODO: Use syntax highlighting
@@ -267,34 +315,6 @@ map <Leader>rn :set relativenumber!<CR>
 set ruler                   "ru:    Show the cursor position all the time
 set cursorline              "cul:   Highlight current line
 " set cursorcolumn            "cuc:   Highlight the screen column of the cursor
-highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
-" highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
-highlight Visual cterm=NONE ctermfg=254 ctermbg=125
-" highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
-
-" FIXME: Work on colour glitches when splitting
-" TODO:  Work in GUI settings
-augroup SorarizedColorAu
-  autocmd!
-
-  autocmd WinLeave,InsertEnter * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=NONE
-  " autocmd WinLeave,InsertEnter * highlight CursorLine gui=NONE guifg=NONE guibg=#005f87
-
-  autocmd WinLeave,InsertEnter * highlight CursorColumn cterm=NONE ctermfg=NONE ctermbg=NONE
-  " autocmd WinLeave,InsertEnter * highlight CursorColumn gui=NONE guifg=NONE guibg=#005f87
-
-  " autocmd WinLeave,InsertEnter * highlight CursorLineNr cterm=bold ctermfg=254 ctermbg=136
-  " autocmd WinLeave,InsertEnter * highlight CursorLineNr gui=bold guifg= guibg=
-
-  autocmd WinEnter,InsertLeave * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=0
-  " autocmd WinEnter,InsertLeave * highlight CursorLine gui=NONE guifg=NONE guibg=#303030
-
-  autocmd WinEnter,InsertLeave * highlight CursorColumn cterm=NONE ctermfg=NONE ctermbg=0
-  " autocmd WinEnter,InsertLeave * highlight CursorColumn gui=NONE guifg=NONE guibg=#303030
-
-  autocmd WinEnter,InsertLeave * highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
-  " autocmd WinEnter,InsertLeave * highlight CursorLineNr guifg= guifg=
-augroup END
 
 " " Cursorline
 " " Only show cursorline in the current window and in normal mode.
@@ -592,10 +612,10 @@ augroup END
 if isdirectory(expand("~/.vim/plugged/vim-airline/"))
   "set guifont=Liberation\ Mono\ for\ Powerline\ 10
 
-  if isdirectory(expand("~/.vim/plugged/vim-airline-themes/"))
-    let g:airline_theme="solarized"
-    " let g:airline_theme=""
-  endif
+  " Airline picks up the colourscheme automatically when g:airline_theme is unset
+  " if isdirectory(expand("~/.vim/plugged/vim-airline-themes/"))
+  "   let g:airline_theme='solarized'
+  " endif
 
   let g:airline_powerline_fonts = 1
 
@@ -656,6 +676,9 @@ if isdirectory(expand("~/.vim/plugged/vim-airline/"))
 endif
 
 function! RefreshUI()
+  if &filetype !=# ''
+    let &filetype = &filetype
+  endif
   if exists(':AirlineRefresh')
     AirlineRefresh
   else
@@ -906,12 +929,7 @@ if isdirectory(expand("~/.vim/plugged/goyo.vim/"))
     set showmode
     set showcmd
     set scrolloff=999
-    highlight CursorLineNr cterm=bold ctermfg=226 ctermbg=0
-    " highlight CursorLineNr gui=bold guifg=#ffff00 guibg=#000000
-    highlight Visual cterm=NONE ctermfg=254 ctermbg=125
-    " highlight Visual gui=NONE guifg=#e4e4e4 guibg=#d33682
-    highlight WildMenu cterm=bold ctermfg=254 ctermbg=125
-    " highlight WildMenu gui=NONE guifg=NONE guibg=NONE
+    call s:FixHighlights(get(g:, 'colors_name', ''))
     " Limelight!
   endfunction
 
@@ -1084,25 +1102,6 @@ if isdirectory(expand("~/.vim/plugged/rainbow/"))
 endif
 
 " }}}1
-" Plugin Settings: Solarized {{{1
-
-" TODO: Enhance the settings
-
-" let g:solarized_termcolors=256
-" let g:solarized_termcolors=16
-
-let g:solarized_termtrans=1
-"let g:solarized_degrade=1
-
-let g:solarized_bold=1
-let g:solarized_underline=1
-let g:solarized_italic=1
-
-let g:solarized_contrast='normal'   " Stay normal recommended [normal, high, low]
-let g:solarized_visibility='normal' " listchars visibility [normal, high, low]
-let g:solarized_hitrail=0
-
-" }}}1
 " Plugin Settings: Syntastic {{{1
 
 if isdirectory(expand("~/.vim/plugged/syntastic/"))
@@ -1259,14 +1258,13 @@ endif
 " Plugin Settings: vim-gitgutter {{{1
 
 if isdirectory(expand("~/.vim/plugged/vim-gitgutter/"))
+  let g:gitgutter_set_sign_backgrounds = 1  " Sync sign bg from SignColumn
   " let g:gitgutter_map_keys = 0  " To disable the default mappings
 
   autocmd BufWritePost * GitGutter
 
   nmap [h <Plug>(GitGutterPrevHunk)|            " default [c
   nmap ]h <Plug>(GitGutterNextHunk)|            " default ]c
-
-  highlight! link SignColumn LineNr
 
   " nmap <Leader>hs <Plug>(GitGutterStageHunk)|   " default map
   " nmap <Leader>hr <Plug>(GitGutterRevertHunk)|  " default map
@@ -1658,7 +1656,7 @@ nnoremap <silent> <C-[><C-[> :nohlsearch<CR>
 "   Miscellaneous {{{2
 
 " Source $MYVIMRC reloads the saved $MYVIMRC
-nmap <silent> <Leader>S :source $MYVIMRC<CR>:call RefreshUI()<CR>
+nmap <silent> <Leader>S :set lazyredraw<CR>:source $MYVIMRC<CR>:call RefreshUI()<CR>:nohlsearch<CR>:set nolazyredraw<CR>:redraw!<CR>
 
 nmap <silent> <Leader>ev :edit $MYVIMRC<CR>|      " Open $MYVIMRC for editing
 nmap <silent> <Leader>eb :edit ~/.bashrc<CR>|     " Open ~/.bashrc for editing
