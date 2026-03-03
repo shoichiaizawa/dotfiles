@@ -34,13 +34,9 @@
 "   General Settings .............. core options, appearance, tabs, search,
 "                                   folding, line wrap, splits, backups
 "   Filetype Autocmds ............. non-plugin filetype detection & overrides
-"   Plugin Settings (alphabetical)  per-plugin config (~30 sections)
+"   Plugin Settings (alphabetical)  per-plugin config (~22 sections)
 "   General Mappings .............. non-plugin key bindings by category
 "   General Functions ............. utility functions (Incr, SmoothScroll, etc.)
-"
-" Known issues:
-"   - <Leader>rn conflict: General Settings (relativenumber toggle) vs
-"     coc.nvim (coc-rename) — coc wins since it loads later
 "
 " }}}1
 " Plugin Manager: vim-plug {{{1
@@ -300,7 +296,7 @@ set foldmethod=marker       "fdm:   Folding lines according to markers
 set title                   "       Show the filename in the window title bar
 set number                  "nu:    Enables line numbers
 "set relativenumber          "rnu    Enables relative line numbers
-map <Leader>rn :set relativenumber!<CR>
+map <Leader>rl :set relativenumber!<CR>
 
 set ruler                   "ru:    Show the cursor position all the time
 set cursorline              "cul:   Highlight current line
@@ -438,7 +434,6 @@ set splitright              "spr:   Split a window right of the current one
 "   }}}2
 "   Backups & Undo {{{2
 
-set backup                        " Enable backups
 set noswapfile                    " TODO: Learn brief history of swap
 
 set undofile
@@ -517,12 +512,6 @@ augroup ft_markdown
   " nnoremap <LocalLeader>5 I##### <Esc>
   " nnoremap <LocalLeader>6 I###### <Esc>
 augroup END
-
-" [SUGGESTION] Markdown to HTML (use :MarkdownPreview from markdown-preview.nvim instead)
-" Credits: JeffreyWay (Jeffrey Way)
-" See http://code.tutsplus.com/tutorials/vim-essential-plugin-markdown-to-html--net-19383
-" nmap <Leader>md :%!/usr/local/Cellar/markdown/1.0.1/bin/markdown --html4tag
-" vmap <Leader>md :%!/usr/local/Cellar/markdown/1.0.1/bin/markdown --html4tag
 
 " --- Python ---
 
@@ -912,34 +901,6 @@ endif
 " }}}1
 " Plugin Settings: Limelight.vim {{{1
 
-" [SUGGESTION] Work on settings
-"
-"       See https://github.com/junegunn/limelight.vim
-
-" " Color name (:help cterm-colors) or ANSI code
-" let g:limelight_conceal_ctermfg = 'gray'
-" let g:limelight_conceal_ctermfg = 240
-
-" " Color name (:help gui-colors) or RGB color
-" let g:limelight_conceal_guifg = 'DarkGray'
-" let g:limelight_conceal_guifg = '#777777'
-
-" " Default: 0.5
-" let g:limelight_default_coefficient = 0.7
-
-" " Number of preceding/following paragraphs to include (default: 0)
-" let g:limelight_paragraph_span = 1
-
-" " Beginning/end of paragraph
-" "   When there's no empty line between the paragraphs
-" "   and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
-
-" " Highlighting priority (default: 10)
-" "   Set it to -1 not to overrule hlsearch
-" let g:limelight_priority = -1
-
 " }}}1
 " Plugin Settings: NERD Commenter {{{1
 
@@ -981,31 +942,6 @@ if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   map <silent> <Leader>nn :NERDTreeToggle<CR>|   " Toggle NERDTree
   map <silent> <Leader>nb :NERDTreeFromBookmark| " TODO: What is this?
   map <silent> <Leader>nf :NERDTreeFind<CR>|     " Find the current file in the tree
-
-  " [SUGGESTION] NERDTree's File highlighting
-  " function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-  "   exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-  "   exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-  " endfunction
-
-  " autocmd VimEnter * call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
-  " autocmd VimEnter * call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
 
   augroup nerd_loader
     autocmd!
@@ -1620,25 +1556,6 @@ nmap <silent> <Leader>w :call Preserve("%s/\\s\\+$//e")<CR>
 " nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 " nmap _= :call Preserve("normal gg=G")<CR>
 " nmap _- :call Preserve("g/^$/d")<CR>
-
-" [SUGGESTION] Tidying whitespace -- Vimcasts.org:
-
-" See details at http://vimcasts.org/episodes/tidying-whitespace/
-
-" function! <SID>StripTrailingWhitespaces()
-"     " Preparation: save last search, and cursor position.
-"     let _s=@/
-"     let l = line(".")
-"     let c = col(".")
-"     " Do the business:
-"     %s/\s\+$//e
-"     " Clean up: restore previous search history, and cursor position
-"     let @/=_s
-"     call cursor(l, c)
-" endfunction
-"
-" nnoremap <silent> <F5> :call <SID>StripTrailingWhitespaces()<CR>
-" autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
 
 "   }}}2
 "   CycleMetasyntacticVariables() {{{2
