@@ -118,6 +118,11 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 - Trust existing shell syntax — if unsure whether constructs like `alias -- -='cd -'` are valid, assume they work
 - When asked to refactor a large file, default to deep structural reorganization (numbered sections, per-feature grouping), not cosmetic cleanup — ask upfront if scope is unclear
 
+### Editing gitconfig
+
+- **Never add `[safe] directory = *`** or similar blanket security bypasses. This disables Git's dubious-ownership check (CVE-2022-24765). If a specific directory needs to be trusted, add only that path: `directory = /path/to/repo`.
+- **Machine-specific overrides** belong in `~/.gitconfig.local` (included by gitconfig), not in the tracked file.
+
 ### Editing bashrc
 
 - **Adding a new alias or function**: place it in the appropriate subsection of §8 (ALIASES) or §9 (FUNCTIONS). Do not append to the end of the file.
