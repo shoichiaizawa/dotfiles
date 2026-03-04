@@ -14,7 +14,7 @@
 "
 " TODO: Migrate to Neovim with lazy.nvim
 "
-"       This single vimrc is organized so that each plugin section maps
+"       This single vimrc is organised so that each plugin section maps
 "       to a future lazy.nvim plugin spec file. The planned migration:
 "
 "         - Each "Plugin Settings: <name>" section → lua/plugins/<name>.lua
@@ -26,7 +26,7 @@
 " }}}1
 " Section Map: --------------------------------------------------------- {{{1
 "
-" This vimrc is organized into fold sections ({{{1 / }}}1).
+" This vimrc is organised into fold sections ({{{1 / }}}1).
 " Use `zM` to close all folds, `zR` to open all.
 "
 "   Header & Section Map .......... file header, this map
@@ -551,7 +551,7 @@ augroup END
 "           Open just enough folds to make the line in which
 "           the cursor is located not folded.
 "
-"   - zz: Redraw, line [count] at center of window in the same column
+"   - zz: Redraw, line [count] at centre of window in the same column
 "         (also see "z." for difference)
 
 " --- QuickFix auto-open ---
@@ -610,7 +610,7 @@ if isdirectory(expand("~/.vim/plugged/vim-airline/"))
   " let g:airline#extensions#tabline#right_alt_sep = ''
 
   "-----------------------
-  " airline-customization
+  " airline-customisation
   "-----------------------
 
   if !exists('g:airline_symbols')
@@ -785,7 +785,7 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " Add `:Fold` command to fold current buffer
 command! -nargs=? Fold   :call CocAction('fold', <f-args>)
 
-" Add `:OR` command for organize imports of the current buffer
+" Add `:OR` command for organise imports of the current buffer
 command! -nargs=0 OR     :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support
@@ -1249,7 +1249,7 @@ nnoremap - <C-X>
 "   }}}2
 "   Search {{{2
 
-" These will make it so that going to the next one in a search will center
+" These will make it so that going to the next one in a search will centre
 " on the line it's found in.
 map N Nzzzv
 map n nzzzv
