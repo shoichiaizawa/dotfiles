@@ -101,16 +101,9 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
-" TODO: Not installed but want to try one day (or I am curious what it is):
-"Plug 'honza/vim-snippets'
-"Plug 'jiangmiao/auto-pairs'  Alternative: 'Raimondi/delimitMate'
-"Plug 'junegunn/vim-easy-align'  TODO: I have tabular but how about this?
-"Plug 'klen/python-mode'
-"Plug 'othree/html5-syntax.vim'
-"Plug 'sheerun/vim-polyglot'  TODO: A solid language pack for Vim
-"Plug 'tpope/vim-commentary'  TODO: I use NERDCommenter but how about this?
-"Plug 'tpope/vim-eunuch'  " Unix commands in Vim
-"Plug 'tpope/vim-git'     " Support plugin for fugitive
+" NOTES: Potential future additions — evaluate during Neovim migration:
+"   - sheerun/vim-polyglot (replace individual syntax plugins)
+"   - tpope/vim-eunuch (Unix commands: :Rename, :Delete, :Move)
 
 call plug#end()
 
