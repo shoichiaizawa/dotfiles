@@ -83,6 +83,7 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
+Plug 'mg979/vim-visual-multi'
 Plug 'mechatroner/rainbow_csv'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -99,7 +100,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'mg979/vim-visual-multi'
 
 " TODO: Not installed but want to try one day (or I am curious what it is):
 "Plug 'honza/vim-snippets'
@@ -1147,14 +1147,6 @@ if isdirectory(expand("~/.vim/plugged/vim-markdown/"))
 endif
 
 " }}}1
-" Plugin Settings: vim-visual-multi {{{1
-
-if isdirectory(expand("~/.vim/plugged/vim-visual-multi/"))
-  let g:VM_maps = {}
-  let g:VM_maps['Select All'] = 'g<C-N>'
-endif
-
-" }}}1
 " Plugin Settings: vim-slash {{{1
 
 if isdirectory(expand("~/.vim/plugged/vim-slash/"))
@@ -1164,6 +1156,14 @@ if isdirectory(expand("~/.vim/plugged/vim-slash/"))
   else
     noremap <plug>(slash-after) zzzv
   endif
+endif
+
+" }}}1
+" Plugin Settings: vim-visual-multi {{{1
+
+if isdirectory(expand("~/.vim/plugged/vim-visual-multi/"))
+  let g:VM_maps = {}
+  let g:VM_maps['Select All'] = 'g<C-N>'
 endif
 
 " }}}1
