@@ -1,22 +1,23 @@
 # /commit
 
-Create a clean, atomic git commit from the currently staged changes.
+Create a clean, atomic git commit from the current changes.
 
 ## Instructions
 
 When this skill is invoked, follow this workflow:
 
-### Step 1 — Review staged changes
+### Step 1 — Review changes
 
-1. Run `git status` and `git diff --cached` to inspect what is staged.
-2. If nothing is staged, tell the user and stop — never auto-stage with `git add -A` or `git add .`.
-3. Run `git log --oneline -5` to see recent commit style for context.
+1. Run `git status`, `git diff --cached`, and `git diff` to inspect both staged and unstaged changes.
+2. Run `git log --oneline -5` to see recent commit style for context.
+3. If there are no changes at all (nothing staged, nothing unstaged), tell the user and stop.
 
-### Step 2 — Verify atomicity
+### Step 2 — Stage and verify atomicity
 
-4. Check whether the staged changes represent a single logical unit of work.
-5. If unrelated changes are bundled (e.g., a bug fix mixed with a refactor), warn the user and suggest splitting into separate commits. List which files/hunks belong to which commit.
-6. Wait for user confirmation before proceeding if a split is recommended.
+4. Review all changes (staged + unstaged) and determine whether they form one or more logical units of work.
+5. **If everything is a single logical change**: stage all modified files by name (e.g., `git add file1 file2`) and proceed.
+6. **If changes should be split into multiple commits**: explain the split, listing which files/hunks belong to each commit. Stage only the first logical unit (use `git add <file>` or `git add -p <file>` for partial staging) and proceed with that commit. The user can invoke `/commit` again for the next unit.
+7. **Never use `git add -A` or `git add .`** — always stage files by name to avoid accidentally including untracked files.
 
 ### Step 3 — Compose commit message
 
@@ -68,7 +69,7 @@ When this skill is invoked, follow this workflow:
 - **Never skip hooks** (`--no-verify`) unless the user explicitly asks.
 - **Never force-push** unless the user explicitly asks — and warn before doing so.
 - **If a pre-commit hook fails**: fix the issue, re-stage, and create a NEW commit. Do not amend — the failed commit never happened, so amending would modify the wrong commit.
-- **Do not stage unstaged changes** without explicit user approval. The user controls what goes into each commit.
+- **Stage by filename, not blanket add.** Always `git add <file>` — never `git add -A` or `git add .`.
 
 ## Notes
 
