@@ -66,7 +66,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 | Header & Section Map | — | file header, migration TODO |
 | Plugin Manager: vim-plug | — | bootstrap, `plug#begin`/`plug#end`, plugin list |
 | General Settings | Core Options, Tabs & Indentation, Folding, Appearance, Search, Line Wrap & Display, Splits & Windows, Backups & Undo | all `set` commands, highlights, `mapleader`, `termguicolors`, colourscheme persistence (`~/.vim/.colorscheme`), `s:FixHighlights()` + `PersistColorscheme` augroup |
-| Filetype Autocmds | — | non-plugin ft detection: ejs, JavaScript, JSON, Markdown, Python, Vim, Line Return, QuickFix |
+| Filetype Autocmds | — | non-plugin ft detection: ejs, JavaScript, JSON, Markdown, Python, Vim, Line Return, QuickFix, Markdown Heading Mappings |
 | Plugin Settings (~22) | — | one `{{{1` per plugin, alphabetical: Airline … vim-visual-multi |
 | General Mappings | Arrow Keys, Character Enhancements, Search, Brackets & Quotes, Escape, Line Movement, Window Navigation, Statement Separators, Tab & Buffer Navigation, Folding, Unhighlighting, Miscellaneous | non-plugin key bindings |
 | General Functions | Incr(), Decr(), CohamaSmoothScroll(), Preserve(), CycleMetasyntacticVariables() | utility functions + their mappings |
