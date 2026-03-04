@@ -180,9 +180,8 @@ augroup PersistColorscheme
   autocmd ColorScheme * call timer_start(0, function('s:DeferFixHighlights'))
   autocmd ColorScheme * call writefile([expand('<amatch>')], expand('~/.vim/.colorscheme'))
 augroup END
-" syntax enable               "      TODO: Use syntax highlighting
 if has('syntax') && !exists('g:syntax_on')
-  syntax on                 "       TODO: Use syntax highlighting
+  syntax on
 endif
 
 set encoding=utf-8          "enc:   Set the character encoding used inside Vim
@@ -227,7 +226,9 @@ if has('clipboard')
   endif
 endif
 
-" set shellslash              "ssl    TODO something to do with Windows OS
+" set shellslash              "ssl    Converts backslashes to forward slashes
+"                            "       in file paths (Windows only).
+"                            "       See :help 'shellslash'
 set ttyfast                 "tf:    Faster terminal connection
 set hidden                  "hid:   Hide buffers when not displayed instead of
                             "       being closed
@@ -274,12 +275,6 @@ set smartindent             "si:    Smart indent
 set shiftround              "sr:    Use multiple of shiftwidth when indenting
                             "       with '<' and '>'
 
-"set cindent                 "cin:   cindent
-"set cinoptions=             "cino:  TODO:
-"set cinwords=               "cinw:  TODO:
-"set noautoindent            "noai:  No autoindent
-"set nosmartindent           "nosi:  No smartindent
-"set nocindent               "nocin: No cindent
 
 "   }}}2
 "   Folding {{{2
@@ -434,7 +429,7 @@ set splitright              "spr:   Split a window right of the current one
 "   }}}2
 "   Backups & Undo {{{2
 
-set noswapfile                    " TODO: Learn brief history of swap
+set noswapfile
 
 set undofile
 set undoreload=10000
@@ -467,7 +462,6 @@ autocmd BufWinEnter,BufRead,BufNewFile *.ejs setlocal filetype=html
 
 autocmd BufWinEnter,BufRead,BufNewFile */.\=gitconfig setlocal filetype=gitconfig
 
-" TODO: brush up
 autocmd BufWinEnter,BufRead,BufNewFile */.\=nginx/conf.d/*.conf setlocal filetype=nginx
 
 " --- JavaScript ---
@@ -575,10 +569,20 @@ augroup autoquickfix
   autocmd QuickFixCmdPost    l* lwindow
 augroup END
 
+" --- Markdown Heading Mappings ---
+
+augroup ft_markdown_headings
+  autocmd!
+  autocmd FileType markdown nnoremap <buffer> <Leader>1 I# <Esc>
+  autocmd FileType markdown nnoremap <buffer> <Leader>2 I## <Esc>
+  autocmd FileType markdown nnoremap <buffer> <Leader>3 I### <Esc>
+  autocmd FileType markdown nnoremap <buffer> <Leader>4 I#### <Esc>
+  autocmd FileType markdown nnoremap <buffer> <Leader>5 I##### <Esc>
+  autocmd FileType markdown nnoremap <buffer> <Leader>6 I###### <Esc>
+augroup END
+
 " }}}1
 " Plugin Settings: Airline {{{1
-
-" TODO: Enhance the settings
 
 if isdirectory(expand("~/.vim/plugged/vim-airline/"))
   "set guifont=Liberation\ Mono\ for\ Powerline\ 10
@@ -819,8 +823,6 @@ highlight CocMenuSel ctermbg=125 guibg=#13354A
 " }}}1
 " Plugin Settings: EasyMotion {{{1
 
-" TODO: Enhance the settings
-
 if isdirectory(expand("~/.vim/plugged/vim-easymotion/"))
   highlight link EasyMotionTarget IncSearch
   highlight link EasyMotionShade  Comment
@@ -839,8 +841,6 @@ endif
 " }}}1
 " Plugin Settings: Emmet {{{1
 
-" TODO: Enhance the settings
-
 if isdirectory(expand("~/.vim/plugged/emmet-vim/"))
   let g:user_emmet_leader_key='<C-E>'
 endif
@@ -857,9 +857,8 @@ endif
 " }}}1
 " Plugin Settings: Goyo.vim {{{1
 
-" FIXME: Fix any settings not restored upon leaving Goyo (if any)
-" TODO:  Find a way to come back to the original location when leaving Goyo
-"        by :q (:Goyo! works okay but not for :q)
+" NOTES: Settings are restored in s:goyo_leave(). Use :Goyo! (not :q) to
+"        return to the original cursor position.
 
 if isdirectory(expand("~/.vim/plugged/goyo.vim/"))
   function! s:goyo_enter()
@@ -904,8 +903,6 @@ endif
 " }}}1
 " Plugin Settings: NERD Commenter {{{1
 
-" TODO: Enhance the settings
-
 if isdirectory(expand("~/.vim/plugged/nerdcommenter/"))
   let NERDSpaceDelims=1
   let NERDCompactSexyComs=1
@@ -917,8 +914,6 @@ endif
 " }}}1
 " Plugin Settings: NERDTree {{{1
 
-" TODO: Enhance the settings
-
 if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   augroup ps_nerdtree
     autocmd!
@@ -927,7 +922,7 @@ if isdirectory(expand("~/.vim/plugged/nerdtree/"))
     autocmd FileType nerdtree nnoremap <silent> <buffer> L :vertical resize +10<CR>
   augroup END
 
-  let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']  " TODO: Add more items
+  let NERDTreeIgnore = ['\~$', '\.sw.$', '\.pyc$', '.DS_Store']
 
   let NERDTreeHighlightCursorline = 1       " options: 0 or 1 (default 1)
   let g:NERDTreeWinSize=20        " options: [integer value] (default 31)
@@ -940,7 +935,6 @@ if isdirectory(expand("~/.vim/plugged/nerdtree/"))
   let NERDTreeMouseMode=2         " options: 1, 2 or 3 (default 1)
 
   map <silent> <Leader>nn :NERDTreeToggle<CR>|   " Toggle NERDTree
-  map <silent> <Leader>nb :NERDTreeFromBookmark| " TODO: What is this?
   map <silent> <Leader>nf :NERDTreeFind<CR>|     " Find the current file in the tree
 
   augroup nerd_loader
@@ -991,8 +985,6 @@ endif
 " }}}1
 " Plugin Settings: Tagbar {{{1
 
-" TODO: Enhance the setting
-
 if isdirectory(expand("~/.vim/plugged/tagbar/"))
   let g:tagbar_autoclose = 1    " If 1, close Tagbar once open (default 0)
   let g:tagbar_autofocus = 1    " If 1, move to Tagbar window when open (default 0)
@@ -1011,14 +1003,10 @@ if isdirectory(expand("~/.vim/plugged/tagbar/"))
   " let g:tagbar_iconchars = ['▶', '▼']  " (default on Linux and Mac OS X)
   let g:tagbar_iconchars = ['▸', '▾']
 
-  " TODO: Find out a mapping key works best for me
   nmap <silent> <Leader>tt :TagbarToggle<CR>
 
-  " TODO: Support for additional filetypes
-  "
-  "       Some filetypes are not supported in the beginning and seem to
-  "       require extra configurations; see the Wiki page for details:
-  "       https://github.com/majutsushi/tagbar/wiki
+  " NOTES: Some filetypes need extra config for Tagbar support; see:
+  "        https://github.com/majutsushi/tagbar/wiki
 endif
 
 " }}}1
@@ -1031,8 +1019,6 @@ endif
 
 " }}}1
 " Plugin Settings: vim-devicons {{{1
-
-" TODO: Enhance the settings
 
 if isdirectory(expand("~/.vim/plugged/vim-devicons/"))
   set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
@@ -1237,13 +1223,11 @@ vnoremap P Pgvy
 nnoremap <silent> zj o<Esc>
 nnoremap <silent> zk O<Esc>
 
-" TODO: Taken from Bram's example vimrc; what is Ex mode exactly?
-" Don't use Ex mode, use Q for formatting
+" NOTES: Ex mode (Q) is batch editing; remapped to gq (format). See :help Ex-mode
 map Q gq
 
-" TODO: Taken from Bran's example vimrc; I don't understand its behaviour
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
+" NOTES: Break undo sequence before CTRL-U so the deletion is undoable.
+"        See :help i_CTRL-G_u
 inoremap <C-U> <C-G>u<C-U>
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy
@@ -1293,8 +1277,6 @@ vnoremap <Leader>* "hy:%s/\V<C-R>h//<Left>
 
 "   }}}2
 "   Brackets & Quotes {{{2
-
-" TODO: Use a plugin if anything better than doing these
 
 " When typing a set of brackets or quotation marks, the cursor is going inside them
 inoremap '' ''<Left>
@@ -1352,11 +1334,6 @@ nnoremap <C-W>3 :vs<CR>:vs<CR><C-W>h<C-W>h
 nnoremap <C-W>4 :vs<CR>:sp<CR><C-W>h:sp<CR><C-W>k
 nnoremap <C-W>6 :vs<CR>:vs<CR>:sp<CR><C-W>h:sp<CR><C-W>h:sp<CR><C-W>k
 
-" FIXME: Settings are poor in this resize section
-
-nnoremap <silent> <buffer> H :vertical resize -10<CR>
-nnoremap <silent> <buffer> L :vertical resize +10<CR>
-
 nnoremap <Tab>= <C-W>=|   " Make all windows (almost) equally high and wide
 nnoremap <Tab>o <C-W>o|   " Close all other windows except the current one
 
@@ -1370,8 +1347,6 @@ autocmd FileType python inoremap :: <End>:
 
 "   }}}2
 "   Tab & Buffer Navigation {{{2
-
-" TODO: Work on settings
 
 nnoremap <silent> <C-Right> :tabnext<CR>|     " Next Tab
 nnoremap <silent> <C-Left> :tabprevious<CR>|  " Previous Tab
@@ -1432,16 +1407,6 @@ inoremap <silent> <Leader>todo <C-R>=strftime('%Y-%m-%d %a')<CR>
 inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
 inoremap <silent> <Leader>time <C-R>=strftime('%H:%M:%S')<CR>
 inoremap <silent> <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
-
-" TODO: Enhance the settings; move this to FileType section
-nnoremap <Leader>1 yypVr=:redraw<CR>
-nnoremap <Leader>2 yypVr-:redraw<CR>
-nnoremap <Leader>3 I### <Esc>
-nnoremap <Leader>4 I#### <Esc>
-nnoremap <Leader>5 I##### <Esc>
-nnoremap <Leader>6 I###### <Esc>
-nnoremap <Leader>7 I### <Esc> A ###<Esc>
-nnoremap <Leader>cz I#<Space><Esc>yypVr-:redraw<CR>2xI#<Space><Esc>yykP2j
 
 "   }}}2
 
@@ -1551,11 +1516,6 @@ function! Preserve(command)
 endfunction
 
 nmap <silent> <Leader>w :call Preserve("%s/\\s\\+$//e")<CR>
-
-" TODO: Assign convenient mappings
-" nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
-" nmap _= :call Preserve("normal gg=G")<CR>
-" nmap _- :call Preserve("g/^$/d")<CR>
 
 "   }}}2
 "   CycleMetasyntacticVariables() {{{2
