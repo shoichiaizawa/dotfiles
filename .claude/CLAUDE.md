@@ -83,6 +83,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 Project-level Claude Code configuration — not symlinked; picked up automatically from the repo root.
 - `settings.json` — project hooks config; uses `PostToolUse` to run `shellcheck-after-edit.sh` after Edit/Write
 - `hooks/shellcheck-after-edit.sh` — runs `bash -n` (syntax check) and `shellcheck --severity=warning` on modified shell files (`bash/*`, `macos`, `tmux/bin/*`, `welcome.sh`); informational only, non-blocking
+- `rules/` — path-scoped editing conventions (bashrc, vimrc, gitconfig, claude settings, skills); loaded on demand via `paths` frontmatter
 - `skills/refactor-plan/SKILL.md` — `/refactor-plan` skill: 3-phase audit → propose → implement workflow for structural refactors
 
 ### iterm2/
@@ -118,45 +119,6 @@ Project-level Claude Code configuration — not symlinked; picked up automatical
 - Trust existing shell syntax — if unsure whether constructs like `alias -- -='cd -'` are valid, assume they work
 - When asked to refactor a large file, default to deep structural reorganization (numbered sections, per-feature grouping), not cosmetic cleanup — ask upfront if scope is unclear
 
-### Editing gitconfig
+### File-Specific Editing Rules
 
-- **Never add `[safe] directory = *`** or similar blanket security bypasses. This disables Git's dubious-ownership check (CVE-2022-24765). If a specific directory needs to be trusted, add only that path: `directory = /path/to/repo`.
-- **Machine-specific overrides** belong in `~/.gitconfig.local` (included by gitconfig), not in the tracked file.
-
-### Editing bashrc
-
-- **Adding a new alias or function**: place it in the appropriate subsection of §8 (ALIASES) or §9 (FUNCTIONS). Do not append to the end of the file.
-- **Adding a new tool** (with its own PATH, aliases, and completions): add a new subsection in the appropriate §10–§14 category, or create a new §15+ category. Keep PATH + aliases + completions for that tool together.
-- **Heading hierarchy in §10–§14**: category sections use 80-cpl `####` fences (same style as §1–§9); tool subsections use 60-cpl `# ---` boxes with no number. Do not mix the two styles.
-- **`[SUGGESTION]` comments**: these are annotate-only markers for dead/broken code — do not remove them without also fixing or deleting the code they describe. Do not add new `[SUGGESTION]` comments for things that are working correctly.
-- **Do not scatter tool-specific PATH entries** into §2 (PATH SETTINGS); §2 is for general/bootstrap PATH only. Tool-specific PATH belongs in the tool's own subsection within §10–§14.
-- **Self-aliases** (`alias foo=foo` after `function foo`) are no-ops in bash — do not add new ones.
-- **`$1`/`$2` in aliases** are not expanded; use a function instead if arguments are needed.
-
-### Editing vimrc
-
-- **Adding a new plugin**: add the `Plug` line in Plugin Manager, then create a new `Plugin Settings: <name> {{{1` section in alphabetical order among the existing plugin sections. Keep all settings + mappings + autocmds for that plugin together in its section.
-- **Adding a non-plugin mapping or setting**: place it in the appropriate sub-fold (`{{{2`) of General Settings, General Mappings, or General Functions. Do not append to the end of the file.
-- **`[SUGGESTION]` comments**: same convention as bashrc — annotate-only markers for commented-out alternatives. Do not remove without fixing or deleting the code they describe.
-- **Plugin-specific `set` commands** (e.g., `set nobackup` in coc.nvim): keep them in the plugin's section, not in General Settings.
-- **Each plugin section should be self-contained**: settings, mappings, autocmds, and functions for one plugin all belong in its `{{{1` section, so it maps cleanly to a future `lua/plugins/<name>.lua` file.
-
-### Editing claude/settings.json (global Claude Code permissions)
-
-- **Syntax**: use modern `Bash(cmd *)` format, not legacy `Bash(cmd:*)`.
-- **Allow list**: only add read-only, non-destructive commands. Commands that modify state (git write ops, file edits, installs) should require per-use approval.
-- **Deny list**: reserve for catastrophic/irreversible operations (e.g., `sudo`, `rm -rf /`, force push). Deny rules are hard blocks — they cannot be overridden by user approval.
-- **Bare vs wildcard**: use `Bash(cmd)` for no-arg commands, `Bash(cmd *)` for commands with args. Note `Bash(cmd*)` (no space) also matches commands starting with `cmd` (e.g., `Bash(ps*)` matches `ps` and `pstree`).
-
-### Editing .claude/settings.json (project hooks)
-
-- **Hooks format**: use the array form — `"hooks": [{"type": "command", "command": "..."}]` — not the legacy bare `"command": "..."` form.
-- **Hook scope**: project hooks run relative to the repo root; use paths like `bash .claude/hooks/script.sh`.
-- **Adding a new hook**: add a new entry in the appropriate `PostToolUse`/`PreToolUse` array with a `matcher` (pipe-separated tool names) and a `hooks` array.
-
-### Editing claude/skills/
-
-- **Directory structure**: each skill lives in `claude/skills/<name>/SKILL.md`. The directory name becomes the slash-command (e.g., `claude/skills/commit/` → `/commit`).
-- **No YAML frontmatter**: skills in this repo use a plain `# /<name>` heading, not YAML metadata blocks.
-- **Global vs project-level**: skills in `claude/skills/` (symlinked to `~/.claude/skills/`) are available in all projects. A project can override a global skill by creating `.claude/skills/<name>/SKILL.md` at the project root.
-- **Keep skills project-agnostic**: global skills should not reference repo-specific paths, tools, or conventions. Repo-specific instructions belong in CLAUDE.md or in a project-level skill override.
+File-specific editing conventions live in `.claude/rules/` and are loaded automatically when the matching file is being worked on. See: `bashrc.md`, `vimrc.md`, `gitconfig.md`, `claude-settings-global.md`, `claude-settings-project.md`, `claude-skills.md`.
