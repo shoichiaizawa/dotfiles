@@ -2,14 +2,6 @@
 # Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/bash/bash_profile
 
-# This only runs on user login
-echo ""
-echo -n "Welcome to Unix on macOS, "; whoami
-echo ""
-echo -n "Today is "; date "+%Y-%m-%d %H:%M:%S %z"
-echo ""
-cal
-
 # This loads in the configuration in .bashrc
 # Put all configuration there!
 if [ -f ~/.bashrc ]; then
@@ -21,8 +13,8 @@ if [ -f ~/.bashrc.local ]; then
   source ~/.bashrc.local
 fi
 
-if type neofetch > /dev/null 2>&1; then
-  neofetch
+if type fastfetch > /dev/null 2>&1; then
+  fastfetch
 elif [ -f ~/.bash/welcome.sh ]; then
   sh ~/.bash/welcome.sh
 fi
