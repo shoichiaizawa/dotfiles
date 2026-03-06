@@ -23,8 +23,6 @@ BREW_PREFIX="$(brew --prefix)"
 [ -x "$BREW_PREFIX/bin/src-hilite-lesspipe.sh" ] && \
 export LESSOPEN="| $BREW_PREFIX/bin/src-hilite-lesspipe.sh %s"
 
-# Composer (PHP package manager) global binaries
-[ -d ~/.composer/vendor/bin ] && export PATH=$PATH:~/.composer/vendor/bin
 
 # diff-highlight (part of git-core contrib)
 [ -d $BREW_PREFIX/share/git-core/contrib/diff-highlight ] && \
