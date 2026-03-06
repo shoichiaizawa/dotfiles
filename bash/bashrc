@@ -1133,16 +1133,11 @@ fi
 # tealdeer (https://github.com/dbrgn/tealdeer)
 # ------------------------------------------------------------
 
-# [SUGGESTION: This sources a completion file from a hardcoded NVM path. If
-#  the Node.js version changes or NVM is absent, this silently fails. The
-#  tealdeer Rust binary (brew install tealdeer) supports:
-#    source <(tldr --print-completions bash)]
-if type tldr > /dev/null 2>&1 && [ -f "${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr" ]; then
-  source <(cat ${NVM_DIR}/current/lib/node_modules/tldr/bin/completion/bash/tldr)
-fi
-
-if type tldr > /dev/null 2>&1 && [ -d "$BREW_PREFIX/Cellar/tealdeer" ]; then
-  export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
+if type tldr > /dev/null 2>&1; then
+  source <(tldr --print-completions bash)
+  if [ -d "$BREW_PREFIX/Cellar/tealdeer" ]; then
+    export TEALDEER_CONFIG_DIR="${HOME}/.config/tealdeer"
+  fi
 fi
 
 ################################################################################
