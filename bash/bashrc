@@ -550,12 +550,6 @@ alias menubarShow='defaults write NSGlobalDomain _HIHideMenuBar -bool false && k
 alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
 alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
 
-# ------------------------------------------------
-# Merge PDF files
-# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
-# ------------------------------------------------
-
-alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
 
 # --------------------------------------------------------------------
 # Empty the Trash on all mounted volumes and the main HDD.
