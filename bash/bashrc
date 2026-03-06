@@ -68,7 +68,7 @@ export HISTCONTROL=ignoreboth:erasedups  # ignoredups:ignorespace:erasedups
 export HISTIGNORE='&:[ 　	]*:?:??'
 export HISTIGNORE=$HISTIGNORE':history:pwd:pdw:exit:eixt:quit:du1'
 export HISTIGNORE=$HISTIGNORE':la1:l1a:lal:lla:l.l:ll.:lll:ls -la'
-export HISTIGNORE=$HISTIGNORE':clear:histg:hgrep'
+export HISTIGNORE=$HISTIGNORE':clear:hgrep'
 
 ################################################################################
 # 4. SHELL OPTIONS
@@ -484,8 +484,7 @@ alias pbs=pbsort
 # -------
 
 alias h='history'
-alias histg='history | grep'
-alias hgrep=histg                       # [SUGGESTION: identical to histg above]
+alias hgrep='history | grep'
 
 # ----------
 # ssh-keygen
