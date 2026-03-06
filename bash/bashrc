@@ -1287,11 +1287,8 @@ fi
 # bit (https://github.com/chriswalz/bit)
 # ------------------------------------------------------------
 
-# [SUGGESTION: This hardcodes /usr/local/bin/bit which is wrong on Apple
-#  Silicon Macs (Homebrew installs to /opt/homebrew/bin). Use:
-#    complete -C "$(command -v bit)" bit]
 if type bit > /dev/null 2>&1; then
-  complete -C /usr/local/bin/bit bit
+  complete -C "$(command -v bit)" bit
 fi
 
 # ------------------------------------------------------------
