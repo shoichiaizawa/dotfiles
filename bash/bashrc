@@ -20,26 +20,9 @@ export EDITOR="$VISUAL"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 BREW_PREFIX="$(brew --prefix)"
 
-[ -x "$BREW_PREFIX/bin/src-hilite-lesspipe.sh" ] && \
-export LESSOPEN="| $BREW_PREFIX/bin/src-hilite-lesspipe.sh %s"
-
-
 # diff-highlight (part of git-core contrib)
 [ -d $BREW_PREFIX/share/git-core/contrib/diff-highlight ] && \
 export PATH=$PATH:$BREW_PREFIX/share/git-core/contrib/diff-highlight
-
-# -------
-# Java
-# -------
-
-export SDKMAN_DIR="$HOME/.sdkman"
-
-if [ -d $SDKMAN_DIR ]; then
-  [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-else
-  unset SDKMAN_DIR
-  /usr/libexec/java_home > /dev/null 2>&1 && export JAVA_HOME=$(/usr/libexec/java_home)
-fi
 
 # -------
 # Android (uncomment if using Android Studio)
@@ -227,12 +210,6 @@ if type __git_main &> /dev/null; then
 fi
 
 # --------------------------------------
-# brew cask completion with `cask` alias
-# --------------------------------------
-#
-
-
-# --------------------------------------
 # killall tab completion for common apps
 # --------------------------------------
 #
@@ -240,48 +217,6 @@ fi
 # https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L47
 #
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari Music SystemUIServer Terminal ScriptMonitor NotificationCenter" killall;
-
-# ------------------------------------------------------------------
-# Completion for Composer -- PHP package manager
-# [Requirements]
-# Composer: `tap homebrew/php && brew install composer`
-# ------------------------------------------------------------------
-#
-# https://github.com/stecman/composer-bash-completion-plugin
-# https://github.com/stecman/symfony-console-completion
-#
-# Modified version of what `composer _completion -g -p composer` generates
-# Composer will only load plugins when a valid composer.json is in its working
-# directory, so for this hack to work, we are always running the completion
-# command in ~/.composer
-function _composercomplete {
-  export COMP_LINE COMP_POINT COMP_WORDBREAKS;
-  local -x COMPOSER_CWD=`pwd`
-  local RESULT STATUS
-
-  # Honour the COMPOSER_HOME variable if set
-  local composer_dir=$COMPOSER_HOME
-  if [ -z "$composer_dir" ]; then
-    composer_dir=$HOME/.composer
-  fi
-
-  RESULT=`cd $composer_dir && composer depends _completion`;
-  STATUS=$?;
-
-  if [ $STATUS -ne 0 ]; then
-    echo $RESULT;
-    return $?;
-  fi;
-
-  local cur;
-  _get_comp_words_by_ref -n : cur;
-
-  COMPREPLY=(`compgen -W "$RESULT" -- $cur`);
-
-  __ltrim_colon_completions "$cur";
-};
-
-complete -F _composercomplete composer;
 
 # -----------------------------
 # Bash completion for Terraform
