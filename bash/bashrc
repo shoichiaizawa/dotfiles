@@ -588,20 +588,6 @@ alias openports='sudo lsof -i | grep LISTEN'                    # openports:    
 alias g='git'
 
 
-# https://github.com/github/hub/issues/1464#issuecomment-311104568
-# Stub out "hub" when its commands conflict with better "git-extras" commands
-if type hub > /dev/null 2>&1; then
-  __hub-stub-conflicting-commands() {
-      case "$1" in
-          alias|fork|pr)
-              /usr/bin/env git "$@"
-              ;;
-          *)
-              /usr/bin/env hub "$@"
-      esac
-  }
-  alias git='__hub-stub-conflicting-commands'
-fi
 
 # --------------------------
 # Homebrew and Homebrew Cask
