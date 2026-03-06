@@ -1195,9 +1195,7 @@ if [[ -d $BREW_PREFIX/share/google-cloud-sdk ]]; then
       }
     else
       # Show a BigQuery table schema without colours if `jq` is not installed
-      # [SUGGESTION: $1 is not expanded inside an alias definition — it will
-      #  always be empty. Use a function: bqschema() { bq show --schema --format=prettyjson "$1"; }]
-      alias bqschema="bq show --schema --format=prettyjson $1"
+      bqschema() { bq show --schema --format=prettyjson "$1"; }
     fi
 
     # Function: bqtables -- show BigQuery tables in the current GCP project
