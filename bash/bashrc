@@ -12,12 +12,6 @@ export LESS='-iMR'
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# Python REPL tab completion
-# https://stackoverflow.com/questions/246725/how-do-i-add-tab-completion-to-the-python-shell
-# https://nicolas.perriault.net/code/2010/python-tab-completion/
-# File: ~/.pythonrc.py@ -> ~/Dropbox/code/dotfiles/pythonrc.py
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-
 ################################################################################
 # 2. PATH SETTINGS
 ################################################################################
