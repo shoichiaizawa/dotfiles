@@ -934,9 +934,8 @@ fi
 # Install a specific version of a Homebrew formula
 # @param {string} $1 Formula name
 # @param {string} $2 Formula version (exact)
-# NOTE: This function references `homebrew/cask` and `homebrew/core` taps
-# removed from Homebrew in 2023. `brew tap homebrew/cask` will fail. Verify
-# before using — likely broken. Remove once confirmed non-functional.
+# NOTE: This function force-taps `homebrew/cask` or `homebrew/core` to access
+# older formula versions — this still works per the original blog post.
 vintage() {
   # Figure out the relevant tap
   local brew_tap
