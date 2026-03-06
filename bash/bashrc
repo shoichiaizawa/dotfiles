@@ -1151,9 +1151,7 @@ fi
 # Google Cloud SDK installed via Homebrew Cask
 if [[ -d $BREW_PREFIX/share/google-cloud-sdk ]]; then
   source "$BREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
-  # [SUGGESTION: The completion script is commented out. Uncomment to enable
-  #  gcloud tab completion:]
-  # source "$BREW_PREFIX/share/google-cloud-sdk/completion.bash.inc"
+  source "$BREW_PREFIX/share/google-cloud-sdk/completion.bash.inc"
 
   if type fzf > /dev/null 2>&1; then
     # Function: gactivate -- switch between GCP configurations effortlessly
