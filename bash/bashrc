@@ -815,12 +815,6 @@ man() {
 #
 # See: https://github.com/xvoland/Extract/blob/master/extract.sh
 #
-# [SUGGESTION: The SAVEIFS/IFS reassignment wrapping this function definition
-#  is unnecessary — IFS only needs to be changed inside the function body if
-#  at all. The two lines before and after the function can be removed safely.]
-SAVEIFS=$IFS
-IFS=$(echo -en "\n\b")
-
 function extract {
   if [ -z "$1" ]; then
     # display usage if no parameters given
@@ -856,8 +850,6 @@ function extract {
     done
   fi
 }
-
-IFS=$SAVEIFS
 
 # }}}
 
