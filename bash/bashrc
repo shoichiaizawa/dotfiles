@@ -149,7 +149,7 @@ export GREP_COLOR='1;38;5;0;48;5;136'
 
 source ~/.bash/bash_prompt
 
-# [SUGGESTION: If starship is installed (see section 18), it replaces this PS1
+# [SUGGESTION: If starship is installed (see §11), it replaces this PS1
 #  at startup. bash_prompt's PS1 is only active when starship is absent.]
 
 #export PS1='\u\[\033[00m\]:\W\[\033[31m\]$(__git_ps1 [%s])\[\033[00m\]\$ '
@@ -239,9 +239,7 @@ fi
 # Add `killall` tab completion for common apps
 # https://github.com/mathiasbynens/dotfiles/blob/master/.bash_profile#L47
 #
-# [SUGGESTION: iTunes was replaced by Music.app in macOS Catalina (2019).
-#  Remove `iTunes` from this list.]
-complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter ScriptMonitor NotificationCenter" killall;
+complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari Music SystemUIServer Terminal ScriptMonitor NotificationCenter" killall;
 
 # ------------------------------------------------------------------
 # Completion for Composer -- PHP package manager
@@ -437,7 +435,6 @@ alias -- -='cd -'                       # -:      Go back to the previous cd
 alias dt='cd ~/Desktop/'                # dt:     Go to Desktop
 alias dc='cd ~/Documents/'              # dc:     Go to Documents
 alias dl='cd ~/Downloads/'              # dl:     Go to Downloads
-alias dr='cd ~/Dropbox/'                # dr:     Go to Dropbox
 
 # -----
 # mkdir
@@ -593,13 +590,8 @@ if type jupyter > /dev/null 2>&1; then
   alias note='jupyter notebook'
 fi
 
-if type pip > /dev/null 2>&1; then
-  alias pip-all-upgrade="pip --disable-pip-version-check list --outdated --format=json | python -c \"import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))\" | xargs -n1 pip install -U"
-  alias pip-cache-locations='find $(python -c "from pip.locations import USER_CACHE_DIR; print(USER_CACHE_DIR)") -name "*.whl"'
-fi
-
 if type pip3 > /dev/null 2>&1; then
-  alias pip3-all-upgrade="pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U"
+  alias pip3-all-upgrade="pip3 --disable-pip-version-check list --outdated --format=json | python3 -c \"import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))\" | xargs -n1 pip3 install -U"
 fi
 
 # ------
@@ -657,7 +649,7 @@ alias evimrc='vim ~/.vimrc'             # Edit .vimrc from anywhere
 alias egitconf='vim ~/.gitconfig'       # Edit .gitconfig from anywhere
 alias egitig='vim ~/.gitignore_global'  # Edit .gitignore_global from anywhere
 alias etmuxconf='vim ~/.tmux.conf'      # Edit .tmux.conf from anywhere
-alias emacos='vim ~/.macos'             # Edit .macos from anywhere
+alias emacos='vim ~/.dotfiles/macos'    # Edit macos defaults script from anywhere
 
 # ----------------
 # Typo corrections
@@ -1001,7 +993,7 @@ vintage() {
 # ---
 
 if type fzf > /dev/null 2>&1; then
-  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+  eval "$(fzf --bash)"
 
   export FZF_DEFAULT_OPTS='
     --height 98% --reverse
