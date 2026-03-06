@@ -230,14 +230,7 @@ fi
 # brew cask completion with `cask` alias
 # --------------------------------------
 #
-# Enable tab completion for `cask` by marking it as an alias for `brew cask`
-# Inspired by the above script by mathiasbynens :D
-#
-# The `cask()` function (§8 Homebrew) delegates to `brew ... --cask`.
-# _brew completion works for `cask` via that delegation.
-if type _brew &> /dev/null; then
-  complete -o default -o nospace -F _brew cask
-fi
+
 
 # --------------------------------------
 # killall tab completion for common apps
@@ -594,9 +587,6 @@ alias g='git'
 # --------------------------
 
 
-if type _brew > /dev/null 2>&1; then
-  cask() { brew "$@" --cask; }
-fi
 
 # ---------
 # Python / pip
