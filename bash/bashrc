@@ -499,10 +499,7 @@ alias white-grep="GREP_COLOR='1;37' grep --color=always"
 # Search a string in an entire directory
 # Usage: dgrep 'pattern' '/directory/to/be/searched'
 # See: https://stackoverflow.com/q/16956810/1334728
-# [SUGGESTION: $1/$2 are not expanded inside alias definitions — both
-#  parameters will always be empty. Use a shell function instead:
-#    dgrep() { grep -nrw "$1" "$2"; }]
-alias dgrep='grep -nrw $1 $2'
+dgrep() { grep -nrw "$1" "$2"; }
 
 # -----
 # mute and unmute
