@@ -593,9 +593,6 @@ alias g='git'
 # Homebrew and Homebrew Cask
 # --------------------------
 
-if [ -e ~/.homebrew-github-api-token ]; then
-  export HOMEBREW_GITHUB_API_TOKEN=$(cat ~/.homebrew-github-api-token)
-fi
 
 if type _brew > /dev/null 2>&1; then
   cask() { brew "$@" --cask; }
