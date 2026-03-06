@@ -587,10 +587,6 @@ alias openports='sudo lsof -i | grep LISTEN'                    # openports:    
 
 alias g='git'
 
-# Deploying a subfolder to GitHub Pages
-# See: https://gist.github.com/cobyism/4730490
-# Courtesy of Coby Chapple (@cobyism)
-alias gh-pages-deploy='git subtree push --prefix dist origin gh-pages'
 
 # https://github.com/github/hub/issues/1464#issuecomment-311104568
 # Stub out "hub" when its commands conflict with better "git-extras" commands
