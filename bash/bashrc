@@ -738,9 +738,6 @@ if type java > /dev/null 2>&1; then
   alias java-versions='/usr/libexec/java_home -V'
 fi
 
-# [SUGGESTION: This path is Dropbox-dependent. Verify the path exists before
-#  using, or update to the correct path on this machine.]
-alias unclutter-gh="vim ~/Dropbox/sho/backup/unclutter/unclutter-notes/'Unclutter Note 2015-12-28 01.08.18.txt'"
 
 ################################################################################
 # 9. FUNCTIONS
