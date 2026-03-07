@@ -2,40 +2,72 @@
 # Author: Shoichi Aizawa <shoichiaizawa@gmail.com>
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/git/gitconfig
 
+# --- Identity & includes ---
+
 [user]
 	name  = Shoichi Aizawa
 	email = shoichiaizawa@gmail.com
+
 [include]
 	path = ~/.gitconfig.local
+
 [includeIf "gitdir:~/work/"]
 	path = ~/work/.gitconfig
+
+# --- Core & general ---
+
 [core]
 	excludesfile = ~/.gitignore_global
 	editor       = vim
 	pager = delta 2> /dev/null || \
 					(diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
 	quotepath = false
+
+[init]
+	defaultBranch = main
+
+[help]
+	autocorrect = 1
+
+# --- Command behaviour ---
+
+[commit]
+	verbose = true
+
+[fetch]
+	prune = true
+
+[merge]
+	conflictstyle = diff3
+
+[rebase]
+	autosquash = true
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+
+[log]
+	date = format:%Y-%m-%d(%a) %H:%M:%S(%z)
+
+[interactive]
+	diffFilter = delta --color-only 2>/dev/null || diff-so-fancy 2>/dev/null || diff-highlight 2>/dev/null || cat
+
+# --- Pager & appearance ---
+
 [delta]
 	side-by-side = true
 	syntax-theme = "Monokai Extended"
 	features     = decorations
+
 [delta "decorations"]
 	commit-decoration-style      = bold yellow box ul
 	file-style                   = bold yellow ul
 	file-decoration-style        = none
 	hunk-header-decoration-style = yellow box
-[commit]
-	verbose = true
-[fetch]
-	prune = true
-[merge]
-	conflictstyle = diff3
-[rebase]
-	autosquash = true
-[pull]
-	rebase = false
-[push]
-	default = simple
+
 [color]
 	branch      = auto
 	diff        = auto
@@ -43,11 +75,13 @@
 	interactive = auto
 	status      = auto
 	ui          = true
+
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+
 [color "diff"]
 	meta = yellow
 	frag = magenta bold
@@ -55,6 +89,9 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+
+# --- Aliases ---
+
 [alias]
 	git  = !git
 	this = !git init && git add . && git commit -m \"chore: initial commit\"
@@ -249,18 +286,13 @@
 
 	tags = tag -l
 
+# --- Integrations ---
+
 [filter "lfs"]
 	clean    = git-lfs clean -- %f
 	smudge   = git-lfs smudge -- %f
 	required = true
 	process  = git-lfs filter-process
-[interactive]
-	diffFilter = delta --color-only 2>/dev/null || diff-so-fancy 2>/dev/null || diff-highlight 2>/dev/null || cat
-[help]
-	autocorrect = 1
-[log]
-	date = format:%Y-%m-%d(%a) %H:%M:%S(%z)
+
 [credential "https://source.developers.google.com"]
 	helper = gcloud.sh
-[init]
-	defaultBranch = main
