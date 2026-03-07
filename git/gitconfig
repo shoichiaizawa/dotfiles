@@ -3,19 +3,15 @@
 # Source: https://github.com/shoichiaizawa/dotfiles/tree/master/git/gitconfig
 
 [user]
-	name     = Shoichi Aizawa
-	email    = shoichiaizawa@gmail.com
-	username = shoichiaizawa
-[github]
-	user     = shoichiaizawa
+	name  = Shoichi Aizawa
+	email = shoichiaizawa@gmail.com
 [include]
-	path     = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [includeIf "gitdir:~/work/"]
-	path     = ~/work/.gitconfig
+	path = ~/work/.gitconfig
 [core]
 	excludesfile = ~/.gitignore_global
 	editor       = vim
-	; editor       = vim -wl1  ; suggested -wl1 options, which did not work
 	pager = delta 2> /dev/null || \
 					(diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
 	quotepath = false
@@ -29,18 +25,11 @@
 	file-decoration-style        = none
 	hunk-header-decoration-style = yellow box
 [commit]
-	; template = ~/.stCommitMsg
 	verbose = true
-[difftool "sourcetree"]
-	cmd  = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
 [fetch]
 	prune = true
 [merge]
 	conflictstyle = diff3
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [rebase]
 	autosquash = true
 [pull]
@@ -68,7 +57,6 @@
 	whitespace = red reverse
 [alias]
 	git  = !git
-	init = init -g  ; `alias git=hub` in your profile
 	this = !git init && git add . && git commit -m \"chore: initial commit\"
 
 	# See alternative solution 'karan/joe', 'simonwhitaker/gibo'
@@ -102,35 +90,7 @@
 	# Switch to a branch, creating it if necessary
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
-	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs git branch -d"
-
-	# ----------------
-	# browse (git=hub)
-	# ----------------
-
-	b               = browse
-	repo            = browse
-	gh              = browse
-
-	gh-actions      = browse -- actions
-	gh-branches     = browse -- branches
-	gh-commits      = browse -- commits
-	gh-community    = browse -- graphs/community
-	gh-contributors = browse -- contributors
-	gh-dependencies = browse -- network/dependencies
-	gh-discussions  = browse -- discussions
-	gh-forks        = browse -- network/members
-	gh-issues       = browse -- issues
-	gh-network      = browse -- network
-	gh-projects     = browse -- projects
-	gh-pulls        = browse -- pulls
-	gh-pulse        = browse -- pulse
-	gh-security     = browse -- security
-	gh-settings     = browse -- settings
-	gh-stargazers   = browse -- stargazers
-	gh-standards    = browse -- community
-	gh-traffic      = browse -- graphs/traffic
-	gh-wiki         = browse -- wiki
+	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|main\\|develop' | xargs git branch -d"
 
 	# --------
 	# checkout
@@ -222,23 +182,6 @@
 	# List the commits for this week in reverse order
 	summary = log --oneline --author="Shoichi.Aizawa" --since=last.mon --reverse
 
-	# -----
-	# merge
-	# -----
-
-	# TODO: Adapted from @mathiasbynens; find out how to use this
-	# Merge GitHub pull request on top of the `master` branch
-	mpr = "!f() { \
-		if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
-			git fetch origin refs/pull/$1/head:pr/$1 && \
-			git rebase master pr/$1 && \
-			git checkout master && \
-			git merge pr/$1 && \
-			git branch -D pr/$1 && \
-			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
-		fi \
-	}; f"
-
 	# ----
 	# push
 	# ----
@@ -274,14 +217,14 @@
 
 	stashes = stash list
 
-	stash-save = stash save
-	stash-all  = stash save -u
+	stash-save = stash push
+	stash-all  = stash push -u
 
 	# Stash only untracked files
 	# See: https://stackoverflow.com/a/39026300/1334728
 	stash-untracked = "!f() {   \
 		git stash;                \
-		git stash save -u "$@";   \
+		git stash push -u "$@";   \
 		git stash pop stash@{1};  \
 	}; f"
 
@@ -311,22 +254,13 @@
 	smudge   = git-lfs smudge -- %f
 	required = true
 	process  = git-lfs filter-process
-; [pager]
-;   log  = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
-;   show = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
-;   diff = (diff-so-fancy 2> /dev/null || diff-highlight 2> /dev/null || cat) | less -FRXK
-[diff]
-	compactionHeuristic = true
 [interactive]
 	diffFilter = delta --color-only 2>/dev/null || diff-so-fancy 2>/dev/null || diff-highlight 2>/dev/null || cat
 [help]
 	autocorrect = 1
 [log]
 	date = format:%Y-%m-%d(%a) %H:%M:%S(%z)
-	; date = rfc2822
 [credential "https://source.developers.google.com"]
 	helper = gcloud.sh
 [init]
 	defaultBranch = main
-[hub]
-	protocol = https
