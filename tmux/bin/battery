@@ -103,11 +103,7 @@ get_remain() {
     fi
 }
 
-# this scripts is supported OS X only now
-# if ! is_osx; then
-#     echo "OS X only" 1>&2
-#     exit 1
-# fi
+# TODO: Linux support — read /sys/class/power_supply/BAT0/capacity or use acpi/upower
 
 # check arguments
 for i in "$@"
