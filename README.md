@@ -12,7 +12,7 @@ Files are manually symlinked from `~/.dotfiles/` — there is no automated insta
 | Config | Status |
 |--------|--------|
 | Bash (`bash/bashrc`) | Stable; monolithic, 14-section layout |
-| Vim (`vim/vimrc`) | Stable; vim-plug + coc.nvim, ~47 plugins |
+| Vim (`vim/vimrc`) | Stable; vim-plug + coc.nvim, ~45 plugins |
 | Git (`git/gitconfig`) | Stable; delta for diffs, local overrides |
 | tmux (`tmux/tmux.conf`) | Stable; prefix Ctrl+Q, 1-indexed |
 | Starship (`starship.toml`) | Stable |

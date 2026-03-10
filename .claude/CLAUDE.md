@@ -56,7 +56,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 - `gitignore_global` — global ignores for Vim swap files, macOS artifacts
 
 ### vim/
-- `vimrc` — uses `vim-plug` for plugin management (~40 plugins); `coc.nvim` for LSP; organized into fold sections (`{{{1`/`}}}1` with `{{{2` sub-folds); true colour via `termguicolors` with colourscheme switching (`solarized8` default, `cobalt2` alt, `:Colors` picker via fzf.vim)
+- `vimrc` — uses `vim-plug` for plugin management (~45 plugins); `coc.nvim` for LSP; organized into fold sections (`{{{1`/`}}}1` with `{{{2` sub-folds); true colour via `termguicolors` with colourscheme switching (`solarized8` default, `cobalt2` alt, `:Colors` picker via fzf.vim)
 - `autoload/plug.vim` — vim-plug bootstrap
 
 #### vimrc section map
