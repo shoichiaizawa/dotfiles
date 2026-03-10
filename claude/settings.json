@@ -81,5 +81,8 @@
       "Bash(shutdown*)",
       "Bash(sudo *)"
     ]
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
   }
 }
