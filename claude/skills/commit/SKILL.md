@@ -25,13 +25,19 @@ If there are no changes at all (nothing staged, nothing unstaged, no untracked f
 ### Step 1 — Stage and verify atomicity
 
 1. Review all changes (staged + unstaged) and determine whether they form one or more logical units of work.
-2. **If everything is a single logical change**: stage all modified files by name (e.g., `git add file1 file2`) and proceed.
-3. **If changes should be split into multiple commits**: explain the split, listing which files/hunks belong to each commit. Stage only the first logical unit (use `git add <file>` or `git add -p <file>` for partial staging) and proceed with that commit. **Stop after committing the first unit** — do not continue to the next. The user will invoke `/commit` again for the rest.
-4. **Never use `git add -A` or `git add .`** — always stage files by name to avoid accidentally including untracked files.
+2. **The "and" test**: draft a one-line summary. If it contains "and" connecting two independent actions (e.g., "improve X **and** enable Y"), it's two commits — split them. A shared topic or session does not make unrelated changes atomic.
+3. **If everything is a single logical change**: stage all modified files by name (e.g., `git add file1 file2`) and proceed.
+4. **If changes should be split into multiple commits**: explain the split, listing which files/hunks belong to each commit. Stage only the first logical unit (use `git add <file>` or `git add -p <file>` for partial staging) and proceed with that commit. **Stop after committing the first unit** — do not continue to the next. The user will invoke `/commit` again for the rest.
+
+   **Example — split needed**:
+   - `claude/skills/commit/SKILL.md` changed (skill refactor) + `claude/settings.json` changed (enable plugin)
+   - Draft summary: "improve /commit skill **and** enable skill-creator plugin" → two independent actions → two commits
+   - First commit: the skill file only. Stop and let the user invoke `/commit` for the settings change.
+5. **Never use `git add -A` or `git add .`** — always stage files by name to avoid accidentally including untracked files.
 
 ### Step 2 — Compose commit message
 
-5. Draft a commit message using Conventional Commits format:
+1. Draft a commit message using Conventional Commits format:
    ```
    <type>(<scope>): <summary>
    ```
@@ -53,8 +59,8 @@ If there are no changes at all (nothing staged, nothing unstaged, no untracked f
 
    - **scope**: the module, component, or area of the codebase being changed (e.g., `auth`, `api`, `cli`, `config`). Optional — omit when the change is cross-cutting.
    - **summary**: imperative mood, lowercase, no period, under 72 characters
-6. Add body text (separated by blank line) only if the "why" isn't obvious from the summary.
-7. Always append a Co-Authored-By trailer identifying the AI agent:
+2. Add body text (separated by blank line) only if the "why" isn't obvious from the summary.
+3. Always append a Co-Authored-By trailer identifying the AI agent:
    ```
    Co-Authored-By: <agent> (<model>[, <effort>]) <email>
    ```
@@ -70,8 +76,8 @@ If there are no changes at all (nothing staged, nothing unstaged, no untracked f
 
 ### Step 3 — Commit
 
-8. Stage files and create the commit in a single message. Use a HEREDOC to pass the commit message for correct formatting.
-9. Run `git status` after committing to confirm success.
+1. Stage files and create the commit in a single message. Use a HEREDOC to pass the commit message for correct formatting.
+2. Run `git status` after committing to confirm success.
 
 ## Safety rules
 
