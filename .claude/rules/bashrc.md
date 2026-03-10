@@ -10,3 +10,4 @@ paths:
 - **Do not scatter tool-specific PATH entries** into §2 (PATH SETTINGS); §2 is for general/bootstrap PATH only. Tool-specific PATH belongs in the tool's own subsection within §10–§14.
 - **Self-aliases** (`alias foo=foo` after `function foo`) are no-ops in bash — do not add new ones.
 - **`$1`/`$2` in aliases** are not expanded; use a function instead if arguments are needed.
+- **Trust existing shell syntax** — if unsure whether constructs like `alias -- -='cd -'` are valid, assume they work.
