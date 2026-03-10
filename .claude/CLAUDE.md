@@ -26,7 +26,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 ## Architecture
 
 ### bash/
-- `bash_profile` — login shell entry point; sources `bashrc`, shows welcome banner
+- `bash_profile` — login shell entry point; sources `bashrc`, runs `fastfetch` (falls back to `welcome.sh`)
 - `bashrc` — monolithic interactive shell config organized into 14 numbered sections (see below)
 - `bash_prompt` — prompt string definitions sourced by bashrc (overridden by starship if installed)
 - `welcome.sh` — colored ASCII art + system info displayed at login
@@ -35,15 +35,15 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 
 | # | Section | Contents |
 |---|---------|----------|
-| 1 | PREAMBLE | `MYNAME`, `LESS`, `VISUAL`, `EDITOR`, `PYTHONSTARTUP` |
-| 2 | PATH SETTINGS | `brew shellenv`, `BREW_PREFIX` cache, `LESSOPEN`, composer, diff-highlight; Java/SDKMAN subsection |
+| 1 | PREAMBLE | `MYNAME`, `LESS`, `VISUAL`, `EDITOR` |
+| 2 | PATH SETTINGS | `brew shellenv`, `BREW_PREFIX` cache, diff-highlight |
 | 3 | HISTORY SETTINGS | `histappend`, `HISTSIZE`, `HISTFILESIZE`, `HISTTIMEFORMAT`, `HISTCONTROL`, `HISTIGNORE` |
 | 4 | SHELL OPTIONS | `set -o noclobber`, all `shopt` commands |
 | 5 | COLOR SETTINGS | `CLICOLOR`, `LSCOLORS`, `GREP_COLOR`, `GREP_OPTIONS` |
 | 6 | PROMPT | `source ~/.bash/bash_prompt`, PS1 reference table |
-| 7 | GENERAL COMPLETIONS | brew bash_completion, SSH, z.sh, git `g` alias, cask, Vagrant, killall, Composer, Terraform |
+| 7 | GENERAL COMPLETIONS | brew bash_completion, SSH, zoxide, git `g` alias, Vagrant, killall, Terraform |
 | 8 | ALIASES | Grouped subsections: safety, ls, tree, df/du, pagers, editors, cd/nav, mkdir, time, clipboard, history, ssh-keygen, grep, mute, macOS, networking, git, homebrew, python, docker, chrome, config-edit, apps, typos, utilities |
-| 9 | FUNCTIONS | `cd()`, `mcd()`, `man()`, `extract()`, `path()`, `cdf()`, `trash()`, `ql()`, `ii()`, `rmh()`, `open-chrome-tabs()`, `toggleiTerm()`, `heroku-static-test()`, `vintage()`, fzf config |
+| 9 | FUNCTIONS | `cd()`, `mcd()`, `man()`, `extract()`, `path()`, `cdf()`, `trash()`, `ql()`, `ii()`, `rmh()`, `open-chrome-tabs()`, `heroku-static-test()`, `vintage()`, fzf config |
 | 10 | LANGUAGE RUNTIMES & PACKAGE MANAGERS | Subsections: rbenv, nvm / npm, pnpm, Bun |
 | 11 | SHELL ENHANCEMENTS | Subsections: starship, thefuck, direnv, tealdeer |
 | 12 | CLOUD & INFRASTRUCTURE | Subsections: Google Cloud SDK, Kubernetes |
@@ -52,7 +52,7 @@ Personal macOS dotfiles managed as a git repository. There is **no automated ins
 | — | PATH DEDUP | `awk` dedup to prevent PATH growth on re-source |
 
 ### git/
-- `gitconfig` — includes `~/.gitconfig.local` (machine-specific overrides) and `~/work/.gitconfig` (work identity); uses `delta` for diffs
+- `gitconfig` — organised into `# ---` section groups (Identity, Core, Commands, Appearance, Aliases, Integrations); includes `~/.gitconfig.local` (machine-specific overrides) and `~/work/.gitconfig` (work identity); uses `delta` for diffs
 - `gitignore_global` — global ignores for Vim swap files, macOS artifacts
 
 ### vim/
