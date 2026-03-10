@@ -1215,14 +1215,6 @@ if command -v code-insiders >/dev/null 2>&1; then
 fi
 
 # ------------------------------------------------------------
-# bit (https://github.com/chriswalz/bit)
-# ------------------------------------------------------------
-
-if type bit > /dev/null 2>&1; then
-  complete -C "$(command -v bit)" bit
-fi
-
-# ------------------------------------------------------------
 # console-ninja (https://console-ninja.com)
 # ------------------------------------------------------------
 
