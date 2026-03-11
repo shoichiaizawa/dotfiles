@@ -968,12 +968,25 @@ nvm-setup() {
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 }
 
-# Case 1: nvm installed via git clone or install script
+# Lazy-load nvm: sourcing nvm.sh on every shell costs ~310ms.
+# Instead, export NVM_DIR and PATH for the current Node, then load nvm.sh
+# on first use of nvm/node/npm/npx.
 if [[ -d "$HOME/.nvm" ]]; then
   export NVM_DIR="$HOME/.nvm"
   export NVM_SYMLINK_CURRENT=true
-  [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-  [[ -r "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+
+  # Add current Node to PATH immediately (avoids lazy-load for simple node/npm use)
+  [[ -d "$NVM_DIR/current/bin" ]] && PATH="$NVM_DIR/current/bin:$PATH"
+
+  _nvm_lazy_load() {
+    unset -f nvm node npm npx
+    [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+    [[ -r "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+  }
+  nvm()  { _nvm_lazy_load; nvm  "$@"; }
+  node() { _nvm_lazy_load; node "$@"; }
+  npm()  { _nvm_lazy_load; npm  "$@"; }
+  npx()  { _nvm_lazy_load; npx  "$@"; }
 
 # Case 2: nvm installed via Homebrew (unsupported by nvm developers)
 elif [[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ]]; then
@@ -984,10 +997,19 @@ elif [[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ]]; then
   echo "Consider migrating: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash"
 fi
 
-# Aliases to list installed npm packages, globally and locally
-if type npm > /dev/null 2>&1; then
-  source <(npm completion)
+# npm completion: cached to a static file to avoid spawning Node on every shell.
+# Regenerate with: npm completion > ~/.local/share/bash-completion/completions/npm
+_npm_completion_cache="$HOME/.local/share/bash-completion/completions/npm"
+if [[ -r "$_npm_completion_cache" ]]; then
+  source "$_npm_completion_cache"
+elif type npm > /dev/null 2>&1; then
+  mkdir -p "${_npm_completion_cache%/*}"
+  npm completion > "$_npm_completion_cache" 2>/dev/null
+  source "$_npm_completion_cache"
+fi
+unset _npm_completion_cache
 
+if type npm > /dev/null 2>&1; then
   alias npm-gpkg-versions='npm list -g --depth=0'
   alias npm-pkg-versions='npm list --depth=0'
 fi
