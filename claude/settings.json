@@ -1,4 +1,5 @@
 {
+  "cleanupPeriodDays": 365,
   "permissions": {
     "allow": [
       "Bash(basename *)",
@@ -84,5 +85,5 @@
   },
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
-  }
+  },
 }
