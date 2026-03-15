@@ -4,6 +4,7 @@
 #
 # Usage:
 #   setup.sh [--prompts-dir <dir>] <task-name> [<task-name> ...]
+#   setup.sh --cleanup <task-name> [<task-name> ...]
 #
 # Example:
 #   setup.sh --prompts-dir /tmp/parallel-abc add-auth fix-pagination
@@ -30,6 +31,39 @@ PROMPTS_DIR=""
 if [[ "${1:-}" == "--prompts-dir" ]]; then
   PROMPTS_DIR="$2"
   shift 2
+fi
+
+# --- Cleanup mode -----------------------------------------------------------
+
+if [[ "${1:-}" == "--cleanup" ]]; then
+  shift
+  if [[ $# -eq 0 ]]; then
+    echo "usage: setup.sh --cleanup <task-name> [<task-name> ...]" >&2
+    exit 1
+  fi
+
+  for task in "$@"; do
+    branch="task/${task}"
+    wt_path="${REPO_ROOT}-${task}"
+
+    # Remove worktree
+    if git worktree list --porcelain | grep -q "worktree ${wt_path}$"; then
+      git worktree remove --force "$wt_path"
+      echo "removed worktree: ${wt_path}"
+    else
+      echo "skip: no worktree at ${wt_path}"
+    fi
+
+    # Delete branch
+    if git show-ref --verify --quiet "refs/heads/${branch}"; then
+      git branch -D "$branch"
+      echo "deleted branch: ${branch}"
+    else
+      echo "skip: no branch ${branch}"
+    fi
+  done
+
+  exit 0
 fi
 
 if [[ $# -eq 0 ]]; then
@@ -84,22 +118,34 @@ echo ""
 
 # --- Print merge plan (before tmux, so it always appears) ------------------
 
-echo "# ── merge plan (run from ${REPO_ROOT}) ──"
+echo "# ── review (run from ${REPO_ROOT}) ──"
 echo ""
 
 for i in "${!names[@]}"; do
-  echo "# review: ${names[$i]}"
+  echo "# ${names[$i]}"
   echo "git log --oneline ${BASE_BRANCH}..${branches[$i]}"
   echo "git diff ${BASE_BRANCH}..${branches[$i]}"
   echo ""
 done
 
+echo "# ── merge plan: rebase (linear history) ──"
+echo ""
+for i in "${!branches[@]}"; do
+  echo "git rebase ${BASE_BRANCH} ${branches[$i]}"
+  echo "git checkout ${BASE_BRANCH}"
+  echo "git merge --ff-only ${branches[$i]}"
+  echo ""
+done
+
+echo "# ── merge plan: merge (merge commit) ──"
+echo ""
 for i in "${!branches[@]}"; do
   echo "git merge ${branches[$i]}"
 done
 
 echo ""
-echo "# cleanup"
+echo "# ── cleanup ──"
+echo ""
 for i in "${!paths[@]}"; do
   echo "git worktree remove ${paths[$i]}"
 done

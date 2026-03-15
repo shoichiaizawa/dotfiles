@@ -61,3 +61,5 @@ after the agents finish — do not execute it.
 - The setup script is idempotent — it skips worktrees that already exist and panes that are already open.
 - Worktree paths are siblings to the repo to avoid untracked directory noise.
 - If `--prompts-dir` is omitted, agents launch with bare `claude` (no initial prompt).
+- The merge plan shows both rebase (linear history) and merge (merge commit) options — the user picks whichever fits the project.
+- To discard all worktrees and branches: `setup.sh --cleanup <slug-1> <slug-2> ...`
