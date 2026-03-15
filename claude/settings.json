@@ -1,5 +1,8 @@
 {
   "cleanupPeriodDays": 365,
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
+  },
   "permissions": {
     "allow": [
       "Bash(basename *)",
@@ -10,8 +13,8 @@
       "Bash(brew search *)",
       "Bash(cat *)",
       "Bash(command -v *)",
-      "Bash(date *)",
       "Bash(date)",
+      "Bash(date *)",
       "Bash(df *)",
       "Bash(diff *)",
       "Bash(dirname *)",
@@ -25,8 +28,8 @@
       "Bash(git config --get *)",
       "Bash(git describe*)",
       "Bash(git diff*)",
-      "Bash(git log *)",
       "Bash(git log)",
+      "Bash(git log *)",
       "Bash(git ls-files*)",
       "Bash(git remote*)",
       "Bash(git rev-parse *)",
@@ -40,10 +43,10 @@
       "Bash(id)",
       "Bash(ls *)",
       "Bash(man *)",
-      "Bash(printenv *)",
       "Bash(printenv)",
-      "Bash(ps *)",
+      "Bash(printenv *)",
       "Bash(ps)",
+      "Bash(ps *)",
       "Bash(pwd)",
       "Bash(readlink *)",
       "Bash(realpath *)",
@@ -52,8 +55,8 @@
       "Bash(tail *)",
       "Bash(tree *)",
       "Bash(type *)",
-      "Bash(uname *)",
       "Bash(uname)",
+      "Bash(uname *)",
       "Bash(wc *)",
       "Bash(which *)",
       "Bash(whoami)"
@@ -65,12 +68,12 @@
       "Bash(diskutil partitionDisk *)",
       "Bash(git branch -D *)",
       "Bash(git clean -f*)",
-      "Bash(git push * --force*)",
-      "Bash(git push * -f)",
-      "Bash(git push * -f *)",
       "Bash(git push --force*)",
       "Bash(git push -f)",
       "Bash(git push -f *)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f)",
+      "Bash(git push * -f *)",
       "Bash(git reset --hard*)",
       "Bash(launchctl *)",
       "Bash(mkfs *)",
@@ -82,8 +85,5 @@
       "Bash(shutdown*)",
       "Bash(sudo *)"
     ]
-  },
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true
-  },
+  }
 }
