@@ -22,3 +22,7 @@
 # Python generated files #
 ##########################
 *.pyc
+
+# Claude Code generated files #
+###############################
+**/skills/*-workspace/
