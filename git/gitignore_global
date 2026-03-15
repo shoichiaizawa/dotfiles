@@ -13,11 +13,6 @@
 .DS_Store
 .Spotlight-V100
 .Trashes
-.netrwhist
-
-# Jekyll generated files #
-##########################
-.jekyll-metadata
 
 # Python generated files #
 ##########################
