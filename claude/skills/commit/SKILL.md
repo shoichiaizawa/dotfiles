@@ -13,6 +13,7 @@ allowed-tools:
 
 ## Context
 
+- User hint: $ARGUMENTS
 - Current branch: !`git branch --show-current`
 - Current git status: !`git status`
 - Staged and unstaged changes: !`git diff HEAD`
@@ -22,9 +23,15 @@ allowed-tools:
 
 If there are no changes at all (nothing staged, nothing unstaged, no untracked files), tell the user and stop.
 
+If the user hint is non-empty, use it to guide which files to stage and what the
+commit message should convey. The hint may describe the scope ("the /parallel
+changes"), the intent ("fix typo in README"), or both. It is a hint, not a
+literal commit message — still apply Conventional Commits format and the
+atomicity rules below.
+
 ### Step 1 — Stage and verify atomicity
 
-1. Review all changes (staged + unstaged) and determine whether they form one or more logical units of work.
+1. Review all changes (staged + unstaged) and determine whether they form one or more logical units of work. If a user hint is present, use it to identify which subset of changes to stage.
 2. **The "and" test**: draft a one-line summary. If it contains "and" connecting two independent actions (e.g., "improve X **and** enable Y"), it's two commits — split them. A shared topic or session does not make unrelated changes atomic.
 3. **If everything is a single logical change**: stage all modified files by name (e.g., `git add file1 file2`) and proceed.
 4. **If changes should be split into multiple commits**: explain the split, listing which files/hunks belong to each commit. Stage only the first logical unit (use `git add <file>` or `git add -p <file>` for partial staging) and proceed with that commit. **Stop after committing the first unit** — do not continue to the next. The user will invoke `/commit` again for the rest.
