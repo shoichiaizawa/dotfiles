@@ -10,6 +10,7 @@ allowed-tools:
 
 ## Context
 
+- Task arguments: $ARGUMENTS
 - Current branch: !`git branch --show-current`
 - Existing worktrees: !`git worktree list`
 
@@ -27,7 +28,10 @@ This context feeds into Step 2 — it is **not** for prescribing exact commit me
 
 ### Step 1 — Gather tasks
 
-If tasks are not already provided, ask the user to list them. For each task:
+If task slugs were passed as arguments (e.g. `/parallel cleanup-bash cleanup-git`),
+use them directly — skip to composing prompts for each slug.
+
+Otherwise, ask the user to list them. For each task:
 - Derive a short slug (lowercase, hyphens, no spaces) — e.g., `add-auth`, `fix-pagination`
 - Capture or compose a clear, self-contained prompt describing what the agent should do
 
