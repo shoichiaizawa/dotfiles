@@ -246,9 +246,11 @@ for i in "${!launch_paths[@]}"; do
     pane_in_win=1
   else
     # Add to existing window
-    pane_id=$(tmux split-window -d -t "$current_win" -c "$p" -P -F '#{pane_id}')
+    pane_id=$(tmux split-window -d -h -t "$current_win" -c "$p" -P -F '#{pane_id}')
     tmux send-keys -t "$pane_id" "$claude_cmd" Enter
-    tmux select-layout -t "$current_win" tiled 2>/dev/null || true
+    if [[ $pane_in_win -ge 2 ]]; then
+      tmux select-layout -t "$current_win" tiled 2>/dev/null || true
+    fi
     pane_in_win=$((pane_in_win + 1))
   fi
 done
