@@ -58,7 +58,7 @@ prompt_git() {
 }
 
 gcp_config() {
-	[[ -n ~/.config/gcloud/active_config ]] || return
+	[[ -f ~/.config/gcloud/active_config ]] || return
 	echo "($(cat ~/.config/gcloud/active_config))"
 }
 
