@@ -1,16 +1,3 @@
-atom/*
-!atom/config.cson
-!atom/init.coffee
-!atom/keymap.cson
-!atom/packages.list
-!atom/snippets.cson
-!atom/styles.less
-
-emacs.d/auto-save-list/*
-emacs.d/games/*
-emacs.d/packages/*
-emacs.d/url/cache/*
-
 matplotlib/*
 !matplotlib/matplotlibrc
 
