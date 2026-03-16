@@ -15,6 +15,16 @@ allowed-tools:
 
 ## Instructions
 
+### Step 0 — Read repo conventions
+
+Before gathering tasks, learn the project's commit and coding conventions:
+
+1. Read the project's CLAUDE.md (if it exists) for commit style, excluded files, and coding rules
+2. Run `git log --oneline -5` to see recent commit message style
+3. Note anything agents should know: commit format, scopes, files to avoid, coding standards
+
+This context feeds into Step 2 — it is **not** for prescribing exact commit messages.
+
 ### Step 1 — Gather tasks
 
 If tasks are not already provided, ask the user to list them. For each task:
@@ -37,6 +47,16 @@ For each task, use the Write tool to create `<prompts_dir>/<slug>.md` containing
 the agent's prompt. Each prompt should be actionable and self-contained — the
 agent won't have the original conversation context.
 
+**Prompt structure:**
+- Describe the work clearly — what to change, why, and any constraints
+- Include relevant conventions discovered in Step 0 as context (e.g. "This repo
+  uses Conventional Commits with scopes matching the config area. TODO.md is
+  untracked — do not commit it.")
+- Tell agents to commit each change atomically
+- Do **not** prescribe exact commit messages, types, or scopes — let the agent
+  decide based on the context provided
+- Mention files that are excluded or out of scope
+
 ### Step 3 — Launch
 
 Pass all task slugs and the prompts directory to the launch script:
@@ -49,10 +69,16 @@ The script handles everything: creates worktrees as sibling directories, launche
 agents with their prompts in a new tmux window (or prints manual commands if not
 in tmux), and outputs the merge plan.
 
-### Step 4 — Relay output
+### Step 4 — Merge
 
-Show the user the script's output. The merge plan at the bottom is what they run
-after the agents finish — do not execute it.
+After agents finish, follow the merge plan from the script output:
+
+1. **Stash or commit local changes** — `git stash` if the working tree is dirty
+2. **Remove worktrees** before rebasing — `git rebase` cannot operate on branches
+   that are checked out in a worktree
+3. **Review each branch** — inspect diffs and commit logs
+4. **Merge** — use the rebase or merge-commit plan from the output
+5. **Clean up** — run `cleanup.sh <slug-1> <slug-2> ...` to remove worktrees and branches
 
 ## Notes
 
@@ -63,3 +89,4 @@ after the agents finish — do not execute it.
 - The merge plan shows both rebase (linear history) and merge (merge commit) options — the user picks whichever fits the project.
 - To discard all worktrees and branches: `cleanup.sh <slug-1> <slug-2> ...`
 - Prompt files are kept in `~/.claude/parallel/sessions/` for audit trails and re-runs.
+- Set `PARALLEL_MAX_PANES` to override the default limit of 16 panes per tmux window.

@@ -37,14 +37,23 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
+# --- Validate task names ---------------------------------------------------
+
+for task in "$@"; do
+  if [[ ! "$task" =~ ^[a-z0-9-]+$ ]]; then
+    echo "error: invalid task name '${task}' — only lowercase letters, digits, and hyphens allowed" >&2
+    exit 1
+  fi
+done
+
 if [[ $# -eq 1 ]]; then
   echo "hint: only 1 task — consider 'claude --worktree' instead"
   echo "      proceeding anyway..."
   echo ""
 fi
 
-# Max panes per window — 16 fits a 14" MacBook comfortably
-MAX_PANES=16
+# Max panes per window — override with PARALLEL_MAX_PANES
+MAX_PANES="${PARALLEL_MAX_PANES:-16}"
 
 # --- Create worktrees (if needed) ------------------------------------------
 # Ensures worktrees exist. Panes are opened for all valid entries.
@@ -52,6 +61,7 @@ MAX_PANES=16
 branches=()
 paths=()
 names=()
+skipped=0
 
 for task in "$@"; do
   branch="task/${task}"
@@ -64,14 +74,22 @@ for task in "$@"; do
     names+=("$task")
   elif git show-ref --verify --quiet "refs/heads/${branch}"; then
     echo "error: branch '${branch}' already exists (not as a worktree)" >&2
+    echo "  hint: delete it with 'git branch -d ${branch}' or use a different task name" >&2
+    skipped=$((skipped + 1))
   elif git worktree add -b "$branch" "$wt_path"; then
     branches+=("$branch")
     paths+=("$wt_path")
     names+=("$task")
   else
     echo "error: failed to create worktree for ${task}" >&2
+    skipped=$((skipped + 1))
   fi
 done
+
+if [[ $skipped -gt 0 ]]; then
+  echo ""
+  echo "warning: ${skipped} task(s) skipped due to errors" >&2
+fi
 
 if [[ ${#paths[@]} -eq 0 ]]; then
   echo "error: no worktrees available" >&2
@@ -94,6 +112,17 @@ for i in "${!names[@]}"; do
   echo ""
 done
 
+echo "# ── prerequisites (before merging) ──"
+echo ""
+echo "# stash or commit local changes first"
+echo "git stash"
+echo ""
+echo "# remove worktrees — rebase can't operate on checked-out branches"
+for i in "${!paths[@]}"; do
+  echo "git worktree remove ${paths[$i]}"
+done
+echo ""
+
 echo "# ── merge plan: rebase (linear history) ──"
 echo ""
 for i in "${!branches[@]}"; do
@@ -112,12 +141,7 @@ done
 echo ""
 echo "# ── cleanup ──"
 echo ""
-for i in "${!paths[@]}"; do
-  echo "git worktree remove ${paths[$i]}"
-done
-for i in "${!branches[@]}"; do
-  echo "git branch -d ${branches[$i]}"
-done
+echo "~/.claude/skills/parallel/scripts/cleanup.sh ${names[*]}"
 echo ""
 
 # --- Deduplicate panes ----------------------------------------------------
@@ -148,17 +172,28 @@ fi
 
 # --- Launch agents ---------------------------------------------------------
 
+# Build a shell-safe claude command for a task.
+# Uses printf '%q' to escape prompt content so $, `, ", \ in prompts
+# are not interpreted by the pane's shell.
+build_claude_cmd() {
+  local task="$1"
+  if [[ -n "$PROMPTS_DIR" && -f "${PROMPTS_DIR}/${task}.md" ]]; then
+    local escaped
+    escaped=$(printf '%q' "$(cat "${PROMPTS_DIR}/${task}.md")")
+    echo "claude ${escaped}"
+  else
+    echo "claude"
+  fi
+}
+
 if [[ -z "${TMUX:-}" ]]; then
   echo "not inside tmux — run these manually:"
   echo ""
   for i in "${!launch_paths[@]}"; do
     p="${launch_paths[$i]}"
     task="${launch_names[$i]}"
-    if [[ -n "$PROMPTS_DIR" && -f "${PROMPTS_DIR}/${task}.md" ]]; then
-      echo "  cd ${p} && claude \"\$(cat '${PROMPTS_DIR}/${task}.md')\""
-    else
-      echo "  cd ${p} && claude"
-    fi
+    claude_cmd=$(build_claude_cmd "$task")
+    echo "  cd ${p} && ${claude_cmd}"
   done
   exit 0
 fi
@@ -200,13 +235,7 @@ fi
 for i in "${!launch_paths[@]}"; do
   p="${launch_paths[$i]}"
   task="${launch_names[$i]}"
-
-  # Build claude command — with prompt if a prompt file exists
-  if [[ -n "$PROMPTS_DIR" && -f "${PROMPTS_DIR}/${task}.md" ]]; then
-    claude_cmd="claude \"\$(cat '${PROMPTS_DIR}/${task}.md')\""
-  else
-    claude_cmd="claude"
-  fi
+  claude_cmd=$(build_claude_cmd "$task")
 
   if [[ -z "$current_win" ]] || [[ $pane_in_win -ge $MAX_PANES ]]; then
     # Need a new window
