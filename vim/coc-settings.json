@@ -21,6 +21,5 @@
   "yaml.format.enable": true,
   "yaml.schemas": {
     "kubernetes": "/*.yaml"
-  },
-  "python.jediEnabled": false
+  }
 }
