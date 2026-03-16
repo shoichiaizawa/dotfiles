@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 #
-# setup.sh — Create worktrees and launch parallel Claude Code sessions.
+# launch.sh — Create worktrees and launch parallel Claude Code sessions.
 #
 # Usage:
-#   setup.sh [--prompts-dir <dir>] <task-name> [<task-name> ...]
-#   setup.sh --cleanup <task-name> [<task-name> ...]
+#   launch.sh [--prompts-dir <dir>] <task-name> [<task-name> ...]
 #
 # Example:
-#   setup.sh --prompts-dir /tmp/parallel-abc add-auth fix-pagination
+#   launch.sh --prompts-dir /tmp/parallel-abc add-auth fix-pagination
 #
 # Each task name becomes:
 #   - Branch:   task/<task-name>
@@ -33,41 +32,8 @@ if [[ "${1:-}" == "--prompts-dir" ]]; then
   shift 2
 fi
 
-# --- Cleanup mode -----------------------------------------------------------
-
-if [[ "${1:-}" == "--cleanup" ]]; then
-  shift
-  if [[ $# -eq 0 ]]; then
-    echo "usage: setup.sh --cleanup <task-name> [<task-name> ...]" >&2
-    exit 1
-  fi
-
-  for task in "$@"; do
-    branch="task/${task}"
-    wt_path="${REPO_ROOT}-${task}"
-
-    # Remove worktree
-    if git worktree list --porcelain | grep -q "worktree ${wt_path}$"; then
-      git worktree remove --force "$wt_path"
-      echo "removed worktree: ${wt_path}"
-    else
-      echo "skip: no worktree at ${wt_path}"
-    fi
-
-    # Delete branch
-    if git show-ref --verify --quiet "refs/heads/${branch}"; then
-      git branch -D "$branch"
-      echo "deleted branch: ${branch}"
-    else
-      echo "skip: no branch ${branch}"
-    fi
-  done
-
-  exit 0
-fi
-
 if [[ $# -eq 0 ]]; then
-  echo "usage: setup.sh [--prompts-dir <dir>] <task-name> [<task-name> ...]" >&2
+  echo "usage: launch.sh [--prompts-dir <dir>] <task-name> [<task-name> ...]" >&2
   exit 1
 fi
 

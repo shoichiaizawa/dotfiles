@@ -1,7 +1,8 @@
 ---
 description: Orchestrate parallel Claude Code sessions in separate git worktrees. Use when the user says "parallel", "spin up tasks", "run these in parallel", or invokes /parallel.
 allowed-tools:
-  - Bash(~/.claude/skills/parallel/scripts/setup.sh *)
+  - Bash(~/.claude/skills/parallel/scripts/launch.sh *)
+  - Bash(~/.claude/skills/parallel/scripts/cleanup.sh *)
   - Bash(mkdir -p ~/.claude/parallel/sessions/*)
 ---
 
@@ -36,12 +37,12 @@ For each task, use the Write tool to create `<prompts_dir>/<slug>.md` containing
 the agent's prompt. Each prompt should be actionable and self-contained — the
 agent won't have the original conversation context.
 
-### Step 3 — Run setup
+### Step 3 — Launch
 
-Pass all task slugs and the prompts directory to the setup script:
+Pass all task slugs and the prompts directory to the launch script:
 
 ```bash
-~/.claude/skills/parallel/scripts/setup.sh --prompts-dir "$prompts_dir" <slug-1> <slug-2> [...]
+~/.claude/skills/parallel/scripts/launch.sh --prompts-dir "$prompts_dir" <slug-1> <slug-2> [...]
 ```
 
 The script handles everything: creates worktrees as sibling directories, launches
@@ -56,9 +57,9 @@ after the agents finish — do not execute it.
 ## Notes
 
 - This skill creates worktrees and launches agents. It does NOT create issues, detect conflicts, or merge branches.
-- The setup script is idempotent — it skips worktrees that already exist and panes that are already open.
+- The launch script is idempotent — it skips worktrees that already exist and panes that are already open.
 - Worktree paths are siblings to the repo to avoid untracked directory noise.
 - If `--prompts-dir` is omitted, agents launch with bare `claude` (no initial prompt).
 - The merge plan shows both rebase (linear history) and merge (merge commit) options — the user picks whichever fits the project.
-- To discard all worktrees and branches: `setup.sh --cleanup <slug-1> <slug-2> ...`
+- To discard all worktrees and branches: `cleanup.sh <slug-1> <slug-2> ...`
 - Prompt files are kept in `~/.claude/parallel/sessions/` for audit trails and re-runs.
