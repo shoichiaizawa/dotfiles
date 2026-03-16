@@ -15,8 +15,6 @@ fi
 
 if type fastfetch > /dev/null 2>&1; then
   fastfetch
-elif [ -f ~/.bash/welcome.sh ]; then
-  sh ~/.bash/welcome.sh
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
