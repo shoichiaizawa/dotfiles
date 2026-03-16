@@ -606,7 +606,7 @@ disabled = false
 
 [swift]
 format = '[via](bold white) [$symbol($version )]($style)'
-symbol = 'ﯣ '  # Nerd Fonts
+symbol = ' '  # Nerd Fonts
 
 ################################################################################
 # Terraform (https://starship.rs/config/#terraform)
