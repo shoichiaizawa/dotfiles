@@ -2,7 +2,7 @@
 description: Orchestrate parallel Claude Code sessions in separate git worktrees. Use when the user says "parallel", "spin up tasks", "run these in parallel", or invokes /parallel.
 allowed-tools:
   - Bash(~/.claude/skills/parallel/scripts/setup.sh *)
-  - Bash(mktemp *)
+  - Bash(mkdir -p ~/.claude/parallel/sessions/*)
 ---
 
 # /parallel
@@ -25,14 +25,12 @@ alternative. Proceed with the script if they still want `/parallel`.
 
 ### Step 2 — Write prompt files
 
-Create a temporary directory and write one prompt file per task:
+Create a session directory and write one prompt file per task:
 
 ```bash
-prompts_dir=$(mktemp -d)
+prompts_dir="$HOME/.claude/parallel/sessions/$(date +%Y-%m-%dT%H-%M-%S)"
+mkdir -p "$prompts_dir"
 ```
-
-If `mktemp` is unavailable, use `/tmp/claude-parallel-$(date +%s)` and create
-the directory manually.
 
 For each task, use the Write tool to create `<prompts_dir>/<slug>.md` containing
 the agent's prompt. Each prompt should be actionable and self-contained — the
@@ -63,3 +61,4 @@ after the agents finish — do not execute it.
 - If `--prompts-dir` is omitted, agents launch with bare `claude` (no initial prompt).
 - The merge plan shows both rebase (linear history) and merge (merge commit) options — the user picks whichever fits the project.
 - To discard all worktrees and branches: `setup.sh --cleanup <slug-1> <slug-2> ...`
+- Prompt files are kept in `~/.claude/parallel/sessions/` for audit trails and re-runs.
