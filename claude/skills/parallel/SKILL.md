@@ -3,6 +3,8 @@ description: Orchestrate parallel Claude Code sessions in separate git worktrees
 allowed-tools:
   - Bash(~/.claude/skills/parallel/scripts/launch.sh *)
   - Bash(~/.claude/skills/parallel/scripts/cleanup.sh *)
+  - Bash(~/.claude/skills/parallel/scripts/status.sh *)
+  - Bash(~/.claude/skills/parallel/scripts/merge.sh *)
   - Bash(mkdir -p ~/.claude/parallel/sessions/*)
 ---
 
@@ -73,24 +75,53 @@ The script handles everything: creates worktrees as sibling directories, launche
 agents with their prompts in a new tmux window (or prints manual commands if not
 in tmux), and outputs the merge plan.
 
-### Step 4 — Merge
+### Step 4 — Monitor (optional)
 
-After agents finish, follow the merge plan from the script output:
+Check agent progress with the status script:
 
-1. **Stash or commit local changes** — `git stash` if the working tree is dirty
-2. **Remove worktrees** before rebasing — `git rebase` cannot operate on branches
-   that are checked out in a worktree
-3. **Review each branch** — inspect diffs and commit logs
-4. **Merge** — use the rebase or merge-commit plan from the output
-5. **Clean up** — run `cleanup.sh <slug-1> <slug-2> ...` to remove worktrees and branches
+```bash
+~/.claude/skills/parallel/scripts/status.sh
+```
+
+It auto-discovers all `task/*` branches, checks for commits since base, and
+detects open tmux panes. Pass task names to check a subset:
+
+```bash
+~/.claude/skills/parallel/scripts/status.sh <slug-1> <slug-2>
+```
+
+### Step 5 — Merge
+
+Once agents are done, merge their branches back. The merge script handles
+worktree removal, stashing, rebasing/merging, and branch cleanup in one go:
+
+```bash
+~/.claude/skills/parallel/scripts/merge.sh <slug-1> <slug-2> [...]
+```
+
+Default strategy is rebase (linear history). For merge commits:
+
+```bash
+~/.claude/skills/parallel/scripts/merge.sh --strategy merge <slug-1> <slug-2>
+```
+
+If a branch conflicts, the script aborts that branch cleanly and continues with
+the rest. Resolve conflicts manually, then clean up leftovers with `cleanup.sh`.
+
+To keep branches after merging (e.g. for further review):
+
+```bash
+~/.claude/skills/parallel/scripts/merge.sh --no-cleanup <slug-1> <slug-2>
+```
 
 ## Notes
 
-- This skill creates worktrees and launches agents. It does NOT create issues, detect conflicts, or merge branches.
+- The full lifecycle is: **launch** → **monitor** → **merge** → **cleanup** — each step has a script.
 - The launch script is idempotent — it skips worktrees that already exist and panes that are already open.
 - Worktree paths are siblings to the repo to avoid untracked directory noise.
 - If `--prompts-dir` is omitted, agents launch with bare `claude` (no initial prompt).
-- The merge plan shows both rebase (linear history) and merge (merge commit) options — the user picks whichever fits the project.
-- To discard all worktrees and branches: `cleanup.sh <slug-1> <slug-2> ...`
+- `status.sh` detects running agents by checking tmux pane directories — it may not detect agents that have exited but whose pane is still open.
+- `merge.sh` handles worktree removal automatically — no need to remove them manually before merging.
+- To discard all worktrees and branches without merging: `cleanup.sh <slug-1> <slug-2> ...`
 - Prompt files are kept in `~/.claude/parallel/sessions/` for audit trails and re-runs.
 - Set `PARALLEL_MAX_PANES` to override the default limit of 16 panes per tmux window.
