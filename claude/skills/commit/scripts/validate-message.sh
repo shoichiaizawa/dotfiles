@@ -39,9 +39,12 @@ if echo "$summary" | grep -qE '^[A-Z]'; then
     errors+=("Summary should start with lowercase")
 fi
 
-# Co-Authored-By trailer
-if ! echo "$msg" | grep -qE '^Co-Authored-By: .+'; then
+# Co-Authored-By trailer — validate structure: Agent (Model[, effort]) <email>
+trailer=$(echo "$msg" | grep -E '^Co-Authored-By: ' || true)
+if [[ -z "$trailer" ]]; then
     errors+=("Missing Co-Authored-By trailer")
+elif ! echo "$trailer" | grep -qE '^Co-Authored-By: [A-Za-z]+ \(.+\) <.+@.+>$'; then
+    errors+=("Co-Authored-By trailer does not match format: Agent (Model[, effort]) <email>")
 fi
 
 # Warn on chore
