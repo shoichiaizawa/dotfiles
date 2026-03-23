@@ -88,9 +88,10 @@ set output-meta on
 # (default on)
 set convert-meta off
 
-# Use the Option key to move forward and back in words
-"\e[1;5D": backward-word
-"\e[1;5C": forward-word
+# Ctrl+Left/Right to jump to beginning/end of line
+# (Requires disabling macOS "Move left/right a space" in Mission Control shortcuts)
+"\e[1;5D": beginning-of-line
+"\e[1;5C": end-of-line
 
 # Use Alt/Meta + Delete to delete the next word
 "\e[3;3~": kill-word
