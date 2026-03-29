@@ -290,6 +290,12 @@
 
 	tags = tag -l
 
+# --- Repository management ---
+
+[ghq]
+	root = ~/sho/code
+	root = ~/work/code
+
 # --- Integrations ---
 
 [filter "lfs"]

@@ -1287,6 +1287,21 @@ if type deck > /dev/null 2>&1; then
 fi
 
 # ------------------------------------------------------------
+# ghq (https://github.com/x-motemen/ghq)
+# ------------------------------------------------------------
+
+if type ghq > /dev/null 2>&1; then
+  # Repo jumping via fzf
+  if type fzf > /dev/null 2>&1; then
+    repo() {
+      local dir
+      dir=$(ghq list -p | fzf --height 40% --reverse --exit-0)
+      [ -n "$dir" ] && cd "$dir"
+    }
+  fi
+fi
+
+# ------------------------------------------------------------
 # Google Antigravity (https://antigravity.google)
 # ------------------------------------------------------------
 
