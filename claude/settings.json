@@ -1,5 +1,6 @@
 {
   "cleanupPeriodDays": 365,
+  "effortLevel": "high",
   "voiceEnabled": true,
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
