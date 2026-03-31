@@ -86,5 +86,19 @@
       "Bash(shutdown*)",
       "Bash(sudo *)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -o '\"file_path\":\"[^\"]*\"' | cut -d'\"' -f4 | { read -r f; case \"$f\" in *.sh|*bashrc|*bash_profile|*bash_prompt) bash -n \"$f\" && echo \"✓ syntax ok: $f\" ;; esac; }",
+            "statusMessage": "Checking shell syntax…"
+          }
+        ]
+      }
+    ]
   }
 }
