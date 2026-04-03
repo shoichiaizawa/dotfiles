@@ -1,12 +1,14 @@
 ---
 description: Create a clean, atomic git commit from the current changes. Use whenever the user says "commit", "commit this", or invokes /commit.
 allowed-tools:
+  - Bash(git init)
   - Bash(git add *)
   - Bash(git status)
   - Bash(git diff *)
   - Bash(git log *)
   - Bash(git branch --show-current)
   - Bash(git commit *)
+  - Bash(bash *pre-flight*)
   - Bash(bash *analyse-changes*)
   - Bash(bash *validate-message*)
   - Bash(cat *validate-message*)
@@ -17,12 +19,28 @@ allowed-tools:
 ## Context
 
 - User hint: $ARGUMENTS
-- Current branch: !`git branch --show-current`
-- Change analysis: !`bash ~/.claude/skills/commit/scripts/analyse-changes.sh`
-- Full diff: !`git diff HEAD`
-- Recent commits: !`git log --oneline -10`
+- Pre-flight: !`bash ~/.claude/skills/commit/scripts/pre-flight.sh`
+- Current branch: !`git branch --show-current 2>/dev/null || echo "N/A"`
+- Change analysis: !`bash ~/.claude/skills/commit/scripts/analyse-changes.sh 2>/dev/null || echo "N/A"`
+- Full diff: !`git diff HEAD 2>/dev/null || echo "N/A"`
+- Recent commits: !`git log --oneline -10 2>/dev/null || echo "N/A"`
 
 ## Instructions
+
+### Not a git repository
+
+If the git check above shows "NOT_A_GIT_REPO":
+
+1. Tell the user this directory is not a git repository.
+2. Run `git init` to initialise one.
+3. Stage all files by name (review the directory contents first — never use
+   `git add -A` or `git add .`). Skip files that look like secrets or build
+   artefacts (`.env`, `node_modules/`, `dist/`, etc.).
+4. Create the initial commit with the message `chore: initial commit` plus the
+   Co-Authored-By trailer (see `references/message-format.md`).
+5. Run `git status` to confirm success, then stop.
+
+### No changes detected
 
 If the change analysis shows "No changes detected", tell the user and stop.
 
