@@ -1401,6 +1401,9 @@ inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
 inoremap <silent> <Leader>time <C-R>=strftime('%H:%M:%S')<CR>
 inoremap <silent> <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
 
+nnoremap <silent> <Leader>ll :call <SID>YankClaudeRef()<CR>
+xnoremap <silent> <Leader>ll :<C-u>call <SID>YankClaudeRef()<CR>
+
 "   }}}2
 
 " NOTES: Explanation on how to achieve inline commenting when mapping keys:
@@ -1409,6 +1412,26 @@ inoremap <silent> <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
 " }}}1
 " General Functions {{{1
 
+"   YankClaudeRef() {{{2
+"
+" Yank selected lines with file path and line range to the system clipboard,
+" for pasting into a Claude Code session.
+"
+function! s:YankClaudeRef() abort
+  let l:file = expand('%:p')
+  let l:start = line("'<")
+  let l:end = line("'>")
+  if l:start == l:end
+    let l:ref = '@' . l:file . ':' . l:start
+  else
+    let l:ref = '@' . l:file . ':' . l:start . '-' . l:end
+  endif
+  let @+ = l:ref
+  redraw
+  echo 'Yanked: ' . l:ref
+endfunction
+
+"   }}}2
 "   Incr() {{{2
 "
 " Credits: Vim Tips Wiki Wikia members
