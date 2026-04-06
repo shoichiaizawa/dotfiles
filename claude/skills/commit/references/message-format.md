@@ -31,8 +31,9 @@ Use `chore` only when nothing else fits.
 
 ## Scope
 
-The module, component, or area of the codebase being changed (e.g., `auth`, `api`,
-`cli`, `config`). Optional — omit when the change is cross-cutting.
+Derive from the common directory or component of the changed files (e.g., `auth`,
+`api`, `cli`, `config`). Omit only when changes are genuinely cross-cutting or all
+files are in the repository root with no directory structure.
 
 ## Summary
 
@@ -56,7 +57,7 @@ Co-Authored-By: <agent> (<model>[, <effort>]) <email>
 
 - `<agent>`: the coding agent name (e.g., Claude, Codex, Cursor)
 - `<model>`: friendly model name from system context (e.g., Opus 4.6, o3-pro, Sonnet 4.6)
-- `<effort>`: reasoning effort level, if the agent supports it — omit if not applicable
+- `<effort>`: reasoning effort level from the skill context. Include when available; omit only when the context shows `N/A`
 - `<email>`: the agent's noreply address
 - Use your actual identity from your system context.
 

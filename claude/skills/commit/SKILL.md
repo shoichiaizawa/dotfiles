@@ -10,6 +10,7 @@ allowed-tools:
   - Bash(git commit *)
   - Bash(bash *pre-flight*)
   - Bash(bash *analyse-changes*)
+  - Bash(bash *effort-level*)
   - Bash(bash *validate-message*)
   - Bash(cat *validate-message*)
 ---
@@ -24,6 +25,7 @@ allowed-tools:
 - Change analysis: !`bash ~/.claude/skills/commit/scripts/analyse-changes.sh 2>/dev/null || echo "N/A"`
 - Full diff: !`git diff HEAD 2>/dev/null || echo "N/A"`
 - Recent commits: !`git log --oneline -10 2>/dev/null || echo "N/A"`
+- Effort level: !`bash ~/.claude/skills/commit/scripts/effort-level.sh`
 
 ## Instructions
 
@@ -79,6 +81,13 @@ Conventional Commits format, type table, and Co-Authored-By trailer spec.
 
 Draft the commit message following that format. Use the recent commits above for
 style consistency.
+
+- **Scope**: derive from the directory grouping in the change analysis. If
+  changed files share a common directory or component, use it as scope. Omit
+  scope only when changes are genuinely cross-cutting or all files are in the
+  repository root with no directory structure.
+- **Effort level**: use the effort level from context above. Include it in the
+  Co-Authored-By trailer unless it shows `N/A`.
 
 ### Step 3 — Validate and commit
 
