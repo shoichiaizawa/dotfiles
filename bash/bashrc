@@ -930,6 +930,203 @@ vintage() {
   ) fi
 }
 
+# System and package maintenance — consolidates daily update routine.
+# Logs output to ~/.local/state/upkeep/<date>.log
+upkeep() {
+  local logdir="$HOME/.local/state/upkeep"
+  local logfile="$logdir/$(date +%Y%m%d-%H%M%S).log"
+  mkdir -p "$logdir"
+
+  {
+    local sep="────────────────────────────────────────"
+    printf '\n%s\n  upkeep — %s\n%s\n' "$sep" "$(date '+%Y-%m-%d %H:%M')" "$sep"
+    local -a _summary=()
+
+    # Homebrew
+    printf '\n:: Homebrew\n\n'
+    brew update
+    local formula_outdated
+    formula_outdated=$(brew outdated --formula 2>/dev/null) || true
+    printf '\nOutdated formulae:\n%s\n' "$formula_outdated"
+    local cask_outdated
+    cask_outdated=$(brew outdated --cask --greedy --verbose 2>/dev/null)
+    printf '\nOutdated casks:\n%s\n\n' "$cask_outdated"
+    brew upgrade --formula
+    local -a cask_targets=()
+    while IFS= read -r _cask; do
+      [[ -n "$_cask" ]] && cask_targets+=("$_cask")
+    done < <(printf '%s\n' "$cask_outdated" | grep -v '(latest) != latest' | awk '{print $1}')
+    if (( ${#cask_targets[@]} > 0 )); then
+      if [[ -t 0 ]]; then
+        brew reinstall --cask "${cask_targets[@]}"
+      else
+        # Non-interactive: attempt each cask individually, log failures
+        local cask_failed=""
+        for cask in "${cask_targets[@]}"; do
+          if ! brew reinstall --cask "$cask" 2>&1; then
+            cask_failed="${cask_failed:+$cask_failed, }$cask"
+          fi
+        done
+        if [[ -n "$cask_failed" ]]; then
+          printf '\n  ⚠ Casks requiring sudo (run manually): %s\n' "$cask_failed"
+        fi
+      fi
+    fi
+    brew cleanup
+    brew doctor || true
+    local formula_count=0 cask_count=${#cask_targets[@]}
+    [[ -n "$formula_outdated" ]] && formula_count=$(printf '%s\n' "$formula_outdated" | grep -c . || true)
+    if (( formula_count + cask_count > 0 )); then
+      local brew_summary="" formula_names
+      if (( formula_count > 0 )); then
+        formula_names=${formula_outdated//$'\n'/ }
+        (( formula_count == 1 )) && brew_summary="↑ 1 formula ($formula_names)" || brew_summary="↑ ${formula_count} formulae ($formula_names)"
+      fi
+      if (( cask_count > 0 )); then
+        [[ -n "$brew_summary" ]] && brew_summary+=", "
+        (( cask_count == 1 )) && brew_summary+="↑ 1 cask (${cask_targets[*]})" || brew_summary+="↑ ${cask_count} casks (${cask_targets[*]})"
+      fi
+      _summary+=("Homebrew   $brew_summary")
+    else
+      _summary+=("Homebrew   up to date")
+    fi
+
+    # nvm
+    printf '\n:: nvm\n\n'
+    nvm-setup
+    local remote_lts current_ver current_major
+    remote_lts=$(nvm version-remote --lts 2>/dev/null)
+    current_ver=$(nvm current 2>/dev/null)
+    current_major=${current_ver#v}; current_major=${current_major%%.*}
+    printf 'Active: %s | Remote LTS: %s\n' "$current_ver" "$remote_lts"
+    local _node_status="${current_ver} ✓"
+    if [[ "$(nvm version "$remote_lts" 2>/dev/null)" == "N/A" ]]; then
+      _node_status="${current_ver} → ${remote_lts} available"
+      if [[ -n "$current_major" && "$current_major" != "none" ]]; then
+        printf '\n  New LTS available — run:\n  nvm install --latest-npm %s --reinstall-packages-from=%s\n' \
+          "$remote_lts" "$current_major"
+      else
+        printf '\n  New LTS available — run:\n  nvm install --latest-npm %s\n' "$remote_lts"
+      fi
+    fi
+    # Only suggest current-line updates if user already has it installed
+    local remote_current rc_major
+    remote_current=$(nvm version-remote 2>/dev/null)
+    rc_major=${remote_current#v}; rc_major=${rc_major%%.*}
+    if [[ "$rc_major" =~ ^[0-9]+$ ]] && (( rc_major % 2 == 1 )) \
+        && [[ "$(nvm ls "$rc_major" 2>/dev/null)" != *"N/A"* ]]; then
+      if [[ "$(nvm version "$remote_current" 2>/dev/null)" == "N/A" ]]; then
+        _node_status="${current_ver} → ${remote_current} available"
+        printf '\n  Current line (%s) update available — run:\n  nvm install --latest-npm %s --reinstall-packages-from=%s\n' \
+          "v$rc_major" "$remote_current" "$rc_major"
+      fi
+    fi
+    _summary+=("Node       $_node_status")
+
+    # Bun
+    printf '\n:: Bun\n\n'
+    local _bun_out
+    _bun_out=$(bun upgrade 2>&1)
+    printf '%s\n' "$_bun_out"
+    if printf '%s' "$_bun_out" | grep -qi 'already'; then
+      _summary+=("Bun        up to date")
+    else
+      _summary+=("Bun        ↑ upgraded")
+    fi
+
+    # uv
+    printf '\n:: uv\n\n'
+    local _uv_out
+    _uv_out=$(uv self update 2>&1)
+    printf '%s\n' "$_uv_out"
+    local _uv_ver
+    _uv_ver=$(printf '%s' "$_uv_out" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | tail -1)
+    if printf '%s' "$_uv_out" | grep -q 'already'; then
+      _summary+=("uv         ${_uv_ver} ✓")
+    else
+      _summary+=("uv         ↑ ${_uv_ver:-upgraded}")
+    fi
+
+    # Google Cloud SDK
+    printf '\n:: Google Cloud SDK\n\n'
+    local _gcloud_out
+    _gcloud_out=$(gcloud components update --quiet 2>&1)
+    printf '%s\n' "$_gcloud_out"
+    if printf '%s' "$_gcloud_out" | grep -q 'up to date'; then
+      local _gv
+      _gv=$(gcloud version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+      _summary+=("gcloud     ${_gv} ✓")
+    else
+      local _gv_old _gv_new
+      _gv_old=$(printf '%s' "$_gcloud_out" | grep -oE 'current.*version is: [0-9.]+' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+      _gv_new=$(printf '%s' "$_gcloud_out" | grep -oE 'latest.*version is: [0-9.]+' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+      if [[ -n "$_gv_old" && -n "$_gv_new" ]]; then
+        _summary+=("gcloud     ↑ ${_gv_old} → ${_gv_new}")
+      else
+        _summary+=("gcloud     ↑ updated")
+      fi
+    fi
+
+    # Vim plugins
+    printf '\n:: Vim plugins\n\n'
+    local plugdir="$HOME/.vim/plugged"
+    local snap_before
+    snap_before=$(mktemp)
+    trap 'rm -f "$snap_before"' EXIT
+    for d in "$plugdir"/*/; do
+      [[ -d "$d/.git" ]] && printf '%s %s\n' "$(basename "$d")" \
+        "$(git -C "$d" rev-parse --short HEAD 2>/dev/null)" >> "$snap_before"
+    done
+    _filehash() { if command -v md5 > /dev/null 2>&1; then md5 -q "$1" 2>/dev/null; else md5sum "$1" 2>/dev/null | awk '{print $1}'; fi; }
+    local plug_hash_before plug_hash_after plug_upgraded=false
+    plug_hash_before=$(_filehash "$HOME/.vim/autoload/plug.vim")
+    vim +'PlugUpgrade' +'PlugUpdate --sync' +qall &>/dev/null
+    plug_hash_after=$(_filehash "$HOME/.vim/autoload/plug.vim")
+    [[ "$plug_hash_before" != "$plug_hash_after" ]] && plug_upgraded=true
+    $plug_upgraded && echo "vim-plug: upgraded" || echo "vim-plug: up to date"
+    local -a _vim_updated=()
+    while IFS=' ' read -r name old_hash; do
+      local new_hash
+      new_hash=$(git -C "$plugdir/$name" rev-parse --short HEAD 2>/dev/null)
+      if [[ "$old_hash" != "$new_hash" ]]; then
+        _vim_updated+=("$name")
+        printf '  %s: %s → %s\n' "$name" "$old_hash" "$new_hash"
+        git -C "$plugdir/$name" log --oneline "${old_hash}..HEAD" 2>/dev/null | sed 's/^/    /'
+      fi
+    done < "$snap_before"
+    rm -f "$snap_before"
+    if (( ${#_vim_updated[@]} == 0 )); then
+      echo "Plugins: all up to date"
+    fi
+    # CocUpdate is async; sleep gives it time to finish before quitting
+    vim -c 'CocUpdate' -c 'sleep 10' -c 'qall!' &>/dev/null
+    echo "CocUpdate done"
+    local _vim_summary=""
+    $plug_upgraded && _vim_summary="vim-plug ↑"
+    if (( ${#_vim_updated[@]} > 0 )); then
+      [[ -n "$_vim_summary" ]] && _vim_summary+=", "
+      local plugin_count=${#_vim_updated[@]}
+      (( plugin_count == 1 )) && _vim_summary+="↑ 1 plugin (${_vim_updated[*]})" \
+        || _vim_summary+="↑ ${plugin_count} plugins (${_vim_updated[*]})"
+    fi
+    if [[ -n "$_vim_summary" ]]; then
+      _summary+=("Vim        $_vim_summary")
+    else
+      _summary+=("Vim        up to date")
+    fi
+
+    printf '\n── Summary %s\n' "${sep:11}"
+    for _line in "${_summary[@]}"; do
+      printf '  %s\n' "$_line"
+    done
+
+    printf '\n%s\n  done — %s\n%s\n' "$sep" "$(date '+%H:%M')" "$sep"
+
+  } 2>&1 | tee -a "$logfile"
+
+  echo "Log: $logfile"
+}
+
 # ---
 # fzf
 # ---
