@@ -1471,6 +1471,14 @@ if type codex > /dev/null 2>&1; then
 fi
 
 # ------------------------------------------------------------
+# Claude Code (https://claude.ai/code)
+# ------------------------------------------------------------
+
+if type claude > /dev/null 2>&1; then
+  alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work claude'
+fi
+
+# ------------------------------------------------------------
 # deck (https://github.com/k1LoW/deck)
 # ------------------------------------------------------------
 
