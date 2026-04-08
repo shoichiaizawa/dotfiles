@@ -1027,8 +1027,11 @@ upkeep() {
     printf '\n:: Bun\n\n'
     local _bun_out
     _bun_out=$(bun upgrade 2>&1)
+    local _bun_rc=$?
     printf '%s\n' "$_bun_out"
-    if printf '%s' "$_bun_out" | grep -qi 'already'; then
+    if (( _bun_rc != 0 )); then
+      _summary+=("Bun        ✗ error")
+    elif printf '%s' "$_bun_out" | grep -qi 'already'; then
       _summary+=("Bun        up to date")
     else
       _summary+=("Bun        ↑ upgraded")
@@ -1038,10 +1041,13 @@ upkeep() {
     printf '\n:: uv\n\n'
     local _uv_out
     _uv_out=$(uv self update 2>&1)
+    local _uv_rc=$?
     printf '%s\n' "$_uv_out"
     local _uv_ver
     _uv_ver=$(printf '%s' "$_uv_out" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | tail -1)
-    if printf '%s' "$_uv_out" | grep -q 'already'; then
+    if (( _uv_rc != 0 )); then
+      _summary+=("uv         ✗ error")
+    elif printf '%s' "$_uv_out" | grep -q 'already'; then
       _summary+=("uv         ${_uv_ver} ✓")
     else
       _summary+=("uv         ↑ ${_uv_ver:-upgraded}")
@@ -1051,8 +1057,11 @@ upkeep() {
     printf '\n:: Google Cloud SDK\n\n'
     local _gcloud_out
     _gcloud_out=$(gcloud components update --quiet 2>&1)
+    local _gcloud_rc=$?
     printf '%s\n' "$_gcloud_out"
-    if printf '%s' "$_gcloud_out" | grep -q 'up to date'; then
+    if (( _gcloud_rc != 0 )); then
+      _summary+=("gcloud     ✗ error")
+    elif printf '%s' "$_gcloud_out" | grep -q 'up to date'; then
       local _gv
       _gv=$(gcloud version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
       _summary+=("gcloud     ${_gv} ✓")
