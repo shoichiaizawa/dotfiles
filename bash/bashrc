@@ -1124,6 +1124,20 @@ upkeep() {
       _summary+=("Vim        up to date")
     fi
 
+    # Agent skills
+    printf '\n:: Agent skills\n\n'
+    local _skills_out
+    _skills_out=$(skills-update 2>&1)
+    local _skills_rc=$?
+    printf '%s\n' "$_skills_out"
+    if (( _skills_rc != 0 )); then
+      _summary+=("Skills     ✗ error")
+    elif printf '%s' "$_skills_out" | grep -qi 'up to date\|no updates\|0 updated'; then
+      _summary+=("Skills     up to date")
+    else
+      _summary+=("Skills     ↑ updated")
+    fi
+
     printf '\n── Summary %s\n' "${sep:11}"
     for _line in "${_summary[@]}"; do
       printf '  %s\n' "$_line"
@@ -1486,6 +1500,22 @@ fi
 if type claude > /dev/null 2>&1; then
   alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work claude'
 fi
+
+# ------------------------------------------------------------
+# Agent skills (https://github.com/vercel-labs/skills)
+# ------------------------------------------------------------
+
+skills-update() {
+  if ! type npx > /dev/null 2>&1; then
+    echo "npx not found — load nvm first" >&2
+    return 1
+  fi
+  npx skills@latest update
+  if [[ -d "$HOME/.claude-work" ]]; then
+    printf '\n(work profile)\n'
+    CLAUDE_CONFIG_DIR="$HOME/.claude-work" npx skills@latest update
+  fi
+}
 
 # ------------------------------------------------------------
 # deck (https://github.com/k1LoW/deck)
