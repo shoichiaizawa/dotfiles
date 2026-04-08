@@ -1401,8 +1401,8 @@ inoremap <silent> <Leader>date <C-R>=strftime('%Y-%m-%d')<CR>
 inoremap <silent> <Leader>time <C-R>=strftime('%H:%M:%S')<CR>
 inoremap <silent> <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
 
-nnoremap <silent> <Leader>ll :call <SID>YankClaudeRef()<CR>
-xnoremap <silent> <Leader>ll :<C-u>call <SID>YankClaudeRef()<CR>
+nnoremap <silent> <Leader>ll :call <SID>YankClaudeRef('n')<CR>
+xnoremap <silent> <Leader>ll :<C-u>call <SID>YankClaudeRef('v')<CR>
 
 "   }}}2
 
@@ -1417,10 +1417,15 @@ xnoremap <silent> <Leader>ll :<C-u>call <SID>YankClaudeRef()<CR>
 " Yank selected lines with file path and line range to the system clipboard,
 " for pasting into a Claude Code session.
 "
-function! s:YankClaudeRef() abort
+function! s:YankClaudeRef(mode) abort
   let l:file = expand('%:p')
-  let l:start = line("'<")
-  let l:end = line("'>")
+  if a:mode ==# 'v'
+    let l:start = line("'<")
+    let l:end = line("'>")
+  else
+    let l:start = line('.')
+    let l:end = l:start
+  endif
   if l:start == l:end
     let l:ref = '@' . l:file . ':' . l:start
   else
