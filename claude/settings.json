@@ -1,10 +1,5 @@
 {
   "cleanupPeriodDays": 365,
-  "effortLevel": "high",
-  "voiceEnabled": true,
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true
-  },
   "permissions": {
     "allow": [
       "Bash(basename *)",
@@ -105,5 +100,10 @@
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "voiceEnabled": true
 }
