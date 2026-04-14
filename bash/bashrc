@@ -1510,10 +1510,10 @@ skills-update() {
     echo "npx not found — load nvm first" >&2
     return 1
   fi
-  npx skills@latest update
+  npx skills@latest update < /dev/null
   if [[ -d "$HOME/.claude-work" ]]; then
     printf '\n(work profile)\n'
-    CLAUDE_CONFIG_DIR="$HOME/.claude-work" npx skills@latest update
+    CLAUDE_CONFIG_DIR="$HOME/.claude-work" npx skills@latest update < /dev/null
   fi
 }
 
