@@ -1132,7 +1132,7 @@ upkeep() {
     printf '%s\n' "$_skills_out"
     if (( _skills_rc != 0 )); then
       _summary+=("Skills     ✗ error")
-    elif printf '%s' "$_skills_out" | grep -qi 'up to date\|no updates\|0 updated'; then
+    elif printf '%s' "$_skills_out" | grep -qi 'up to date\|no updates\|no.*skills to update\|0 updated'; then
       _summary+=("Skills     up to date")
     else
       _summary+=("Skills     ↑ updated")
