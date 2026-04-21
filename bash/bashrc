@@ -1546,6 +1546,17 @@ if type ghq > /dev/null 2>&1; then
 fi
 
 # ------------------------------------------------------------
+# jj (https://github.com/jj-vcs/jj)
+# ------------------------------------------------------------
+
+# Dynamic completion — completes bookmarks, revisions, operations, files.
+# Engine is marked unstable upstream; fall back to `jj util completion bash`
+# if issues arise.
+if type jj > /dev/null 2>&1; then
+  source <(COMPLETE=bash jj)
+fi
+
+# ------------------------------------------------------------
 # Google Antigravity (https://antigravity.google)
 # ------------------------------------------------------------
 
