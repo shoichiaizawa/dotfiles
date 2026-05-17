@@ -1498,6 +1498,8 @@ fi
 # ------------------------------------------------------------
 
 if type claude > /dev/null 2>&1; then
+  alias claude='claude --allow-dangerously-skip-permissions'
+  # claude-work omits --allow-dangerously-skip-permissions: no work sandbox configured
   alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work claude'
 fi
 
