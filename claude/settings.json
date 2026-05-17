@@ -7,7 +7,6 @@
     "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
   },
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Bash(basename *)",
       "Bash(brew --prefix*)",
@@ -83,7 +82,8 @@
       "Bash(rm -rf ~/*)",
       "Bash(shutdown*)",
       "Bash(sudo *)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "hooks": {
     "PostToolUse": [
@@ -140,6 +140,7 @@
       "docker-compose *"
     ]
   },
+  "tui": "fullscreen",
   "voiceEnabled": true,
   "voice": {
     "enabled": true,
