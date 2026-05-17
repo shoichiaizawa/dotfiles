@@ -87,41 +87,6 @@
       "Bash(sudo *)"
     ]
   },
-  "sandbox": {
-    "enabled": true,
-    "failIfUnavailable": true,
-    "allowUnsandboxedCommands": false,
-    "excludedCommands": ["docker *", "docker-compose *"],
-    "filesystem": {
-      "denyRead": [
-        "~/.ssh",
-        "~/.config/gcloud",
-        "~/.boto",
-        "~/.config/configstore",
-        "~/.npmrc",
-        "~/.aws",
-        "~/.gnupg",
-        "~/.config/firebase",
-        "~/.wrangler",
-        "~/.cloudflared"
-      ],
-      "denyWrite": [
-        "~/.bashrc",
-        "~/.zshrc",
-        "~/.bash_profile",
-        "/etc"
-      ]
-    },
-    "network": {
-      "allowedDomains": [
-        "github.com",
-        "*.githubusercontent.com",
-        "formulae.brew.sh",
-        "*.brew.sh",
-        "ghcr.io"
-      ]
-    }
-  },
   "hooks": {
     "PostToolUse": [
       {
@@ -138,6 +103,44 @@
   },
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.githubusercontent.com",
+        "formulae.brew.sh",
+        "*.brew.sh",
+        "ghcr.io"
+      ]
+    },
+    "filesystem": {
+      "denyWrite": [
+        "~/.bashrc",
+        "~/.zshrc",
+        "~/.bash_profile",
+        "/etc"
+      ],
+      "denyRead": [
+        "~/.ssh",
+        "~/.config/gcloud",
+        "~/.boto",
+        "~/.config/configstore",
+        "~/.npmrc",
+        "~/.aws",
+        "~/.gnupg",
+        "~/.config/firebase",
+        "~/.wrangler",
+        "~/.cloudflared"
+      ]
+    },
+    "excludedCommands": [
+      "docker *",
+      "docker-compose *"
+    ]
   },
   "effortLevel": "high",
   "voiceEnabled": true,
