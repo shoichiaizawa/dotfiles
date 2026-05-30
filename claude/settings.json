@@ -145,5 +145,7 @@
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
