@@ -88,10 +88,16 @@ set output-meta on
 # (default on)
 set convert-meta off
 
-# Ctrl+Left/Right to jump to beginning/end of line
-# (Requires disabling macOS "Move left/right a space" in Mission Control shortcuts)
-"\e[1;5D": beginning-of-line
-"\e[1;5C": end-of-line
+# Option/Ctrl + Left/Right -> word-wise, portable across terminals & Option-key modes.
+# Terminals disagree on what bytes Option sends, so bind every common encoding to the
+# same action. Ctrl always sends 1;5, so it moves word-wise too -- the accepted
+# trade-off for not having to touch any terminal's own settings.
+"\e[1;3D": backward-word   # Alt/Option, the standard encoding
+"\e[1;3C": forward-word
+"\e[1;5D": backward-word   # Ctrl everywhere; also Option on this iTerm2
+"\e[1;5C": forward-word
+"\e\e[D": backward-word     # Option-as-Meta mode (ESC-prefixed arrow)
+"\e\e[C": forward-word
 
 # Use Alt/Meta + Delete to delete the next word
 "\e[3;3~": kill-word
